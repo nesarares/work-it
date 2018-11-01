@@ -1,0 +1,23 @@
+<div class="ui top attached menu" *ngIf="user$ | async as user">
+  <div class="ui container">
+    <div class="left menu">
+      <a class="ui item" routerLink="/">
+        <i class="home icon right spaced"></i>
+        Home
+      </a>
+    </div>
+    <div class="right menu">
+      <div class="ui pointing dropdown avt vertical center aligned" suiDropdown>
+        <img class="ui right spaced avatar image" src="{{ user.photoUrl }}">
+        <span>{{ user.displayName }}</span>
+        <i class="dropdown icon"></i>
+        <div class="menu" suiDropdownMenu>
+          <div class="item" (click)="signOut()">
+            <i class="sign-out icon"></i>
+            <span>Sign out</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

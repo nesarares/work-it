@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SuiModule } from 'ng2-semantic-ui';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { AuthGuard } from './guards/auth.guard';
     SuiModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    RouterModule
   ],
   declarations: [],
   exports: [
@@ -26,8 +28,9 @@ import { AuthGuard } from './guards/auth.guard';
     SuiModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    RouterModule
   ],
-  providers: [AuthService, AuthGuard]
+  providers: []
 })
 export class SharedModule {}

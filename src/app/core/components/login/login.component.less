@@ -1,0 +1,59 @@
+.wrapper {
+  height: 90vh;
+}
+
+.card {
+  width: 400px;
+  overflow: hidden;
+
+  .form {
+    .field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      input {
+        width: 260px;
+      }
+    }
+  }
+
+  .content {
+    padding: 1.5em 2em;
+  }
+
+  .button {
+    width: 100%;
+  }
+}
+
+.lined {
+  line-height: 0;
+  text-align: center;
+  margin: 2em 0 !important;
+
+  span {
+    display: inline-block;
+    position: relative;
+  }
+}
+
+.lined span:before,
+.lined span:after {
+  content: '';
+  position: absolute;
+  height: 1px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  top: 0;
+  width: 160px;
+}
+
+.lined span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+
+.lined span:after {
+  left: 100%;
+  margin-left: 15px;
+}

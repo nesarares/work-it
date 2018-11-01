@@ -1,1 +1,43 @@
-<p>Login works</p>
+<div class="ui padded vertical horizontal center aligned container wrapper">
+	<div class="ui card">
+		<div class="content">
+			<div class="header">Login</div>
+		</div>
+		<div class="content">
+			<form #f (ngSubmit)="login(f.value)">
+				<div class="ui form">
+					<div class="inline field">
+						<label for="email">E-mail</label>
+						<input #email="ngModel" [(ngModel)]="user.email" type="email" name="email" id="email">
+					</div>
+					<div class="inline field">
+						<label for="password">Password</label>
+						<input #password="ngModel" [(ngModel)]="user.password" type="password" name="password" id="password">
+					</div>
+
+					<button class="ui button">Login</button>
+				</div>
+			</form>
+
+			<p class="ui center aligned lined"><span>or be social</span></p>
+
+			<button class="ui google plus button bottom spaced" (click)="googleLogin()">
+				<i class="google icon float"></i>
+				Login with Google
+			</button>
+			<button class="ui facebook button bottom spaced more disabled">
+				<i class="facebook f icon"></i>
+				Login with Facebook
+			</button>
+
+			<a routerLink="/register" class="center aligned">New user? Register!</a>
+		</div>
+	</div>
+
+	<div class="ui error message" *ngIf="loginError">
+		<div class="header">
+			Error
+		</div>
+		<p>{{ loginError }}</p>
+	</div>
+</div>
