@@ -23,7 +23,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.less", "src/semantic/dist/semantic.min.css"],
+            "styles": ["src/semantic/dist/semantic.min.css", "src/styles.less"],
             "scripts": []
           },
           "configurations": {

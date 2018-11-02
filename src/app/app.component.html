@@ -1,4 +1,4 @@
-<div class="full width height">
-	<app-navbar></app-navbar>
+<app-navbar></app-navbar>
+<div [class.full]="!loggedIn" [class.full-navbar]="loggedIn">
 	<router-outlet></router-outlet>
 </div>
