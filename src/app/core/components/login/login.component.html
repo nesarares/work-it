@@ -1,18 +1,18 @@
-<div class="ui padded vertical horizontal center aligned container wrapper">
+<div class="ui padded vertical center aligned wrapper">
 	<div class="ui card">
-		<div class="content">
+		<div class="content horizontal center aligned">
 			<div class="header">Login</div>
 		</div>
 		<div class="content">
-			<form #f (ngSubmit)="login(f.value)">
+			<form>
 				<div class="ui form">
 					<div class="inline field">
 						<label for="email">E-mail</label>
-						<input #email="ngModel" [(ngModel)]="user.email" type="email" name="email" id="email">
+						<input [(ngModel)]="user.email" type="email" name="email" id="email">
 					</div>
 					<div class="inline field">
 						<label for="password">Password</label>
-						<input #password="ngModel" [(ngModel)]="user.password" type="password" name="password" id="password">
+						<input [(ngModel)]="user.password" type="password" name="password" id="password">
 					</div>
 
 					<button class="ui button">Login</button>
@@ -30,7 +30,7 @@
 				Login with Facebook
 			</button>
 
-			<a routerLink="/register" class="center aligned">New user? Register!</a>
+			<a routerLink="/register" class="horizontal center aligned">New user? Register!</a>
 		</div>
 	</div>
 
