@@ -5,12 +5,17 @@
 - [Visual Studio Code (recommended)](https://code.visualstudio.com/)
 - [Git](https://git-scm.com/)
 - [NodeJS (8+)](https://nodejs.org/en/)
+- [Angular Console](https://angularconsole.com/) - optional
 
 ## VSCode extensions
 
 - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [TypeScript Hero](https://marketplace.visualstudio.com/items?itemName=rbbit.typescript-hero)
 - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) - optional
+
+## Structure
+
+- Use different folders for components, services, models and guards in modules (see example in shared module)
 
 ## Development
 
@@ -86,3 +91,15 @@ _Open File -> Preferences -> Settings. Click on the three dots -> Open settings.
   "editor.fontSize": 16
 }
 ```
+
+## Angular console
+
+Use angular console to easily create components/modules/services
+
+- Open the project with console
+- When creating a component/service/etc. fill the inputs like this:
+  - Name : path/to/component (eg. core/components/login)
+  - Project : work-it
+  - Module : component's parent module (eg. for login -> core\core.module.ts)
+  - Export : if it's in shared / core this should be true (or if you want to use the component in another module)
+- Click "Generate"
