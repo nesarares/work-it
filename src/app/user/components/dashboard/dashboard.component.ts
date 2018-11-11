@@ -14,7 +14,15 @@ export class DashboardComponent implements OnInit {
     {
       icon: 'chart bar outline',
       text: 'Dashboard',
-      link: user => `/user/${user.uid}`
+      link: user => [`/user/${user.uid}`, { outlets: { dashboard: ['home'] } }]
+    },
+    {
+      icon: 'cubes',
+      text: 'Example',
+      link: user => [
+        `/user/${user.uid}`,
+        { outlets: { dashboard: ['example'] } }
+      ]
     }
   ];
 
