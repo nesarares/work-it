@@ -1,0 +1,37 @@
+<div class="ui padded vertical center aligned wrapper">
+  <div class="ui card">
+    <div class="content horizontal center aligned">
+      <div class="header">Create new account</div>
+    </div>
+    <div class="content">
+      <form>
+        <div class="ui form">
+
+          <div class="inline field" [class.has-error]="email.invalid && email.touched">
+            <label for="email"><i class="envelope icon"></i></label>
+            <input [(ngModel)]="user.email" type="email" name="email" id="email" placeholder="E-mail">
+          </div>
+
+          <div class="inline field">
+            <label for="password"><i class="key icon"></i></label>
+            <input [(ngModel)]="user.password" type="password" name="password" id="password" placeholder="Password">
+          </div>
+
+          <div class="inline field">
+            <label for="password-confirmation"><i class="key icon"></i></label>
+            <input [(ngModel)]="user.password" type="password" name="password-confirm" id="password-confirm"
+              placeholder="Password confirmation">
+          </div>
+
+          <button class="ui button">Register</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="ui error message" *ngIf="registerError">
+      <div class="header">
+        Error
+      </div>
+      <p>{{ registerError }}</p>
+    </div>
+  </div>
