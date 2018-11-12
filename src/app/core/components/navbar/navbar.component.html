@@ -1,4 +1,4 @@
-<div class="ui top attached menu wrapper" *ngIf="(user$ | async) as user">
+<div class="ui top attached menu wrapper">
   <div class="ui container">
     <div class="left menu">
       <a class="ui item" routerLink="/">
@@ -6,7 +6,11 @@
       </a>
     </div>
     <div class="right menu">
-      <div class="ui pointing dropdown avt vertical center aligned" suiDropdown>
+      <div
+        class="ui pointing dropdown avt vertical center aligned"
+        suiDropdown
+        *ngIf="(user$ | async) as user; else: login"
+      >
         <img class="ui right spaced avatar image" src="{{ user.photoUrl }}" />
         <span>{{ user.displayName }}</span> <i class="dropdown icon"></i>
         <div class="menu menu-user" suiDropdownMenu>
@@ -19,6 +23,12 @@
           </div>
         </div>
       </div>
+
+      <ng-template #login>
+        <a class="ui item" routerLink="/login">
+          <i class="sign-in icon right spaced"></i> Login
+        </a>
+      </ng-template>
     </div>
   </div>
 </div>
