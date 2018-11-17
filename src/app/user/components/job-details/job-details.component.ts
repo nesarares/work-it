@@ -23,7 +23,6 @@ export class JobDetailsComponent implements OnInit {
   }
 
   validateFields() {
-
     let errors: string = "";
     if (this.job.title === "") errors = errors.concat("Job title cannot be empty. ");
     if (this.job.description === "") errors = errors.concat("Job description cannot be empty. ");
