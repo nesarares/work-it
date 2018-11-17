@@ -1,0 +1,65 @@
+<div class="ui padded vertical center aligned wrapper">
+  <div class="content">
+    <form>
+      <div class="ui form">
+
+        <div class="inline field">
+          <input [(ngModel)]="job.title" class="form-control" type="text" name="title" id="title" placeholder="Job title"
+            #title="ngModel" required>
+        </div>
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
+          <div *ngIf="title.errors.required">
+            Job title is required.
+          </div>
+        </div>
+
+        <div class="inline field">
+          <input [(ngModel)]="job.description" type="text" name="description" id="description" placeholder="Job description"
+            #description="ngModel" required>
+        </div>
+        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger">
+          <div *ngIf="description.errors.required">
+            Job description is required.
+          </div>
+        </div>
+
+        <div class="inline field">
+          <input [(ngModel)]="job.requirements" type="text" name="requirements" id="requirements" placeholder="Requirements"
+            #requirements="ngModel" required>
+        </div>
+        <div *ngIf="requirements.invalid && (requirements.dirty || requirements.touched)" class="alert alert-danger">
+          <div *ngIf="requirements.errors.required">
+            Requirements field is required.
+          </div>
+        </div>
+
+        <div class="inline field">
+          <input [(ngModel)]="job.tags" type="text" name="tags" id="tags" placeholder="Tags">
+        </div>
+
+        <div class="inline field">
+          <input [(ngModel)]="job.period" type="text" name="period" id="period" placeholder="Period" #period="ngModel"
+            required>
+        </div>
+        <div *ngIf="period.invalid && (period.dirty || period.touched)" class="alert alert-danger">
+          <div *ngIf="period.errors.required">
+            Period is required.
+          </div>
+        </div>
+
+        <div class="inline field">
+          <input [(ngModel)]="job.salary" type="text" name="salary" id="salary" placeholder="Salary">
+        </div>
+
+        <button class="ui button" (click)="addJob()">Add</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="ui error message" *ngIf="addJobError">
+    <div class="header">
+      Error
+    </div>
+    <p>{{ addJobError }}</p>
+  </div>
+</div>
