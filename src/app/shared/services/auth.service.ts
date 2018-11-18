@@ -57,6 +57,7 @@ export class AuthService {
   }
 
   private updateUserData(user) {
+
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${user.uid}`
     );
@@ -67,7 +68,7 @@ export class AuthService {
       displayName: user.displayName ? user.displayName : user.email
     };
 
-    if (user.photoURL) data.photoUrl = user.photoURL;
+    data.photoUrl = user.photoURL ? user.photoURL : "../assets/images/default.jpg";
 
     return userRef.set(data, { merge: true });
   }

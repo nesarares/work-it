@@ -5,10 +5,11 @@ import { LoginComponent } from './components/login/login.component';
 import { SharedModule } from '../shared/shared.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
+import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 
 @NgModule({
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, PasswordStrengthMeterModule],
   declarations: [HomeComponent, LoginComponent, NavbarComponent, RegisterComponent],
   exports: [HomeComponent, LoginComponent, NavbarComponent]
 })
-export class CoreModule {}
+export class CoreModule { }
