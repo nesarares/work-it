@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { Job } from 'src/app/shared/models/job';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-job-details',
@@ -8,7 +12,10 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class JobDetailsComponent implements OnInit {
   addJobError: string;
-  job = {
+  tags: string;
+  job: Job = {
+    id: '',
+    employerID: '',
     title: '',
     description: '',
     requirements: '',
@@ -17,9 +24,13 @@ export class JobDetailsComponent implements OnInit {
     salary: ''
   };
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private afs: AngularFirestore) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    console.log("SALUUUUUUUUUUUT")
+    const user: User = await this.auth.user$.toPromise();
+    this.job.employerID = user.uid;
+    console.log(user, "****************************************")
   }
 
   validateFields() {
@@ -34,9 +45,20 @@ export class JobDetailsComponent implements OnInit {
     }
   }
 
+  splitTags() {
+    this.job.tags = this.tags.split(" ");
+  }
+
   addJob() {
     this.addJobError = "";
     this.validateFields();
+    if (this.addJobError !== "") return;
+
+    this.splitTags();
+
+    const id = this.afs.createId();
+    this.job.id = id;
+    this.afs.collection("jobs").doc(id).set(this.job);
   }
 
 }
