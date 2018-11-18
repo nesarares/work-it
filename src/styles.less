@@ -6,6 +6,10 @@ html {
   min-height: 100vh;
 }
 
+:focus {
+  outline: 0;
+}
+
 body *:not(.icon) {
   font-family: @font-family !important;
 }
@@ -90,4 +94,8 @@ body *:not(.icon) {
   position: relative;
   height: calc(~'100vh - 60px');
   width: 100vw;
+}
+
+body .menu .item {
+  font-family: 'Rubik' !important;
 }

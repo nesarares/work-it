@@ -1,23 +1,34 @@
-<div class="ui top attached menu wrapper" *ngIf="user$ | async as user">
+<div class="ui top attached menu wrapper">
   <div class="ui container">
     <div class="left menu">
       <a class="ui item" routerLink="/">
-        <i class="home icon right spaced"></i>
-        Home
+        <i class="home icon right spaced"></i> Home
       </a>
     </div>
     <div class="right menu">
-      <div class="ui pointing dropdown avt vertical center aligned" suiDropdown>
-        <img class="ui right spaced avatar image" src="{{ user.photoUrl }}">
-        <span>{{ user.displayName }}</span>
-        <i class="dropdown icon"></i>
-        <div class="menu" suiDropdownMenu>
+      <div
+        class="ui pointing dropdown avt vertical center aligned"
+        suiDropdown
+        *ngIf="(user$ | async) as user; else: login"
+      >
+        <img class="ui right spaced avatar image" src="{{ user.photoUrl }}" />
+        <span>{{ user.displayName }}</span> <i class="dropdown icon"></i>
+        <div class="menu menu-user" suiDropdownMenu>
+          <div class="item" routerLink="/user/{{ user.uid }}">
+            <i class="chart bar outline icon"></i> <span>Dashboard</span>
+          </div>
+          <div class="ui divider"></div>
           <div class="item" (click)="signOut()">
-            <i class="sign-out icon"></i>
-            <span>Sign out</span>
+            <i class="sign-out icon"></i> <span>Sign out</span>
           </div>
         </div>
       </div>
+
+      <ng-template #login>
+        <a class="ui item" routerLink="/login">
+          <i class="sign-in icon right spaced"></i> Login
+        </a>
+      </ng-template>
     </div>
   </div>
 </div>

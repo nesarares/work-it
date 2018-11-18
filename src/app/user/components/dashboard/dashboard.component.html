@@ -1,0 +1,15 @@
+<div class="wrapper" *ngIf="(user$ | async) as user">
+  <div class="ui vertical inverted menu main-menu">
+    <a
+      class="item"
+      *ngFor="let menuItem of menuItems"
+      [routerLink]="menuItem.link(user)"
+      routerLinkActive="active"
+    >
+      <i class="{{ menuItem.icon }} icon"></i> {{ menuItem.text }}
+    </a>
+  </div>
+  <section class="content">
+    <router-outlet name="dashboard"></router-outlet>
+  </section>
+</div>
