@@ -21,14 +21,13 @@ export class LoginComponent implements OnInit {
   googleLogin() {
     this.auth.googleLogin()
       .catch(error => (this.loginError = error))
-      .then(() => this.router.navigate(['']));
+      .then((logedInUser) => this.router.navigate([`user/${logedInUser.uid}`]));
   }
 
   emailLogin() {
     this.auth
       .emailLogin(this.user.email, this.user.password)
       .catch(error => (this.loginError = error))
-      .then(() => this.router.navigate(['']));
+      .then((logedInUser) => this.router.navigate([`/user/${logedInUser.uid}`]));
   }
-
 }

@@ -58,8 +58,8 @@ export class RegisterComponent implements OnInit {
 
     if (!this.passwordsAreMatching || this.strengthLevel < 2) return;
 
-    this.authService.emailSignUp(email, password).then(() => {
-      this.router.navigate(['']);
+    this.authService.emailSignUp(email, password).then((logedInUser) => {
+      this.router.navigate([`/user/${logedInUser.user.uid}`]);
     }).catch((err) => {
       this.usedEmail = err.message;
     })
