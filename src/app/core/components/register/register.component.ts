@@ -50,27 +50,19 @@ export class RegisterComponent implements OnInit {
 
     this.isFormSubmitted = true;
 
-    let email: string = this.registerForm.controls.email.value;
-    let password: string = this.registerForm.controls.password.value;
+    const email: string = this.registerForm.controls.email.value;
+    const password: string = this.registerForm.controls.password.value;
+    const passwordConfirm = this.registerForm.controls.confirmedPassword.value;
 
-    this.passwordsAreMatching = this.checkPasswords(
-      this.registerForm.controls.confirmedPassword.value,
-      password
-    );
+    this.passwordsAreMatching = (passwordConfirm === password);
 
-    if (!this.passwordsAreMatching) return;
+    if (!this.passwordsAreMatching || this.strengthLevel < 2) return;
 
     this.authService.emailSignUp(email, password).then(() => {
       this.router.navigate(['']);
     }).catch((err) => {
       this.usedEmail = err.message;
     })
-  }
-
-
-  // Checks if the password and confirmed password are the same
-  private checkPasswords(password: string, confirmedPassword: string) {
-    return password === confirmedPassword;
   }
 
 }

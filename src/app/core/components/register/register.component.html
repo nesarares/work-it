@@ -42,7 +42,8 @@
             You must reenter the same password!
           </div>
 
-          <input [attr.disabled]="strengthLevel < 2 ? true : null" type="submit" class="ui button" value="Sign up" />
+          <input [attr.disabled]="strengthLevel < 2 ? true : null && !registerForm.valid" type="submit" class="ui button"
+            value="Sign up" />
 
         </div>
       </form>

@@ -19,7 +19,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() { }
 
   googleLogin() {
-    this.auth.googleLogin().catch(error => (this.loginError = error));
+    this.auth.googleLogin()
+      .catch(error => (this.loginError = error))
+      .then(() => this.router.navigate(['']));
   }
 
   emailLogin() {

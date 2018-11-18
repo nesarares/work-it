@@ -68,7 +68,9 @@ export class AuthService {
       displayName: user.displayName ? user.displayName : user.email
     };
 
-    data.photoUrl = user.photoURL ? user.photoURL : "../assets/images/default.jpg";
+    const defaultPhotoURL = "https://openclipart.org/image/2400px/svg_to_png/277084/Male-Avatar-3.png";
+
+    data.photoUrl = user.photoURL ? user.photoURL : defaultPhotoURL;
 
     return userRef.set(data, { merge: true });
   }
