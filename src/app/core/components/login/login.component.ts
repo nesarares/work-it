@@ -18,10 +18,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() { }
 
-  googleLogin() {
-    this.auth.googleLogin()
-      .catch(error => (this.loginError = error))
-      .then((logedInUser) => this.router.navigate([`user/${logedInUser.uid}`]));
+  async googleLogin() {
+    try {
+      const user = await this.auth.googleLogin()
+      this.router.navigateByUrl(`/user/${user.uid}`);
+    } catch (error) {
+      this.loginError = error;
+    }
   }
 
   emailLogin() {
