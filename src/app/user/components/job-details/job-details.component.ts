@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { Job } from 'src/app/shared/models/job';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { take } from 'rxjs/operators';
+import { JobService } from 'src/app/shared/services/job.service';
 
 @Component({
   selector: 'app-job-details',
@@ -22,7 +23,7 @@ export class JobDetailsComponent implements OnInit {
     salary: ''
   };
 
-  constructor(private auth: AuthService, private afs: AngularFirestore) {}
+  constructor(private auth: AuthService, private jobService: JobService) {}
 
   ngOnInit() {
     this.auth.user$.pipe(take(1)).subscribe(user => {
@@ -30,18 +31,8 @@ export class JobDetailsComponent implements OnInit {
     });
   }
 
-  splitTags() {
-    this.job.tags = this.tags.split(' ');
-  }
-
   addJob() {
-    this.splitTags();
-
-    const id = this.afs.createId();
-    this.job.id = id;
-    this.afs
-      .collection('jobs')
-      .doc(id)
-      .set(this.job);
+    this.job.tags = this.tags.split(' ');
+    this.jobService.addJob(this.job);
   }
 }
