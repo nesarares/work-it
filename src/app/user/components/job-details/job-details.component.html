@@ -14,8 +14,8 @@
         </div>
 
         <div class="inline field">
-          <input [(ngModel)]="job.description" type="text" name="description" id="description" placeholder="Job description"
-            #description="ngModel" required>
+          <textarea [(ngModel)]="job.description" name="description" id="description" placeholder="Job description"
+            #description="ngModel" required></textarea>
         </div>
         <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger">
           <div *ngIf="description.errors.required">
@@ -24,8 +24,8 @@
         </div>
 
         <div class="inline field">
-          <input [(ngModel)]="job.requirements" type="text" name="requirements" id="requirements" placeholder="Requirements"
-            #requirements="ngModel" required>
+          <textarea [(ngModel)]="job.requirements" name="requirements" id="requirements" placeholder="Requirements"
+            #requirements="ngModel" required></textarea>
         </div>
         <div *ngIf="requirements.invalid && (requirements.dirty || requirements.touched)" class="alert alert-danger">
           <div *ngIf="requirements.errors.required">
@@ -54,12 +54,5 @@
         <button class="ui button" (click)="addJob()">Add</button>
       </div>
     </form>
-  </div>
-
-  <div class="ui error message" *ngIf="addJobError">
-    <div class="header">
-      Error
-    </div>
-    <p>{{ addJobError }}</p>
   </div>
 </div>
