@@ -14,23 +14,28 @@ export class LoginComponent implements OnInit {
     password: ''
   };
 
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private auth: AuthService, private router: Router) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   async googleLogin() {
     try {
-      const user = await this.auth.googleLogin()
+      const user = await this.auth.googleLogin();
       this.router.navigateByUrl(`/user/${user.uid}`);
     } catch (error) {
       this.loginError = error;
     }
   }
 
-  emailLogin() {
-    this.auth
-      .emailLogin(this.user.email, this.user.password)
-      .catch(error => (this.loginError = error))
-      .then((logedInUser) => this.router.navigate([`/user/${logedInUser.uid}`]));
+  async emailLogin() {
+    try {
+      const user = await this.auth.emailLogin(
+        this.user.email,
+        this.user.password
+      );
+      this.router.navigate([`/user/${user.uid}`]);
+    } catch (error) {
+      this.loginError = error;
+    }
   }
 }

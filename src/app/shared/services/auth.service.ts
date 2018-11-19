@@ -12,6 +12,7 @@ import { switchMap } from 'rxjs/operators';
 
 import { User } from '../models/user';
 import { Router } from '@angular/router';
+import { urls } from '../constants/urls';
 
 @Injectable({
   providedIn: 'root'
@@ -79,9 +80,7 @@ export class AuthService {
       displayName: user.displayName ? user.displayName : user.email
     };
 
-    const defaultPhotoURL = "https://openclipart.org/image/2400px/svg_to_png/277084/Male-Avatar-3.png";
-
-    data.photoUrl = user.photoURL ? user.photoURL : defaultPhotoURL;
+    data.photoUrl = user.photoURL ? user.photoURL : urls.defaultPhoto;
 
     return userRef.set(data, { merge: true });
   }
