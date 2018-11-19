@@ -22,16 +22,16 @@ export class JobDetailsComponent implements OnInit {
     salary: ''
   };
 
-  constructor(private auth: AuthService, private afs: AngularFirestore) { }
+  constructor(private auth: AuthService, private afs: AngularFirestore) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.auth.user$.pipe(take(1)).subscribe(user => {
       this.job.employerID = user.uid;
     });
   }
 
   splitTags() {
-    this.job.tags = this.tags.split(" ");
+    this.job.tags = this.tags.split(' ');
   }
 
   addJob() {
@@ -39,6 +39,9 @@ export class JobDetailsComponent implements OnInit {
 
     const id = this.afs.createId();
     this.job.id = id;
-    this.afs.collection("jobs").doc(id).set(this.job);
+    this.afs
+      .collection('jobs')
+      .doc(id)
+      .set(this.job);
   }
 }
