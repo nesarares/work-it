@@ -1,0 +1,78 @@
+@import '../../../../variables';
+
+.wrapper {
+  min-height: 100%;
+  background-size: cover;
+  background-position: right center;
+  justify-content: flex-end;
+  padding-right: 15%;
+}
+
+.card {
+  width: 400px;
+  overflow: hidden;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  background-color: #fdfdfd;
+
+  .form {
+    .field {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        font-size: 1.3em;
+      }
+
+      input {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  .content {
+    padding: 1.5em 2em;
+  }
+
+  .button {
+    width: 100%;
+  }
+}
+
+.lined {
+  line-height: 0;
+  text-align: center;
+  margin: 2em 0 !important;
+
+  span {
+    display: inline-block;
+    position: relative;
+  }
+}
+
+.lined span:before,
+.lined span:after {
+  content: '';
+  position: absolute;
+  height: 1px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  top: 0;
+  width: 160px;
+}
+
+.lined span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+
+.lined span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+
+@media only screen and (max-width: @largestTabletScreen) {
+  .wrapper {
+    padding-right: 1.5em !important;
+    background-position: 34% center;
+    justify-content: center;
+  }
+}

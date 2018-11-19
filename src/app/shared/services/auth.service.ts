@@ -11,6 +11,8 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { User } from '../models/user';
+import { Router } from '@angular/router';
+import { urls } from '../constants/urls';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,7 @@ import { User } from '../models/user';
 export class AuthService {
   user$: Observable<User>;
 
-  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore) {
+  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(
         user =>
@@ -37,26 +39,37 @@ export class AuthService {
   emailLogin(email: string, password: string) {
     return this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
-      .then(credential => this.updateUserData(credential.user));
-  }
-
-  private oAuthLogin(provider) {
-    return this.afAuth.auth
-      .signInWithPopup(provider)
-      .then(credential => this.updateUserData(credential.user));
+      .then(credential => {
+        this.updateUserData(credential.user);
+        return credential.user;
+      });
   }
 
   emailSignUp(email: string, password: string) {
     return this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
-      .then(user => this.updateUserData(user.user));
+      .then(user => {
+        this.updateUserData(user.user);
+        return user;
+      });
   }
 
   signOut() {
     this.afAuth.auth.signOut();
+    this.router.navigate(['/login']);
+  }
+
+  private oAuthLogin(provider) {
+    return this.afAuth.auth
+      .signInWithPopup(provider)
+      .then(credential => {
+        this.updateUserData(credential.user);
+        return credential.user;
+      });
   }
 
   private updateUserData(user) {
+
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${user.uid}`
     );
@@ -67,7 +80,7 @@ export class AuthService {
       displayName: user.displayName ? user.displayName : user.email
     };
 
-    if (user.photoURL) data.photoUrl = user.photoURL;
+    data.photoUrl = user.photoURL ? user.photoURL : urls.defaultPhoto;
 
     return userRef.set(data, { merge: true });
   }
