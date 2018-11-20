@@ -23,6 +23,11 @@ export class DashboardComponent implements OnInit {
         `/user/${user.uid}`,
         { outlets: { dashboard: ['example'] } }
       ]
+    },
+    {
+      icon: 'briefcase',
+      text: 'Add job',
+      link: user => [`/user/${user.uid}`, { outlets: { dashboard: ['job'] } }]
     }
   ];
 
