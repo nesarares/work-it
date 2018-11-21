@@ -2941,7 +2941,7 @@
 									"containerChangeable": false,
 									"containerExtending": false,
 									"left": 0,
-									"top": 0,
+									"top": 24,
 									"width": 10,
 									"height": 10,
 									"autoResize": false
@@ -2965,7 +2965,7 @@
 									"containerChangeable": false,
 									"containerExtending": false,
 									"left": 0,
-									"top": 0,
+									"top": 24,
 									"width": 10,
 									"height": 10,
 									"autoResize": false
