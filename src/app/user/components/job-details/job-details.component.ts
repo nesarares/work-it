@@ -32,7 +32,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
   addJob() {
-    this.job.tags = this.tags.split(' ');
+    this.job.tags = this.tags.split(',').map(tag => tag.trim());
     this.jobService.addJob(this.job);
   }
 }
