@@ -1,43 +1,58 @@
 <div class="ui padded vertical center aligned wrapper">
-	<div class="ui card">
-		<div class="content horizontal center aligned">
-			<div class="header">Login</div>
-		</div>
-		<div class="content">
-			<form>
-				<div class="ui form">
-					<div class="inline field">
-						<label for="email"><i class="envelope icon"></i></label>
-						<input [(ngModel)]="user.email" type="email" name="email" id="email" placeholder="E-mail">
-					</div>
-					<div class="inline field">
-						<label for="email"><i class="key icon"></i></label>
-						<input [(ngModel)]="user.password" type="password" name="password" id="password" placeholder="Password">
-					</div>
+  <div class="ui card">
+    <div class="content horizontal center aligned">
+      <div class="header">Login</div>
+    </div>
+    <div class="content">
+      <form>
+        <div class="ui form">
+          <div class="inline field">
+            <label for="email"><i class="envelope icon"></i></label>
+            <input
+              [(ngModel)]="user.email"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="E-mail"
+            />
+          </div>
+          <div class="inline field">
+            <label for="email"><i class="key icon"></i></label>
+            <input
+              [(ngModel)]="user.password"
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+            />
+          </div>
 
-					<button class="ui button" (click)="emailLogin()">Login</button>
-				</div>
-			</form>
+          <button class="ui primary button" (click)="emailLogin()">
+            Login
+          </button>
+        </div>
+      </form>
 
-			<p class="ui center aligned lined"><span>or be social</span></p>
+      <div class="ui error message" *ngIf="loginError">
+        <div class="header">Error</div>
+        <p>{{ loginError }}</p>
+      </div>
 
-			<button class="ui google plus button bottom spaced" (click)="googleLogin()">
-				<i class="google icon float"></i>
-				Login with Google
-			</button>
-			<button class="ui facebook button bottom spaced more disabled">
-				<i class="facebook f icon"></i>
-				Login with Facebook
-			</button>
+      <p class="ui center aligned lined"><span>or be social</span></p>
 
-			<a routerLink="/register" class="horizontal center aligned">New user? Register!</a>
-		</div>
-	</div>
+      <button
+        class="ui google plus button bottom spaced"
+        (click)="googleLogin()"
+      >
+        <i class="google icon float"></i> Login with Google
+      </button>
+      <button class="ui facebook button bottom spaced more disabled">
+        <i class="facebook f icon"></i> Login with Facebook
+      </button>
 
-	<div class="ui error message" *ngIf="loginError">
-		<div class="header">
-			Error
-		</div>
-		<p>{{ loginError }}</p>
-	</div>
+      <a routerLink="/register" class="horizontal center aligned">
+        New user? Register!
+      </a>
+    </div>
+  </div>
 </div>
