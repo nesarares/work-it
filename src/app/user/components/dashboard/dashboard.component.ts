@@ -17,16 +17,13 @@ export class DashboardComponent implements OnInit {
       link: user => [`/user/${user.uid}`, { outlets: { dashboard: ['home'] } }]
     },
     {
-      icon: 'cubes',
-      text: 'Example',
-      link: user => [
-        `/user/${user.uid}`,
-        { outlets: { dashboard: ['example'] } }
-      ]
+      icon: 'briefcase',
+      text: 'Add job',
+      link: user => [`/user/${user.uid}`, { outlets: { dashboard: ['job'] } }]
     }
   ];
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService) {}
 
   ngOnInit() {
     this.user$ = this.auth.user$;

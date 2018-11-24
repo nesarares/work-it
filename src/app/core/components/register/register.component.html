@@ -6,27 +6,60 @@
       <div class="header">Create new account</div>
     </div>
     <div class="content">
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <form
+        [formGroup]="registerForm"
+        (ngSubmit)="onSubmit()"
+        class="bottom spaced"
+      >
         <div class="ui form">
           <div class="inline field">
             <label for="email"><i class="envelope icon"></i></label>
-            <input type="email" formControlName="email" name="email" id="email" placeholder="E-mail">
+            <input
+              type="email"
+              formControlName="email"
+              name="email"
+              id="email"
+              placeholder="E-mail"
+            />
           </div>
-          <div *ngIf="isFormSubmitted && registerForm.controls.email.errors" class="error">
-            <div *ngIf="registerForm.controls.email.errors.required">You must enter an email address!</div>
-            <div *ngIf="registerForm.controls.email.errors.email">You must enter a valid email address!</div>
+          <div
+            *ngIf="isFormSubmitted && registerForm.controls.email.errors"
+            class="error"
+          >
+            <div *ngIf="registerForm.controls.email.errors.required">
+              You must enter an email address!
+            </div>
+            <div *ngIf="registerForm.controls.email.errors.email">
+              You must enter a valid email address!
+            </div>
           </div>
           <div *ngIf="usedEmail">{{ usedEmail }}</div>
 
           <div class="inline field">
             <label for="password"><i class="key icon"></i></label>
-            <input type="password" formControlName="password" name="password" id="password" placeholder="Password">
+            <input
+              type="password"
+              formControlName="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+            />
           </div>
-          <password-strength-meter [password]="registerForm.controls.password.value" (strengthChange)="handleStrengthChanged($event)">
+          <password-strength-meter
+            [password]="registerForm.controls.password.value"
+            (strengthChange)="handleStrengthChanged($event)"
+          >
           </password-strength-meter>
-          <div *ngIf="isFormSubmitted && registerForm.controls.password.errors" class="error">
-            <div *ngIf="registerForm.controls.password.errors.required">You must enter a password!</div>
-            <div *ngIf="registerForm.controls.password.errors.pattern">Password must enter a valid password!</div>
+          <div
+            *ngIf="isFormSubmitted && registerForm.controls.password.errors"
+            class="error"
+          >
+            <div *ngIf="registerForm.controls.password.errors.required">
+              You must enter a password!
+            </div>
+            <div *ngIf="registerForm.controls.password.errors.pattern">
+              Password must enter a valid password!
+            </div>
           </div>
           <div *ngIf="passwordStrengthFeedback">
             {{ passwordStrengthFeedback }}
@@ -34,19 +67,39 @@
 
           <div class="inline field">
             <label for="confirm-password"><i class="key icon"></i></label>
-            <input type="password" formControlName="confirmedPassword" name="confirm-password" id="confirm-password"
-              placeholder="Confirm password">
+            <input
+              type="password"
+              formControlName="confirmedPassword"
+              name="confirm-password"
+              id="confirm-password"
+              placeholder="Confirm password"
+            />
           </div>
-          <div *ngIf="isFormSubmitted && (registerForm.controls.confirmedPassword.errors || !passwordsAreMatching)  "
-            class="error">
+          <div
+            *ngIf="
+              isFormSubmitted &&
+              (registerForm.controls.confirmedPassword.errors ||
+                !passwordsAreMatching)
+            "
+            class="error"
+          >
             You must reenter the same password!
           </div>
 
-          <input [attr.disabled]="strengthLevel < 2 ? true : null && !registerForm.valid" type="submit" class="ui button"
-            value="Sign up" />
-
+          <input
+            [attr.disabled]="
+              strengthLevel < 2 ? true : null && !registerForm.valid
+            "
+            type="submit"
+            class="ui primary button vertical spaced"
+            value="Sign up"
+          />
         </div>
       </form>
+
+      <a routerLink="/login" class="horizontal center aligned top spaced">
+        Already have an account? Login!
+      </a>
     </div>
   </div>
 </div>

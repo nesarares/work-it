@@ -35,7 +35,15 @@ export class LoginComponent implements OnInit {
       );
       this.router.navigate([`/user/${user.uid}`]);
     } catch (error) {
-      this.loginError = error;
+      switch (error.code) {
+        case 'auth/wrong-password':
+        case 'auth/user-not-found':
+          this.loginError =
+            'The email or password is incorrect. Please check the details and try again.';
+          break;
+        default:
+          this.loginError = error.message;
+      }
     }
   }
 }
