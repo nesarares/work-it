@@ -20,13 +20,14 @@ import { urls } from '../constants/urls';
 export class AuthService {
   user$: Observable<User>;
 
-  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
+  constructor(
+    private afAuth: AngularFireAuth,
+    private afs: AngularFirestore,
+    private router: Router
+  ) {
     this.user$ = this.afAuth.authState.pipe(
-      switchMap(
-        user =>
-          user
-            ? this.afs.doc<User>(`users/${user.uid}`).valueChanges()
-            : of(null)
+      switchMap(user =>
+        user ? this.afs.doc<User>(`users/${user.uid}`).valueChanges() : of(null)
       )
     );
   }
@@ -60,16 +61,13 @@ export class AuthService {
   }
 
   private oAuthLogin(provider) {
-    return this.afAuth.auth
-      .signInWithPopup(provider)
-      .then(credential => {
-        this.updateUserData(credential.user);
-        return credential.user;
-      });
+    return this.afAuth.auth.signInWithPopup(provider).then(credential => {
+      this.updateUserData(credential.user);
+      return credential.user;
+    });
   }
 
   private updateUserData(user) {
-
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${user.uid}`
     );

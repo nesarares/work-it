@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { firebaseConfig } from 'src/environments/firebaseApi';
+import { SuiModule } from 'ng2-semantic-ui';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,9 +19,10 @@ import { firebaseConfig } from 'src/environments/firebaseApi';
     SharedModule,
     CoreModule,
     ReactiveFormsModule,
+    SuiModule,
     AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

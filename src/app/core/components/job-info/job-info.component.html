@@ -1,0 +1,21 @@
+<!-- <div  class="ui inveted ">
+  <h2>{{job.title}}</h2>
+</div> -->
+
+<div *ngIf="job" class="ui inverted  center aligned segment flex-container">
+
+    <div class="ui text container">
+        <h1 class="ui inverted header">
+          {{job.title}}
+        </h1>
+       
+      </div>
+
+    <div class="ui container">
+      <div class="ui large secondary inverted pointing menu">
+        <div class="right item">
+            <div class="ui huge primary button">Apply <i class="right arrow icon"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
