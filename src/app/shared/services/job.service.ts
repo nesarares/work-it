@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Job } from '../models/job';
-import { map, take } from 'rxjs/operators';
-import { query } from '@angular/core/src/render3';
-import { join } from 'path';
-import { stringify } from 'querystring';
+import { map } from 'rxjs/operators';
 import { tagColoros } from '../constants/colors';
 
 @Injectable({

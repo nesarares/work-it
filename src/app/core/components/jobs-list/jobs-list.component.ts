@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { JobService } from 'src/app/shared/services/job.service';
 import { Job } from 'src/app/shared/models/job';
-import {} from 'ng2-semantic-ui';
 import { Router } from '@angular/router';
 
 @Component({
