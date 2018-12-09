@@ -1,0 +1,45 @@
+<div class="ui form center container">
+  <h2 class="ui large header centered">
+    We are almost ready, &nbsp;just a few more details...
+  </h2>
+  <!-- Initial usertype selection -->
+  <div *ngIf="userType !== undefined">
+    <button class="ui button float right" (click)="resetUser()">
+      <i class=" arrow left icon"></i> Back
+    </button>
+  </div>
+
+  <!-- Initial usertype selection -->
+  <div *ngIf="userType === undefined">
+    <h2 class="ui medium header" style="margin-left:30px">
+      I am looking to...
+    </h2>
+    <div class="ui two column stackable center aligned grid segment">
+      <div class="column">
+        <button
+          class="ui button orange bigselect massive"
+          (click)="selectEmployee()"
+        >
+          Find a job
+        </button>
+      </div>
+      <div class="ui vertical divider"></div>
+      <div class="column">
+        <button
+          class="ui button blue bigselect massive"
+          (click)="selectEmployer()"
+        >
+          Hire people
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-create-profile-employer
+    *ngIf="userType === employerUserType"
+  ></app-create-profile-employer>
+
+  <app-create-profile-employee
+    *ngIf="userType === employeeUserType"
+  ></app-create-profile-employee>
+</div>

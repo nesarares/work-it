@@ -41,3 +41,4 @@ Thumbs.db
 
 # Api keys
 /src/environments/firebaseApi.ts
+.vscode/settings.json

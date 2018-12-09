@@ -13,6 +13,7 @@ import { switchMap } from 'rxjs/operators';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { urls } from '../constants/urls';
+import { UserType } from '../models/userType';
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +21,14 @@ import { urls } from '../constants/urls';
 export class AuthService {
   user$: Observable<User>;
 
-  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
+  constructor(
+    private afAuth: AngularFireAuth,
+    private afs: AngularFirestore,
+    private router: Router
+  ) {
     this.user$ = this.afAuth.authState.pipe(
-      switchMap(
-        user =>
-          user
-            ? this.afs.doc<User>(`users/${user.uid}`).valueChanges()
-            : of(null)
+      switchMap(user =>
+        user ? this.afs.doc<User>(`users/${user.uid}`).valueChanges() : of(null)
       )
     );
   }
@@ -60,16 +62,13 @@ export class AuthService {
   }
 
   private oAuthLogin(provider) {
-    return this.afAuth.auth
-      .signInWithPopup(provider)
-      .then(credential => {
-        this.updateUserData(credential.user);
-        return credential.user;
-      });
+    return this.afAuth.auth.signInWithPopup(provider).then(credential => {
+      this.updateUserData(credential.user);
+      return credential.user;
+    });
   }
 
   private updateUserData(user) {
-
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${user.uid}`
     );
@@ -81,7 +80,6 @@ export class AuthService {
     };
 
     data.photoUrl = user.photoURL ? user.photoURL : urls.defaultPhoto;
-
     return userRef.set(data, { merge: true });
   }
 }
