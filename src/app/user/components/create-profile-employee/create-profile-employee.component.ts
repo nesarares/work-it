@@ -11,7 +11,7 @@ import { UserProfile } from 'src/app/shared/models/userProfile';
   styleUrls: ['./create-profile-employee.component.less']
 })
 export class CreateProfileEmployeeComponent implements OnInit {
-  $userId: string;
+  userId: string;
   userProfileForm: FormGroup;
   isFormSubmitted: boolean;
   constructor(
@@ -36,18 +36,18 @@ export class CreateProfileEmployeeComponent implements OnInit {
           .educationalExperience.value
       };
       this.createProfileService
-        .updateUserProfile(this.$userId, userProfile)
-        .then(res => this.router.navigate([`/user/${this.$userId}`]))
+        .updateUserProfile(this.userId, userProfile)
+        .then(res => this.router.navigate([`/user/${this.userId}`]))
         .catch(fail => {
           console.log('Profile creation failed.');
-          this.router.navigate([`/user/${this.$userId}/create-profile`]);
+          this.router.navigate([`/user/${this.userId}/create-profile`]);
         });
     }
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.$userId = params['id'];
+      this.userId = params['id'];
     });
     this.isFormSubmitted = false;
     this.userProfileForm = this.formBuilder.group({

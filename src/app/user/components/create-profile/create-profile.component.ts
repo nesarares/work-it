@@ -17,8 +17,8 @@ import { UserProfile } from 'src/app/shared/models/userProfile';
 })
 export class CreateProfileComponent implements OnInit {
   userType?: UserType;
-  employeeUserType?: UserType;
-  employerUserType?: UserType;
+  employeeUserType: UserType = UserType.Employee;
+  employerUserType: UserType = UserType.Employer;
   constructor() {}
 
   selectEmployee() {
@@ -33,9 +33,5 @@ export class CreateProfileComponent implements OnInit {
     this.userType = undefined;
   }
 
-  ngOnInit() {
-    this.userType = undefined;
-    this.employeeUserType = UserType.Employee;
-    this.employerUserType = UserType.Employer;
-  }
+  ngOnInit() {}
 }

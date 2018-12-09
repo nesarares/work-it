@@ -14,17 +14,12 @@ export class CreateProfileService {
   constructor(private afs: AngularFirestore, private router: Router) {}
 
   /**
-   * Updates the user profile of the user with the specified userId
+   * Updates the user profile of the user with the specifiedu serId
    */
-  async updateUserProfile($userId: string, userProfile: UserProfile) {
-    let $user: AngularFirestoreDocument<User>;
-    $user = this.afs.collection<User>('users').doc($userId);
-    let document = await $user.ref.get();
-    if (!document.exists) {
-      console.log('Invalid user found, redirecting to main page...');
-      this.router.navigate([`/`]);
-      return;
-    }
-    return $user.ref.update({ userProfile: userProfile });
+  async updateUserProfile(userId: string, userProfile: UserProfile) {
+    return this.afs
+      .collection<User>('users')
+      .doc(userId)
+      .update({ userProfile: userProfile });
   }
 }
