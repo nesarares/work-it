@@ -10,7 +10,7 @@ import { UserProfile } from '../models/userProfile';
 @Injectable({
   providedIn: 'root'
 })
-export class CreateProfileService {
+export class UserProfileService {
   constructor(private afs: AngularFirestore, private router: Router) {}
 
   /**

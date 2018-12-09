@@ -15,7 +15,7 @@ import { UserProfile } from 'src/app/shared/models/userProfile';
   templateUrl: './create-profile.component.html',
   styleUrls: ['./create-profile.component.less']
 })
-export class CreateProfileComponent implements OnInit {
+export class CreateProfileComponent {
   userType?: UserType;
   employeeUserType: UserType = UserType.Employee;
   employerUserType: UserType = UserType.Employer;
@@ -32,6 +32,4 @@ export class CreateProfileComponent implements OnInit {
   resetUser() {
     this.userType = undefined;
   }
-
-  ngOnInit() {}
 }

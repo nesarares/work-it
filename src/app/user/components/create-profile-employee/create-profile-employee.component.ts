@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateProfileService } from 'src/app/shared/services/create-profile.service';
+import { UserProfileService } from 'src/app/shared/services/user-profile.service';
 import { UserType } from 'src/app/shared/models/userType';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserProfile } from 'src/app/shared/models/userProfile';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-profile-employee',
@@ -18,7 +19,7 @@ export class CreateProfileEmployeeComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private createProfileService: CreateProfileService
+    private createProfileService: UserProfileService
   ) {}
 
   onSubmit() {
@@ -46,9 +47,10 @@ export class CreateProfileEmployeeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.pipe(take(1)).subscribe(params => {
       this.userId = params['id'];
     });
+
     this.isFormSubmitted = false;
     this.userProfileForm = this.formBuilder.group({
       firstName: ['', [Validators.required]],
