@@ -20,15 +20,16 @@ export class CreateProfileGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return this.auth.user$.pipe(
-      take(1),
-      tap((user: User) => {
-        if (user.userProfile) {
-          console.log('access denied');
-          this.router.navigate([`/user/${user.uid}`]);
-        }
-      }),
-      map(user => !!user.userProfile)
-    );
+    // return this.auth.user$.pipe(
+    //   take(1),
+    //   tap((user: User) => {
+    //     if (user.userProfile) {
+    //       console.log('access denied');
+    //       this.router.navigate([`/user/${user.uid}`]);
+    //     }
+    //   }),
+    //   map(user => !!user.userProfile)
+    // );
+    return true;
   }
 }

@@ -1,0 +1,120 @@
+<form
+  class="ui form container margin top"
+  [formGroup]="userProfileForm"
+  (ngSubmit)="onSubmit()"
+>
+  <!-- Name -->
+  <div
+    class="field"
+    [ngClass]="{
+      error:
+        isFormSubmitted &&
+        (userProfileForm.controls.firstName.errors ||
+          userProfileForm.controls.lastName.errors)
+    }"
+  >
+    <label>Name</label>
+  </div>
+
+  <div class="two fields">
+    <!-- First name -->
+    <div
+      class="field"
+      [ngClass]="{
+        error: isFormSubmitted && userProfileForm.controls.firstName.errors
+      }"
+    >
+      <input
+        type="text"
+        formControlName="firstName"
+        id="firstNameCompany"
+        placeholder="First Name"
+      />
+      <span
+        class="error text"
+        *ngIf="
+          isFormSubmitted &&
+          userProfileForm.controls.firstName.errors &&
+          userProfileForm.controls.firstName.errors.required
+        "
+        >First name required.</span
+      >
+    </div>
+    <!-- Last name -->
+    <div
+      class="field"
+      [ngClass]="{
+        error: isFormSubmitted && userProfileForm.controls.lastName.errors
+      }"
+    >
+      <input
+        type="text"
+        formControlName="lastName"
+        id="lastNameCompany"
+        placeholder="Last Name"
+      />
+      <span
+        class="error text"
+        *ngIf="
+          isFormSubmitted &&
+          userProfileForm.controls.lastName.errors &&
+          userProfileForm.controls.lastName.errors.required
+        "
+        >Last name required.</span
+      >
+    </div>
+  </div>
+
+  <!-- Birth date -->
+  <div
+    class="field"
+    [ngClass]="{
+      error: isFormSubmitted && userProfileForm.controls.birthDate.errors
+    }"
+  >
+    <label class="large">Birthdate</label>
+    <input
+      type="date"
+      formControlName="birthDate"
+      id="birthDateCompany"
+      placeholder="Birth date"
+    />
+    <span
+      class="error text"
+      *ngIf="
+        isFormSubmitted &&
+        userProfileForm.controls.birthDate.errors &&
+        userProfileForm.controls.birthDate.errors.required
+      "
+      >Birthdate required.</span
+    >
+  </div>
+
+  <!-- Company name -->
+  <div
+    class="field"
+    [ngClass]="{
+      error: isFormSubmitted && userProfileForm.controls.companyName.errors
+    }"
+  >
+    <label class="large">Company name</label>
+    <input
+      type="text"
+      formControlName="companyName"
+      id="companyName"
+      placeholder="Company name"
+    />
+    <span
+      class="error text"
+      *ngIf="
+        isFormSubmitted &&
+        userProfileForm.controls.companyName.errors &&
+        userProfileForm.controls.companyName.errors.required
+      "
+      >Company name required.</span
+    >
+  </div>
+
+  <!-- Submit button -->
+  <button class="ui submit button" id="submituserProfileForm">Submit</button>
+</form>
