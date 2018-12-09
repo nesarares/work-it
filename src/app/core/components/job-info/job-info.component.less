@@ -1,7 +1,74 @@
 .flex-container {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: center;
+  background: linear-gradient(
+    45deg,
+    rgba(234, 91, 49, 0.8) 0%,
+    rgba(26, 26, 53, 0.8) 100%
+  );
+  zoom: 1;
+  height: auto;
+  text-align: left;
 
+  .button {
+    background: rgba(234, 91, 49, 0.9);
+  }
+}
+
+.apply-for-job-header {
+  background-image: url(http://img.ejobs.ro/img/webcore/hero/cover/job-hero.jpg);
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+.first {
+  flex: 0 1 450px;
+  margin-right: 9em;
+  min-height: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+
+  h5 {
+    margin-top: 2em;
+    text-align: left;
+    font-size: 15px;
+  }
+
+  h4 {
+    margin-top: 1em;
+    margin-bottom: 2em;
+    text-align: left;
+    font-size: 15px;
+  }
+}
+
+.second {
+  flex: 0 1 150px;
+  height: 50px;
+}
+
+.font {
+  font-weight: bold;
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 0px !important;
+
+  .item {
+    margin-right: 3em !important;
+    font-weight: 400;
+  }
+
+  .active {
+    border-color: #f77a21 !important;
+  }
 }

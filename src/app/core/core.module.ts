@@ -6,19 +6,28 @@ import { SharedModule } from '../shared/shared.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
-import { JobsListComponent } from  './components/jobs-list/jobs-list.component';
+import { JobsListComponent } from './components/jobs-list/jobs-list.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { JobInfoComponent } from './components/job-info/job-info.component';
+import { JobDescriptionComponent } from './components/job-description/job-description.component';
+import { JobSimilarComponent } from './components/job-similar/job-similar.component';
 
 @NgModule({
-  imports: [CommonModule, SharedModule, PasswordStrengthMeterModule, InfiniteScrollModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    PasswordStrengthMeterModule,
+    InfiniteScrollModule
+  ],
   declarations: [
     HomeComponent,
     LoginComponent,
     NavbarComponent,
     RegisterComponent,
     JobsListComponent,
-    JobInfoComponent
+    JobInfoComponent,
+    JobDescriptionComponent,
+    JobSimilarComponent
   ],
   exports: [HomeComponent, LoginComponent, NavbarComponent]
 })

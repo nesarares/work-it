@@ -4,7 +4,7 @@ import { LoginComponent } from './core/components/login/login.component';
 import { HomeComponent } from './core/components/home/home.component';
 import { RegisterComponent } from './core/components/register/register.component';
 import { AuthGuard } from './shared/guards/auth.guard';
-import {JobInfoComponent } from "./core/components/job-info/job-info.component" 
+import { JobInfoComponent } from './core/components/job-info/job-info.component';
 
 const routes: Routes = [
   {
@@ -24,9 +24,9 @@ const routes: Routes = [
     loadChildren: './user/user.module#UserModule',
     canActivate: [AuthGuard]
   },
-  { 
-    path:'job-info/:id',
-    loadChildren:'./core/core.module#CoreModule',
+  {
+    path: 'job-info/:id',
+    loadChildren: './core/core.module#CoreModule',
     component: JobInfoComponent
   }
 ];

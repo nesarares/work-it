@@ -1,36 +1,46 @@
-
-<div 
+<div
   infinite-scroll
   [infiniteScrollDistance]="scrollDistance"
   [infiniteScrollUpDistance]="scrollUpDistance"
   [infiniteScrollThrottle]="throttle"
   (scrolled)="onScrollDown()"
-  (scrolledUp)="onUp()" class="container">
-
+  class="container"
+>
   <div *ngFor="let job of jobList">
-
-      <div class="ui cards">
-
-          <div class="card" style="width: 800px;" (click)="cardClicked(job.id)">
-
-            <div class="content">
-
-              <img class="right floated mini ui image" [src]='job.employer.photoUrl'>
-              <div class="header">{{ job  .title}}</div>
-              <div class="meta">{{job.period}}</div>
-              <div class="description">{{job.description}}</div>
-              
-            </div>
-            
-            <div class="extra content">
-              <div class="ui elements">
-                <div *ngFor="let tag of job.tags" >
-                  <a class="ui red horizontal label">{{tag}}</a>
-                </div>
-              </div>
-            </div>
-
+    <div class="ui cards">
+      <div class="card" style="width: 800px;" (click)="cardClicked(job.id)">
+        <div class="content">
+          <img
+            class="right floated mini ui image"
+            [src]="job.employer.photoUrl"
+          />
+          <div class="header">{{ job.title }}</div>
+          <div class="meta">{{ job.period }}</div>
+          <div class="description">
+            {{
+              job.description.length > 150
+                ? (job.description | slice: 0:150) + '...'
+                : job.description
+            }}
           </div>
         </div>
+
+        <div class="extra content">
+          <div class="ui elements">
+            <div *ngFor="let tag of job.tags">
+              <a
+                class="ui horizontal label"
+                [ngStyle]="{
+                  'background-color': getColor(tag),
+                  color: 'white',
+                  'font-weight': 'bold'
+                }"
+                >{{ tag }}</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

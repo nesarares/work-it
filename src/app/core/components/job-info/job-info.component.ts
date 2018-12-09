@@ -9,17 +9,38 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./job-info.component.less']
 })
 export class JobInfoComponent implements OnInit {
-
   job: Job;
+  firstTabActive: boolean;
+  secondTabActive: boolean;
 
-  constructor(private jobService: JobService, private route: ActivatedRoute) { 
-    const jobId = this.route.snapshot.paramMap.get("id");
-    jobService.getJobById(jobId).subscribe(job => {
-      this.job = job;
+  constructor(private jobService: JobService, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(() => {
+      // get job's id
+      const jobId = this.route.snapshot.paramMap.get('id');
+      this.jobService.getJobById(jobId).subscribe(jobPromise => {
+        jobPromise.then(job => {
+          this.job = job;
+        });
+      });
+      this.firstTabActive = true;
+      this.secondTabActive = false;
     });
   }
 
-  ngOnInit() {
+  changeTab(tagName: string) {
+    switch (tagName) {
+      case 'first': {
+        this.firstTabActive = true;
+        this.secondTabActive = false;
+        break;
+      }
+      case 'second': {
+        this.secondTabActive = true;
+        this.firstTabActive = false;
+        break;
+      }
+    }
   }
-
 }

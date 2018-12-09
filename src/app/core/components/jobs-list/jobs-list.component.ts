@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { JobService } from 'src/app/shared/services/job.service';
 import { Job } from 'src/app/shared/models/job';
-import { } from 'ng2-semantic-ui';
+import {} from 'ng2-semantic-ui';
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-jobs-list',
@@ -11,44 +10,44 @@ import { Router } from '@angular/router';
   styleUrls: ['./jobs-list.component.less']
 })
 export class JobsListComponent implements OnInit {
-  
   jobList: Job[];
-  displayedList: Job[];
-
-  throttle = 300;
-  scrollDistance = 5;
-  scrollUpDistance = 5;
-  
-  start = 5;
-
+  throttle = 1000;
+  scrollDistance = 6;
+  mappedTags: Map<string, string> = new Map();
 
   constructor(private jobService: JobService, private router: Router) {
-
-      // update on refresh / navigation
-      // this.jobService.getJobs().subscribe(jobs=>{
-      //   this.jobList = jobs;
-      // });
-
-      // Real time update
-      this.jobService.getObservaleJobs().subscribe(()=>{
-        this.jobService.getJobs().subscribe(jobs => {
-            this.jobList = jobs;
-          });
+    // Real time update
+    this.jobService.getObservaleJobs().subscribe(() => {
+      this.jobService.getJobs(this.queryParam).subscribe(jobs => {
+        this.jobList = jobs;
       });
-
+      this.mappedTags = this.jobService.getMappedTags();
+    });
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 
   onScrollDown() {
+    console.log(this.mappedTags);
+    this.queryParam.startingAt = this.jobList[this.jobList.length - 1].id;
+    this.queryParam.old = this.jobList;
+    this.jobService.getJobs(this.queryParam).subscribe(jobs => {
+      this.jobList = jobs;
+    });
   }
 
-  onUp(){
-  }
-
-  cardClicked(jobId: string){
+  cardClicked(jobId: string) {
     this.router.navigate([`/job-info`, jobId]);
   }
+
+  getColor(tag: string) {
+    return this.mappedTags.get(tag);
+  }
+
+  private queryParam = {
+    orderBy: 'id',
+    limitTo: this.scrollDistance,
+    startingAt: undefined,
+    old: []
+  };
 }

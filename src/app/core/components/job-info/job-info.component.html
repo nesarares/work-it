@@ -1,21 +1,50 @@
-<!-- <div  class="ui inveted ">
-  <h2>{{job.title}}</h2>
-</div> -->
-
-<div *ngIf="job" class="ui inverted  center aligned segment flex-container">
-
-    <div class="ui text container">
-        <h1 class="ui inverted header">
-          {{job.title}}
-        </h1>
-       
-      </div>
-
-    <div class="ui container">
-      <div class="ui large secondary inverted pointing menu">
-        <div class="right item">
-            <div class="ui huge primary button">Apply <i class="right arrow icon"></i></div>
+<div class="main-page">
+  <div class="apply-for-job-header">
+    <div *ngIf="job" class="ui flex-container">
+      <div class="ui first">
+        <div>
+          <h5 class="ui inverted header" style="color: rgba(242,242,242,0.5)">
+            PERIOADA: {{ job.period | uppercase }}
+          </h5>
+        </div>
+        <h2
+          class="ui inverted header"
+          style="font-size: 25px; font-weight: bold;"
+        >
+          {{ job.title | uppercase }}
+        </h2>
+        <div>
+          <h4 class="ui inverted header">
+            {{ job.employer.displayName | uppercase }}
+          </h4>
         </div>
       </div>
+      <button class="ui medium primary button second">
+        <div>APPLY <i class="right arrow icon"></i></div>
+      </button>
     </div>
   </div>
+  <div class="ui secondary pointing menu menu-items">
+    <a
+      class="item "
+      [ngClass]="{ active: firstTabActive, '': !firstTabActive }"
+      (click)="changeTab('first')"
+    >
+      JOB DESCRIPTION
+    </a>
+    <a
+      class="item "
+      [ngClass]="{ active: secondTabActive, '': !secondTabActive }"
+      (click)="changeTab('second')"
+    >
+      SIMILAR JOBS
+    </a>
+  </div>
+
+  <app-job-description
+    *ngIf="job && firstTabActive"
+    [job]="job"
+  ></app-job-description>
+  <app-job-similar *ngIf="job && secondTabActive" [job]="job">
+  </app-job-similar>
+</div>
