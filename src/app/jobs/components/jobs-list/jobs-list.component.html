@@ -4,46 +4,52 @@
   [infiniteScrollUpDistance]="scrollUpDistance"
   [infiniteScrollThrottle]="throttle"
   (scrolled)="onScrollDown()"
-  class="container"
+  class="ui container"
 >
-  <main class="ui cards">
-    <article
-      class="card"
-      *ngFor="let job of jobList"
-      style="width: 800px;"
-      (click)="cardClicked(job.id)"
-    >
-      <div class="content">
-        <img
-          class="right floated mini ui image"
-          [src]="job.employer.photoUrl"
-        />
-        <div class="header">{{ job.title }}</div>
-        <div class="meta">{{ job.period }}</div>
-        <div class="description">
-          {{
-            job.description.length > 150
-              ? (job.description | slice: 0:150) + '...'
-              : job.description
-          }}
+  <main class="ui two column stackable grid">
+    <div class="column" *ngFor="let job of jobList">
+      <div class="ui card" (click)="cardClicked(job.id)">
+        <div class="content">
+          <div class="ui divided grid">
+            <div class="five wide column">
+              <img
+                class="ui centered circular image"
+                [src]="job.employer.photoUrl"
+              />
+              <p class="employer-name">{{ job.employer.displayName }}</p>
+            </div>
+            <div class="eleven wide column">
+              <h2 class="header">{{ job.title }}</h2>
+              <p class="meta">
+                {{ job.publishedDate.toDate() | date: medium }}
+              </p>
+              <p class="description">
+                {{
+                  job.description.length > 150
+                    ? (job.description | slice: 0:150) + '...'
+                    : job.description
+                }}
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="extra content">
-        <div class="ui elements">
-          <div *ngFor="let tag of job.tags">
+        <div class="extra content">
+          <div class="ui elements">
             <a
+              *ngFor="let tag of job.tags"
               class="ui horizontal label"
               [ngStyle]="{
                 'background-color': getColor(tag),
                 color: 'white',
                 'font-weight': 'bold'
               }"
-              >{{ tag }}</a
             >
+              {{ tag }}
+            </a>
           </div>
         </div>
       </div>
-    </article>
+    </div>
   </main>
 </div>

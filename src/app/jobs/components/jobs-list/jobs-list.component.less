@@ -1,21 +1,51 @@
 .elements {
-  display: flex;
-  flex-direction: row;
+  line-height: 2em;
 }
 
 .container {
-  .cards {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  > .grid {
     margin-top: 1em;
   }
 
   .card {
+    width: 100%;
     transition: transform 1s;
-    margin-top: 1em;
     box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
     transition: all 0.2s ease;
+
+    .header {
+      margin: 0;
+    }
+
+    .meta {
+      margin: 0.5em 0;
+    }
+
+    .image {
+      width: 75%;
+    }
+
+    .employer-name {
+      font-weight: 500;
+      font-size: 1.2em;
+      margin-top: 1.12em;
+      font-family: 'Rubik' !important;
+    }
+
+    .description {
+      text-align: justify;
+    }
+
+    .column:nth-child(2) {
+      padding: 1.5em;
+    }
+
+    .column:nth-child(1) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 
     &:hover {
       cursor: pointer;

@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class JobsListComponent implements OnInit {
   jobList: Job[];
   throttle = 1000;
-  scrollDistance = 6;
+  scrollDistance = 8;
   mappedTags: Map<string, string> = new Map();
 
   constructor(private jobService: JobService, private router: Router) {
@@ -44,7 +44,7 @@ export class JobsListComponent implements OnInit {
   }
 
   private queryParam = {
-    orderBy: 'id',
+    orderBy: 'publishedDate',
     limitTo: this.scrollDistance,
     startingAt: undefined,
     old: []

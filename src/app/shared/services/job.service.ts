@@ -26,7 +26,12 @@ export class JobService {
    * @param queryParam - the given condition
    */
   getJobs(
-    queryParam = { orderBy: 'id', startingAt: undefined, limitTo: 5, old: [] }
+    queryParam = {
+      orderBy: 'publishedDate',
+      startingAt: undefined,
+      limitTo: 5,
+      old: []
+    }
   ) {
     // get the number of elements from database
     let limit;
