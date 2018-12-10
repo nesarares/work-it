@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from '@angular/fire/firestore';
 import { Job } from '../models/job';
 import { map } from 'rxjs/operators';
 import { tagColoros } from '../constants/colors';
@@ -9,25 +12,33 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class JobService {
-  constructor(private afs: AngularFirestore) {}
+  private jobsCollection: AngularFirestoreCollection<Job>;
+
+  constructor(private afs: AngularFirestore) {
+    this.jobsCollection = this.afs.collection<Job>('jobs');
+  }
 
   addJob(job: Job, employerId: string) {
     const id = this.afs.createId();
     job.id = id;
     job.employerRef = this.afs.collection('users').doc(employerId).ref;
-    this.afs
-      .collection('jobs')
-      .doc(id)
-      .set(job);
+    this.jobsCollection.doc(id).set(job);
+  }
+
+  /**
+   * Returns all jobs from database
+   */
+  getJobs(): Observable<Job[]> {
+    return this.jobsCollection.valueChanges();
   }
 
   /**
    * Returns a list of jobs satisfiyng a given condition
    * @param queryParam - the given condition
    */
-  getJobs(
+  getJobsByQueryParam(
     queryParam = {
-      orderBy: 'publishedDate',
+      orderBy: 'id',
       startingAt: undefined,
       limitTo: 5,
       old: []
@@ -39,24 +50,22 @@ export class JobService {
 
     return this.afs
       .collection<Job>('jobs', ref => this.getQueryForm(queryParam, ref))
-      .get()
+      .valueChanges()
       .pipe(
-        map(querySnapshot => {
+        map(jobsArray => {
           let jobs = queryParam.old;
 
           if (queryParam.old.length >= limit) {
             return jobs;
           }
 
-          querySnapshot.forEach(async doc => {
-            let newItem = doc.data();
-
+          jobsArray.forEach(job => {
             // remove the first element of the list, because is already displayed
-            if (jobs.length > 0 && newItem.id == jobs[jobs.length - 1].id) {
+            if (jobs.length > 0 && job.id == jobs[jobs.length - 1].id) {
               return;
             }
 
-            jobs.push(newItem);
+            jobs.push(job);
           });
 
           return jobs;
@@ -65,59 +74,43 @@ export class JobService {
   }
 
   /**
-   * Returns an observable of jobs list
-   */
-  getObservaleJobs() {
-    return this.afs.collection('jobs').valueChanges();
-  }
-
-  /**
    * Get the job
    * @param jobId: string representing the job's id
    */
   getJobById(jobId: string): Observable<Job> {
-    return this.afs
-      .collection('jobs')
-      .doc<Job>(jobId)
-      .valueChanges();
-  }
-
-  /**
-   * Returns all jobs from database
-   */
-  getAllJobs(): Observable<Job[]> {
-    return this.afs.collection<Job>('jobs').valueChanges();
+    return this.jobsCollection.doc<Job>(jobId).valueChanges();
   }
 
   /**
    * Get a map containing all tags once with its associated color
    */
   getMappedTags() {
-    let mappedTags: Map<string, string> = new Map();
-
-    this.getAllJobs().subscribe(jobs => {
-      jobs.forEach(job => {
-        if (!job.tags) {
-          return;
-        }
-
-        job.tags.forEach(tag => {
-          if (!mappedTags[tag]) {
-            mappedTags.set(tag, 'default');
+    return this.getJobs().pipe(
+      map(jobs => {
+        let mappedTags: Map<string, string> = new Map();
+        jobs.forEach(job => {
+          if (!job.tags) {
+            return;
           }
+
+          job.tags.forEach(tag => {
+            if (!mappedTags[tag]) {
+              mappedTags.set(tag, 'default');
+            }
+          });
         });
-      });
 
-      let index = 0;
-      mappedTags.forEach((value: string, key: string) => {
-        mappedTags.set(
-          key,
-          tagColoros.colors[index++ % tagColoros.colors.length]
-        );
-      });
-    });
+        let index = 0;
+        mappedTags.forEach((value: string, key: string) => {
+          mappedTags.set(
+            key,
+            tagColoros.colors[index++ % tagColoros.colors.length]
+          );
+        });
 
-    return mappedTags;
+        return mappedTags;
+      })
+    );
   }
 
   /**
@@ -136,15 +129,6 @@ export class JobService {
   }
 
   private async getCollectionSize() {
-    return (await this.afs
-      .collection('jobs')
-      .get()
-      .toPromise()).docs.length;
-  }
-
-  private async asyncForEach(array, callback) {
-    for (let idx = 0; idx < array.length; ++idx) {
-      await callback(array[idx], idx, array);
-    }
+    return (await this.jobsCollection.get().toPromise()).docs.length;
   }
 }

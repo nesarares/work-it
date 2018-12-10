@@ -70,7 +70,7 @@ export class JobSimilarComponent implements OnInit {
    * Used to load job's data from database
    */
   private loadData() {
-    this.jobService.getAllJobs().subscribe(jobs => {
+    this.jobService.getJobsByQueryParam().subscribe(jobs => {
       this.similarJobList = this.getSimilarJobs(jobs);
     });
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { JobService } from 'src/app/shared/services/job.service';
-import { Job } from 'src/app/shared/models/job';
 import { Router } from '@angular/router';
+import { Job } from 'src/app/shared/models/job';
+import { JobService } from 'src/app/shared/services/job.service';
 
 @Component({
   selector: 'app-jobs-list',
@@ -15,12 +15,12 @@ export class JobsListComponent implements OnInit {
   mappedTags: Map<string, string> = new Map();
 
   constructor(private jobService: JobService, private router: Router) {
-    // Real time update
-    this.jobService.getObservaleJobs().subscribe(() => {
-      this.jobService.getJobs(this.queryParam).subscribe(jobs => {
-        this.jobList = jobs;
-      });
-      this.mappedTags = this.jobService.getMappedTags();
+    this.jobService.getJobsByQueryParam(this.queryParam).subscribe(jobs => {
+      this.jobList = jobs;
+    });
+
+    this.jobService.getMappedTags().subscribe(mappedTags => {
+      this.mappedTags = mappedTags;
     });
   }
 
@@ -30,7 +30,7 @@ export class JobsListComponent implements OnInit {
     console.log(this.mappedTags);
     this.queryParam.startingAt = this.jobList[this.jobList.length - 1].id;
     this.queryParam.old = this.jobList;
-    this.jobService.getJobs(this.queryParam).subscribe(jobs => {
+    this.jobService.getJobsByQueryParam(this.queryParam).subscribe(jobs => {
       this.jobList = jobs;
     });
   }
