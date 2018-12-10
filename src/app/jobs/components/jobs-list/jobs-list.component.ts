@@ -44,7 +44,7 @@ export class JobsListComponent implements OnInit {
   }
 
   private queryParam = {
-    orderBy: 'publishedDate',
+    orderBy: 'id',
     limitTo: this.scrollDistance,
     startingAt: undefined,
     old: []

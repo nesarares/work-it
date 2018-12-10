@@ -38,7 +38,7 @@ export class JobService {
     this.getCollectionSize().then(x => (limit = x));
 
     return this.afs
-      .collection('jobs', ref => this.getQueryForm(queryParam, ref))
+      .collection<Job>('jobs', ref => this.getQueryForm(queryParam, ref))
       .get()
       .pipe(
         map(querySnapshot => {
