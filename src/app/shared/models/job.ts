@@ -4,11 +4,12 @@ import { User } from './user';
 export interface Job {
   id: string;
   employerRef?: DocumentReference;
-  employer?: User;
+  employer?: { displayName: string; photoUrl: string };
   title: string;
   description: string;
   requirements: string;
   tags?: string[];
   period: string;
   salary?: string;
+  publishedDate: Date;
 }

@@ -13,6 +13,7 @@ import { switchMap } from 'rxjs/operators';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { urls } from '../constants/urls';
+import { UserType } from '../models/userType';
 
 @Injectable({
   providedIn: 'root'
@@ -79,7 +80,6 @@ export class AuthService {
     };
 
     data.photoUrl = user.photoURL ? user.photoURL : urls.defaultPhoto;
-
     return userRef.set(data, { merge: true });
   }
 }

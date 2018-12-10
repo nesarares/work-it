@@ -3,20 +3,18 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Job } from '../models/job';
 import { map } from 'rxjs/operators';
 import { tagColoros } from '../constants/colors';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobService {
-  constructor(private afs: AngularFirestore) {
-    this.getJobs();
-  }
+  constructor(private afs: AngularFirestore) {}
 
   addJob(job: Job, employerId: string) {
     const id = this.afs.createId();
     job.id = id;
     job.employerRef = this.afs.collection('users').doc(employerId).ref;
-
     this.afs
       .collection('jobs')
       .doc(id)
@@ -53,10 +51,6 @@ export class JobService {
               return;
             }
 
-            if (newItem.employerRef) {
-              const res = await newItem.employerRef.get();
-              newItem.employer = res.data();
-            }
             jobs.push(newItem);
           });
 
@@ -76,47 +70,18 @@ export class JobService {
    * Get the job
    * @param jobId: string representing the job's id
    */
-  getJobById(jobId: string) {
+  getJobById(jobId: string): Observable<Job> {
     return this.afs
-      .doc<Job>(`jobs/${jobId}`)
-      .get()
-      .pipe(
-        map(async querySnapshot => {
-          let newItem = querySnapshot.data();
-          if (newItem.employerRef) {
-            const res = await newItem.employerRef.get();
-            newItem.employer = res.data();
-          }
-          return newItem as Job;
-        })
-      );
+      .collection('jobs')
+      .doc<Job>(jobId)
+      .valueChanges();
   }
 
   /**
    * Returns all jobs from database
    */
-  getAllJobs() {
-    return this.afs
-      .collection('jobs')
-      .get()
-      .pipe(
-        map(async querySnapshot => {
-          let jobs = [];
-
-          await this.asyncForEach(querySnapshot.docs, async doc => {
-            let newItem = doc.data();
-
-            if (newItem.employerRef) {
-              const res = await newItem.employerRef.get();
-              newItem.employer = res.data();
-            }
-
-            jobs.push(newItem);
-          });
-
-          return jobs;
-        })
-      );
+  getAllJobs(): Observable<Job[]> {
+    return this.afs.collection<Job>('jobs').valueChanges();
   }
 
   /**
@@ -125,27 +90,25 @@ export class JobService {
   getMappedTags() {
     let mappedTags: Map<string, string> = new Map();
 
-    this.getAllJobs().subscribe(promise => {
-      promise.then(jobs => {
-        jobs.forEach(job => {
-          if (!job.tags) {
-            return;
+    this.getAllJobs().subscribe(jobs => {
+      jobs.forEach(job => {
+        if (!job.tags) {
+          return;
+        }
+
+        job.tags.forEach(tag => {
+          if (!mappedTags[tag]) {
+            mappedTags.set(tag, 'default');
           }
-
-          job.tags.forEach(tag => {
-            if (!mappedTags[tag]) {
-              mappedTags.set(tag, 'default');
-            }
-          });
         });
+      });
 
-        let index = 0;
-        mappedTags.forEach((value: string, key: string) => {
-          mappedTags.set(
-            key,
-            tagColoros.colors[index++ % tagColoros.colors.length]
-          );
-        });
+      let index = 0;
+      mappedTags.forEach((value: string, key: string) => {
+        mappedTags.set(
+          key,
+          tagColoros.colors[index++ % tagColoros.colors.length]
+        );
       });
     });
 

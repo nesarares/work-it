@@ -36,7 +36,7 @@ export class JobsListComponent implements OnInit {
   }
 
   cardClicked(jobId: string) {
-    this.router.navigate([`/job-info`, jobId]);
+    this.router.navigate(['/jobs', jobId]);
   }
 
   getColor(tag: string) {

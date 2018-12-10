@@ -18,21 +18,27 @@ export class JobDetailsComponent implements OnInit {
     requirements: '',
     tags: [],
     period: '',
-    salary: ''
+    salary: '',
+    publishedDate: null
   };
 
-  employerID: string;
+  userId: string;
 
   constructor(private auth: AuthService, private jobService: JobService) {}
 
   ngOnInit() {
     this.auth.user$.pipe(take(1)).subscribe(user => {
-      this.employerID = user.uid;
+      this.job.employer = {
+        displayName: user.displayName,
+        photoUrl: user.photoUrl
+      };
+      this.userId = user.uid;
     });
   }
 
   addJob() {
     this.job.tags = this.tags.split(',').map(tag => tag.trim());
-    this.jobService.addJob(this.job, this.employerID);
+    this.job.publishedDate = new Date();
+    this.jobService.addJob(this.job, this.userId);
   }
 }

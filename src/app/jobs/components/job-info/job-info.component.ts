@@ -19,10 +19,8 @@ export class JobInfoComponent implements OnInit {
     this.route.paramMap.subscribe(() => {
       // get job's id
       const jobId = this.route.snapshot.paramMap.get('id');
-      this.jobService.getJobById(jobId).subscribe(jobPromise => {
-        jobPromise.then(job => {
-          this.job = job;
-        });
+      this.jobService.getJobById(jobId).subscribe(job => {
+        this.job = job;
       });
       this.firstTabActive = true;
       this.secondTabActive = false;

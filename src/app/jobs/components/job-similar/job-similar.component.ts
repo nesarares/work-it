@@ -29,7 +29,7 @@ export class JobSimilarComponent implements OnInit {
   ngOnInit() {}
 
   handleClick(job: Job) {
-    this.router.navigate([`/job-info`, job.id]);
+    this.router.navigate(['/jobs', job.id]);
   }
 
   /**
@@ -70,10 +70,8 @@ export class JobSimilarComponent implements OnInit {
    * Used to load job's data from database
    */
   private loadData() {
-    this.jobService.getAllJobs().subscribe(promise => {
-      promise.then(jobs => {
-        this.similarJobList = this.getSimilarJobs(jobs);
-      });
+    this.jobService.getAllJobs().subscribe(jobs => {
+      this.similarJobList = this.getSimilarJobs(jobs);
     });
   }
 }
