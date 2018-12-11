@@ -27,8 +27,11 @@ export class JobsListComponent implements OnInit {
   ngOnInit() {}
 
   onScrollDown() {
-    console.log(this.mappedTags);
-    this.queryParam.startingAt = this.jobList[this.jobList.length - 1].id;
+    // get the last displayed data on the screen
+    this.queryParam.startingAt = this.jobList[
+      this.jobList.length - 1
+    ].publishedDate;
+
     this.queryParam.old = this.jobList;
     this.jobService.getJobsByQueryParam(this.queryParam).subscribe(jobs => {
       this.jobList = jobs;
@@ -44,7 +47,7 @@ export class JobsListComponent implements OnInit {
   }
 
   private queryParam = {
-    orderBy: 'id',
+    orderBy: 'publishedDate',
     limitTo: this.scrollDistance,
     startingAt: undefined,
     old: []
