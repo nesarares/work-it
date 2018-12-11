@@ -5,11 +5,14 @@ import { UserHomeComponent } from './components/user-home/user-home.component';
 import { JobDetailsComponent } from './components/job-details/job-details.component';
 import { CreateProfileComponent } from './components/create-profile/create-profile.component';
 import { CreateProfileGuard } from './guards/create-profile.guard';
+import { NoProfileGuard } from './guards/no-profile.guard';
+import { AuthGuard } from '../shared/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: ':id',
     component: DashboardComponent,
+    canActivate: [AuthGuard, NoProfileGuard],
     children: [
       {
         path: '',
@@ -25,12 +28,13 @@ const routes: Routes = [
         path: 'job',
         component: JobDetailsComponent,
         outlet: 'dashboard'
-      }]
+      }
+    ]
   },
   {
     path: ':id/create-profile',
     component: CreateProfileComponent,
-    canActivate: [CreateProfileGuard]
+    canActivate: [AuthGuard, CreateProfileGuard]
   }
 ];
 

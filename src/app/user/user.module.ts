@@ -11,6 +11,13 @@ import { CreateProfileEmployeeComponent } from './components/create-profile-empl
 
 @NgModule({
   imports: [CommonModule, SharedModule, UserRoutingModule],
-  declarations: [DashboardComponent, UserHomeComponent, CreateProfileComponent, JobDetailsComponent, CreateProfileEmployerComponent, CreateProfileEmployeeComponent]
+  declarations: [
+    DashboardComponent,
+    UserHomeComponent,
+    CreateProfileComponent,
+    JobDetailsComponent,
+    CreateProfileEmployerComponent,
+    CreateProfileEmployeeComponent
+  ]
 })
 export class UserModule {}

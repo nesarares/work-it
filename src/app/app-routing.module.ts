@@ -19,9 +19,12 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
+    path: 'jobs',
+    loadChildren: './jobs/jobs.module#JobsModule'
+  },
+  {
     path: 'user',
-    loadChildren: './user/user.module#UserModule',
-    canActivate: [AuthGuard]
+    loadChildren: './user/user.module#UserModule'
   }
 ];
 

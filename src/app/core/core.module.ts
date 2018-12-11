@@ -9,7 +9,12 @@ import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 
 @NgModule({
   imports: [CommonModule, SharedModule, PasswordStrengthMeterModule],
-  declarations: [HomeComponent, LoginComponent, NavbarComponent, RegisterComponent],
+  declarations: [
+    HomeComponent,
+    LoginComponent,
+    NavbarComponent,
+    RegisterComponent
+  ],
   exports: [HomeComponent, LoginComponent, NavbarComponent]
 })
-export class CoreModule { }
+export class CoreModule {}

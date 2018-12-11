@@ -6,14 +6,13 @@ import {
   Router
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { take, map, tap } from 'rxjs/operators';
-import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { take, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CreateProfileGuard implements CanActivate {
+export class NoProfileGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) {}
 
   canActivate(
@@ -23,12 +22,12 @@ export class CreateProfileGuard implements CanActivate {
     return this.auth.user$.pipe(
       take(1),
       tap(user => {
-        if (user.userProfile) {
-          console.log('access denied - user already has a profile');
-          this.router.navigate([`/user/${this.auth.user.uid}`]);
+        if (!user.userProfile) {
+          console.log('access denied - user does not have a profile');
+          this.router.navigate([`/user/${this.auth.user.uid}/create-profile`]);
         }
       }),
-      map(user => !user.userProfile)
+      map(user => !!user.userProfile)
     );
   }
 }

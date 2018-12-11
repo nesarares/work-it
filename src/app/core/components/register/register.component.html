@@ -45,11 +45,7 @@
               placeholder="Password"
             />
           </div>
-          <password-strength-meter
-            [password]="registerForm.controls.password.value"
-            (strengthChange)="handleStrengthChanged($event)"
-          >
-          </password-strength-meter>
+
           <div
             *ngIf="isFormSubmitted && registerForm.controls.password.errors"
             class="error"
@@ -60,9 +56,6 @@
             <div *ngIf="registerForm.controls.password.errors.pattern">
               Password must enter a valid password!
             </div>
-          </div>
-          <div *ngIf="passwordStrengthFeedback">
-            {{ passwordStrengthFeedback }}
           </div>
 
           <div class="inline field">
@@ -75,6 +68,17 @@
               placeholder="Confirm password"
             />
           </div>
+
+          <password-strength-meter
+            [password]="registerForm.controls.password.value"
+            (strengthChange)="handleStrengthChanged($event)"
+          >
+          </password-strength-meter>
+
+          <div *ngIf="passwordStrengthFeedback">
+            {{ passwordStrengthFeedback }}
+          </div>
+
           <div
             *ngIf="
               isFormSubmitted &&
