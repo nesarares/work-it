@@ -7,7 +7,6 @@ import {
 import { User } from 'firebase';
 import { Router } from '@angular/router';
 import { UserProfile } from '../models/userProfile';
-
 @Injectable({
   providedIn: 'root'
 })

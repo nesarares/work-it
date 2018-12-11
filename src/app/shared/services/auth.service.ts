@@ -44,7 +44,6 @@ export class AuthService {
     return this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
-        this.updateUserData(credential.user);
         return credential.user;
       });
   }
