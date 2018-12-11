@@ -32,21 +32,23 @@ export class JobSimilarComponent implements OnInit {
     const simJobList: Job[] = [];
 
     if (!this.job || !this.job.tags) {
-      return;
+      return simJobList;
     }
 
-    jobs.forEach(curentJob => {
-      if (!curentJob.tags || curentJob.id === this.job.id) {
-        return;
+    for (const currentJob of jobs) {
+      if (!currentJob.tags || currentJob.id === this.job.id) {
+        continue;
       }
 
-      curentJob.tags.forEach(tag => {
-        if (this.job.tags.includes(tag) && !simJobList.includes(curentJob)) {
-          simJobList.push(curentJob);
+      currentJob.tags.forEach(tag => {
+        if (this.job.tags.includes(tag) && !simJobList.includes(currentJob)) {
+          simJobList.push(currentJob);
           return;
         }
       });
-    });
+
+      if (simJobList.length === 4) break;
+    }
 
     return simJobList;
   }
