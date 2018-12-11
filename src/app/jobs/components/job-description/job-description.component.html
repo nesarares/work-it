@@ -1,21 +1,44 @@
-<div class="container">
-  <div class="container-item">
-    <h3>Description</h3>
-    <div class="content">{{ job.description }}</div>
+<div class="ui stackable relaxed grid container">
+  <div class="ten wide column">
+    <div class="container-item">
+      <h3>Description</h3>
+      <p class="description">{{ job.description }}</p>
+    </div>
   </div>
 
-  <div class="container-item">
+  <div class="six wide column">
+    <div class="employer-details">
+      <img
+        [src]="job.employer.photoUrl"
+        alt="Employer avatar"
+        class="ui circular small image"
+      />
+      <p class="employer-name">{{ job.employer.displayName }}</p>
+    </div>
+
+    <div class="ui divider"></div>
+
     <h3>Requirements</h3>
-    <div class="content">{{ job.requirements }}</div>
-  </div>
+    <p>{{ job.requirements }}</p>
 
-  <div class="container-item">
+    <div class="ui divider"></div>
+
     <h3>Period</h3>
-    <div class="content">{{ job.period }}</div>
-  </div>
+    <p>{{ job.period }}</p>
 
-  <div *ngIf="job.salary" class="container-item">
-    <h3>Salary</h3>
-    <div class="content">{{ job.salary }}</div>
+    <div class="ui divider"></div>
+
+    <ng-container *ngIf="job.salary" class="ui segment">
+      <h3>Salary</h3>
+      <p>{{ job.salary }}</p>
+    </ng-container>
+
+    <div class="ui divider"></div>
+
+    <div class="horizontal center aligned">
+      <button class="ui large primary button">
+        APPLY <i class="paper plane icon"></i>
+      </button>
+    </div>
   </div>
 </div>

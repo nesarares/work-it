@@ -10,8 +10,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class JobInfoComponent implements OnInit {
   job: Job;
-  firstTabActive: boolean;
-  secondTabActive: boolean;
 
   constructor(private jobService: JobService, private route: ActivatedRoute) {}
 
@@ -22,23 +20,6 @@ export class JobInfoComponent implements OnInit {
       this.jobService.getJobById(jobId).subscribe(job => {
         this.job = job;
       });
-      this.firstTabActive = true;
-      this.secondTabActive = false;
     });
-  }
-
-  changeTab(tagName: string) {
-    switch (tagName) {
-      case 'first': {
-        this.firstTabActive = true;
-        this.secondTabActive = false;
-        break;
-      }
-      case 'second': {
-        this.secondTabActive = true;
-        this.firstTabActive = false;
-        break;
-      }
-    }
   }
 }
