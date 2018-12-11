@@ -10,8 +10,9 @@ import { JobService } from 'src/app/shared/services/job.service';
 })
 export class JobsListComponent implements OnInit {
   jobList: Job[];
-  throttle = 1000;
-  scrollDistance = 8;
+  throttle = 1500;
+  scrollDistance = 1;
+  jobsPerScroll = 4;
   mappedTags: Map<string, string> = new Map();
 
   constructor(private jobService: JobService, private router: Router) {
@@ -48,7 +49,7 @@ export class JobsListComponent implements OnInit {
 
   private queryParam = {
     orderBy: 'publishedDate',
-    limitTo: this.scrollDistance,
+    limitTo: this.jobsPerScroll,
     startingAt: undefined,
     old: []
   };

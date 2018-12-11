@@ -1,9 +1,7 @@
 @import './variables';
 
-body,
-html {
-  min-width: 100vw;
-  min-height: 100vh;
+body {
+  height: initial;
 }
 
 :focus {
@@ -84,14 +82,14 @@ body *:not(.icon) {
   }
 }
 
-.full {
+.content-wrapper {
   position: relative;
-  min-height: 100vh;
-  width: 100vw;
+  min-height: @height-content;
+  width: 100%;
 }
 
-.ptnav {
-  padding-top: 60px !important;
+.mtnav {
+  margin-top: 60px !important;
   background-color: whitesmoke;
 }
 
