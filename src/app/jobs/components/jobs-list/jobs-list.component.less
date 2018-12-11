@@ -10,8 +10,13 @@
   .card {
     width: 100%;
     transition: transform 1s;
-    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
-    transition: all 0.2s ease;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.13), 0 4px 15px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.25s ease;
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    }
 
     .header {
       margin: 0;
@@ -22,7 +27,7 @@
     }
 
     .image {
-      width: 75%;
+      width: 60%;
     }
 
     .employer-name {
@@ -45,12 +50,6 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-    }
-
-    &:hover {
-      cursor: pointer;
-      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.13),
-        0 4px 15px 0 rgba(0, 0, 0, 0.1);
     }
   }
 }

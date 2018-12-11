@@ -7,6 +7,7 @@ import {
 import { User } from 'firebase';
 import { Router } from '@angular/router';
 import { UserProfile } from '../models/userProfile';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,6 +21,9 @@ export class UserProfileService {
     return this.afs
       .collection<User>('users')
       .doc(userId)
-      .update({ userProfile: userProfile });
+      .update({
+        displayName: `${userProfile.firstName} ${userProfile.lastName}`,
+        userProfile
+      });
   }
 }

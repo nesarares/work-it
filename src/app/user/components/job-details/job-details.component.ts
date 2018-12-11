@@ -27,13 +27,12 @@ export class JobDetailsComponent implements OnInit {
   constructor(private auth: AuthService, private jobService: JobService) {}
 
   ngOnInit() {
-    this.auth.user$.pipe(take(1)).subscribe(user => {
-      this.job.employer = {
-        displayName: user.displayName,
-        photoUrl: user.photoUrl
-      };
-      this.userId = user.uid;
-    });
+    const user = this.auth.user;
+    this.job.employer = {
+      displayName: user.displayName,
+      photoUrl: user.photoUrl
+    };
+    this.userId = user.uid;
   }
 
   addJob() {
