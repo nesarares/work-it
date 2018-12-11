@@ -118,7 +118,7 @@ export class JobService {
    * Function for paggination
    */
   private getQueryForm(queryParam, ref) {
-    let query = ref.orderBy(queryParam.orderBy as string);
+    let query = ref.orderBy(queryParam.orderBy as string, 'desc');
 
     if (!queryParam.startingAt) {
       return query.limit(queryParam.limitTo as number);

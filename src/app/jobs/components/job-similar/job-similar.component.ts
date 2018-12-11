@@ -14,49 +14,34 @@ export class JobSimilarComponent implements OnInit {
 
   similarJobList: Job[] = [];
 
-  constructor(
-    private jobService: JobService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
+  constructor(private jobService: JobService) {}
+
+  ngOnChanges() {
     this.loadData();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnInit() {
     this.loadData();
-  }
-
-  ngOnInit() {}
-
-  handleClick(job: Job) {
-    this.router.navigate(['/jobs', job.id]);
   }
 
   /**
    * Return a list of jobs which have at leas one common tag with the current job
    * @param jobs
    */
-  private getSimilarJobs(jobs: Job[]) {
-    let simJobList: Job[] = [];
+  getSimilarJobs(jobs: Job[]) {
+    const simJobList: Job[] = [];
 
     if (!this.job || !this.job.tags) {
       return;
     }
 
     jobs.forEach(curentJob => {
-      if (!curentJob.tags) {
-        return;
-      }
-
-      if (curentJob.id === this.job.id) {
+      if (!curentJob.tags || curentJob.id === this.job.id) {
         return;
       }
 
       curentJob.tags.forEach(tag => {
-        if (
-          this.job.tags.indexOf(tag) > -1 &&
-          !simJobList.includes(curentJob)
-        ) {
+        if (this.job.tags.includes(tag) && !simJobList.includes(curentJob)) {
           simJobList.push(curentJob);
           return;
         }
@@ -69,8 +54,8 @@ export class JobSimilarComponent implements OnInit {
   /**
    * Used to load job's data from database
    */
-  private loadData() {
-    this.jobService.getJobsByQueryParam().subscribe(jobs => {
+  loadData() {
+    this.jobService.getJobs().subscribe(jobs => {
       this.similarJobList = this.getSimilarJobs(jobs);
     });
   }

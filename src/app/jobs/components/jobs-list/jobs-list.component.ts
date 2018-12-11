@@ -10,7 +10,7 @@ import { JobService } from 'src/app/shared/services/job.service';
 })
 export class JobsListComponent implements OnInit {
   jobList: Job[];
-  throttle = 1500;
+  throttle = 1000;
   scrollDistance = 1;
   jobsPerScroll = 4;
   mappedTags: Map<string, string> = new Map();

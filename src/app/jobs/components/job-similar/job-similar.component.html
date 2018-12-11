@@ -3,7 +3,7 @@
     class="ui middle aligned animated list"
     *ngFor="let job of similarJobList"
   >
-    <div class="item" (click)="handleClick(job)">
+    <div class="item" routerLink="/jobs/{{job.id}}">
       <img class="ui avatar image" [src]="job.employer.photoUrl" />
       <h3>{{ job.title }}</h3>
       <div class="content">
