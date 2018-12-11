@@ -1,10 +1,10 @@
-<div class="ui form center container">
+<div class="ui form center very padded container content-wrapper">
   <h2 class="ui large header centered">
     We are almost ready, &nbsp;just a few more details...
   </h2>
   <!-- Initial usertype selection -->
-  <div *ngIf="userType !== undefined">
-    <button class="ui button float right" (click)="resetUser()">
+  <div *ngIf="userType !== undefined" class="back-button">
+    <button class="ui button" (click)="resetUser()">
       <i class=" arrow left icon"></i> Back
     </button>
   </div>
