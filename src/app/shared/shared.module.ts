@@ -8,6 +8,7 @@ import { SuiModule } from 'ng2-semantic-ui';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { RouterModule } from '@angular/router';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { RouterModule } from '@angular/router';
     AngularFireStorageModule,
     RouterModule
   ],
-  declarations: [],
+  declarations: [MessageComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -29,7 +30,8 @@ import { RouterModule } from '@angular/router';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    RouterModule
+    RouterModule,
+    MessageComponent
   ],
   providers: []
 })

@@ -81,6 +81,6 @@ export class AuthService {
     };
 
     data.photoUrl = user.photoURL ? user.photoURL : urls.defaultPhoto;
-    return userRef.set(data, { merge: true });
+    return userRef.update(data);
   }
 }

@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { Job } from 'src/app/shared/models/job';
 import { take } from 'rxjs/operators';
 import { JobService } from 'src/app/shared/services/job.service';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
   selector: 'app-job-details',
@@ -24,7 +25,11 @@ export class JobDetailsComponent implements OnInit {
 
   userId: string;
 
-  constructor(private auth: AuthService, private jobService: JobService) {}
+  constructor(
+    private auth: AuthService,
+    private jobService: JobService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit() {
     const user = this.auth.user;
@@ -41,5 +46,11 @@ export class JobDetailsComponent implements OnInit {
     this.job.tags = this.tags.split(',').map(tag => tag.trim());
     this.job.publishedDate = new Date();
     this.jobService.addJob(this.job, this.userId);
+
+    this.messageService.showMessage({
+      type: 'success',
+      text: 'The job listing has been added succesfully.',
+      header: 'Success'
+    });
   }
 }
