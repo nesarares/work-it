@@ -22,4 +22,8 @@ export class JobInfoComponent implements OnInit {
       });
     });
   }
+
+  handleApply() {
+    console.log('Apply');
+  }
 }

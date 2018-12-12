@@ -9,6 +9,10 @@
 </header>
 
 <div class="vertical spaced">
-  <app-job-description *ngIf="job" [job]="job"></app-job-description>
+  <app-job-description
+    *ngIf="job"
+    [job]="job"
+    (onApply)="handleApply()"
+  ></app-job-description>
 </div>
 <app-job-similar *ngIf="job" [job]="job"> </app-job-similar>

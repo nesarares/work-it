@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Job } from 'src/app/shared/models/job';
 
 @Component({
@@ -9,6 +9,9 @@ import { Job } from 'src/app/shared/models/job';
 export class JobDescriptionComponent implements OnInit {
   @Input()
   job: Job;
+
+  @Output('onApply')
+  onApply: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
