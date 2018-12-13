@@ -1,0 +1,10 @@
+<sui-message
+  *ngIf="message"
+  class="{{ message.type }} custom-message"
+  [isDismissable]="false"
+  [suiTransition]="transitionController"
+>
+  <i class="close icon"></i>
+  <div class="header">{{ message.header }}</div>
+  <p>{{ message.text }}</p>
+</sui-message>

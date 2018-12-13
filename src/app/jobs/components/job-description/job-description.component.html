@@ -1,0 +1,45 @@
+<div class="ui stackable relaxed grid container">
+  <div class="ten wide column">
+    <div class="container-item">
+      <h3>Description</h3>
+      <div class="ui divider"></div>
+      <div class="description" [innerHtml]="job.description"></div>
+    </div>
+  </div>
+
+  <div class="six wide column">
+    <div class="employer-details">
+      <img
+        [src]="job.employer.photoUrl"
+        alt="Employer avatar"
+        class="ui circular small image"
+      />
+      <p class="employer-name">{{ job.employer.displayName }}</p>
+    </div>
+
+    <div class="ui divider"></div>
+
+    <h3>Requirements</h3>
+    <p>{{ job.requirements }}</p>
+
+    <div class="ui divider"></div>
+
+    <h3>Period</h3>
+    <p>{{ job.period }}</p>
+
+    <div class="ui divider"></div>
+
+    <ng-container *ngIf="job.salary" class="ui segment">
+      <h3>Salary</h3>
+      <p>{{ job.salary }}</p>
+    </ng-container>
+
+    <div class="ui divider"></div>
+
+    <div class="horizontal center aligned" *ngIf="hasApply">
+      <button class="ui large primary button" (click)="onApply.emit()">
+        APPLY <i class="paper plane icon"></i>
+      </button>
+    </div>
+  </div>
+</div>

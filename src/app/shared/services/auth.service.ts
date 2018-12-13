@@ -8,17 +8,19 @@ import {
 } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { urls } from '../constants/urls';
+import { UserType } from '../models/userType';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   user$: Observable<User>;
+  user: User = null;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -28,7 +30,8 @@ export class AuthService {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user =>
         user ? this.afs.doc<User>(`users/${user.uid}`).valueChanges() : of(null)
-      )
+      ),
+      tap(user => (this.user = user))
     );
   }
 
@@ -41,7 +44,6 @@ export class AuthService {
     return this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
-        this.updateUserData(credential.user);
         return credential.user;
       });
   }
@@ -80,7 +82,6 @@ export class AuthService {
     };
 
     data.photoUrl = user.photoURL ? user.photoURL : urls.defaultPhoto;
-
-    return userRef.set(data, { merge: true });
+    return userRef.update(data);
   }
 }

@@ -1,0 +1,18 @@
+<header *ngIf="job">
+  <div class="ui container">
+    <h5 class="ui inverted header">
+      Published date: {{ job.publishedDate.toDate() | date: medium }}
+    </h5>
+    <h1 class="ui inverted header">{{ job.title }}</h1>
+    <h4 class="ui inverted header">{{ job.employer.displayName }}</h4>
+  </div>
+</header>
+
+<div class="vertical spaced">
+  <app-job-description
+    *ngIf="job"
+    [job]="job"
+    (onApply)="handleApply()"
+  ></app-job-description>
+</div>
+<app-job-similar *ngIf="job" [job]="job"> </app-job-similar>

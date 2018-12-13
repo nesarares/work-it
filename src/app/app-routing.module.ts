@@ -19,14 +19,19 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
+    path: 'jobs',
+    loadChildren: './jobs/jobs.module#JobsModule'
+  },
+  {
     path: 'user',
-    loadChildren: './user/user.module#UserModule',
-    canActivate: [AuthGuard]
+    loadChildren: './user/user.module#UserModule'
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

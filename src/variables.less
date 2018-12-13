@@ -2,6 +2,14 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Rubik:300,400,500,700,900');
 
 @card-shadow : 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
 @font-family : 'Lato';
+@font-family-accent : 'Rubik' !important;
+
+@dark-color: #202020;
 @primary-color : #169deb;
 @primary-color-darken : darken(@primary-color, 10%);
+
+@height-footer: 80px;
+@height-top-menu: 60px;
+@height-content: ~'calc(100vh - @{height-top-menu} - @{height-footer})';
