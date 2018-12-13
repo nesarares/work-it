@@ -16,4 +16,13 @@ export class JobService {
       .doc(id)
       .set(job);
   }
+
+  addJobApplication(job: Job, date: Date, uid: string) {
+    const application = { date, uid };
+    job.applications.push(application);
+    this.afs
+      .collection('jobs')
+      .doc(job.id)
+      .set(job);
+  }
 }

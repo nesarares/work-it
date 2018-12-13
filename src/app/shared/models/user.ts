@@ -3,4 +3,5 @@ export interface User {
   email: string;
   displayName?: string;
   photoUrl?: string;
+  applications: { date: Date; jobId: string }[];
 }

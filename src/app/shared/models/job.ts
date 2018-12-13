@@ -7,4 +7,5 @@ export interface Job {
   tags?: string[];
   period: string;
   salary?: string;
+  applications: { date: Date; uid: string }[];
 }

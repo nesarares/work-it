@@ -20,7 +20,8 @@ export class JobDetailsComponent implements OnInit {
     requirements: '',
     tags: [],
     period: '',
-    salary: ''
+    salary: '',
+    applications: []
   };
 
   constructor(private auth: AuthService, private jobService: JobService) {}
