@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Apply for job</h1>
+<div mat-dialog-content>
+  <form class="ui form">
+    <div class="field">
+      <label for="message">Insert a message for the employer below:</label>
+      <textarea id="message" name="message" [(ngModel)]="message"></textarea>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button class="ui red button" (click)="close()">Cancel</button>
+  <button class="ui green button" (click)="apply()" autofocus>Apply</button>
+</div>

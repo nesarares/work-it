@@ -9,7 +9,8 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { firebaseConfig } from 'src/environments/firebaseApi';
 import { SuiModule } from 'ng2-semantic-ui';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,9 +21,12 @@ import { SuiModule } from 'ng2-semantic-ui';
     CoreModule,
     ReactiveFormsModule,
     SuiModule,
+    BrowserAnimationsModule,
     AngularFireModule.initializeApp(firebaseConfig)
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

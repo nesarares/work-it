@@ -20,6 +20,7 @@ export class JobDetailsComponent implements OnInit {
     tags: [],
     period: '',
     salary: '',
+    applications: [],
     publishedDate: null
   };
 

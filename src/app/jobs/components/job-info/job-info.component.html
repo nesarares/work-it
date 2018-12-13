@@ -12,7 +12,9 @@
   <app-job-description
     *ngIf="job"
     [job]="job"
+    [hasApply]="!applyDisabled"
     (onApply)="handleApply()"
+    [message]="applyDisabled ? 'You already applied for this job!' : null"
   ></app-job-description>
 </div>
 <app-job-similar *ngIf="job" [job]="job"> </app-job-similar>
