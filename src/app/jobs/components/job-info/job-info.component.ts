@@ -30,16 +30,19 @@ export class JobInfoComponent implements OnInit {
       const jobId = this.route.snapshot.paramMap.get('id');
       this.jobService.getJobById(jobId).subscribe(job => {
         this.job = job;
-        this.applyDisabled = !job.applications.find(
-          job => job.employeeRef === this.authService.userRef
-        );
+        this.applyDisabled = job.applications
+          ? !!job.applications.find(
+              job => job.employeeRef === this.authService.userRef
+            )
+          : false;
       });
     });
   }
 
   handleApply() {
-    const dialogRef = this.dialog.open(JobApplicationComponent, {
-      width: '300px',
+    this.dialog.open(JobApplicationComponent, {
+      width: '500px',
+      maxWidth: '93%',
       data: this.job
     });
   }

@@ -1,5 +1,8 @@
-<div class="wrapper" *ngIf="(user$ | async) as user">
-  <div class="ui vertical inverted menu main-menu">
+<div class="content-wrapper" *ngIf="(user$ | async) as user">
+  <nav class="ui vertical inverted menu main-menu" [class.closed]="!isMenuOpen">
+    <a class="ui label" (click)="isMenuOpen = !isMenuOpen">
+      <i class="angle big left icon" [class.rotate]="!isMenuOpen"></i>
+    </a>
     <a
       class="item"
       *ngFor="let menuItem of menuItems"
@@ -8,7 +11,7 @@
     >
       <i class="{{ menuItem.icon }} icon"></i> {{ menuItem.text }}
     </a>
-  </div>
+  </nav>
   <section class="content">
     <router-outlet name="dashboard"></router-outlet>
   </section>
