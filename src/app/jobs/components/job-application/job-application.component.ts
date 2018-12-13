@@ -33,6 +33,7 @@ export class JobApplicationComponent implements OnInit {
     const user: User = this.authService.user;
     const date: Date = new Date();
     this.jobService.addJobApplication(this.data, user, date, this.message);
+    // TODO: add success message
     this.close();
   }
 

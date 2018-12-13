@@ -23,6 +23,7 @@ export class JobService {
   }
 
   addJob(job: Job, employerId: string) {
+    // TODO: make method return promise
     const id = this.afs.createId();
     job.id = id;
     job.employerRef = this.afs.collection('users').doc(employerId).ref;
@@ -137,6 +138,8 @@ export class JobService {
   }
 
   addJobApplication(job: Job, user: User, date: Date, message: string) {
+    // TODO: make method return promise
+
     const employeeRef = this.afs.collection('users').doc(user.uid).ref;
     const displayName = this.authService.user.displayName;
     const photoUrl = this.authService.user.photoUrl;

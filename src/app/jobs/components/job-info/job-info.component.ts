@@ -32,7 +32,8 @@ export class JobInfoComponent implements OnInit {
         this.job = job;
         this.applyDisabled = job.applications
           ? !!job.applications.find(
-              job => job.employeeRef === this.authService.userRef
+              application =>
+                application.employeeRef === this.authService.userRef
             )
           : false;
       });

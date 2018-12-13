@@ -63,6 +63,7 @@ export class AuthService {
   }
 
   get userRef() {
+    // TODO: replace this.user.uid to user$ (this.user can be null)
     return this.afs.collection('users').doc(this.user.uid).ref;
   }
 
