@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Job } from 'src/app/shared/models/job';
 import { JobService } from 'src/app/shared/services/job.service';
+import { stripHtmlToText } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'app-jobs-list',
@@ -45,6 +46,10 @@ export class JobsListComponent implements OnInit {
 
   getColor(tag: string) {
     return this.mappedTags.get(tag);
+  }
+
+  convertToText(html: string) {
+    return stripHtmlToText(html);
   }
 
   private queryParam = {

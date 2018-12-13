@@ -13,6 +13,9 @@ export class JobDescriptionComponent implements OnInit {
   @Output('onApply')
   onApply: EventEmitter<any> = new EventEmitter();
 
+  @Input('hasApply')
+  hasApply: boolean = true;
+
   constructor() {}
 
   ngOnInit() {}

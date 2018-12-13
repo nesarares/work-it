@@ -26,12 +26,11 @@
               <p class="meta">
                 {{ job.publishedDate.toDate() | date: medium }}
               </p>
-              <p class="description">
-                {{
-                  job.description.length > 150
-                    ? (job.description | slice: 0:150) + '...'
-                    : job.description
-                }}
+              <p
+                class="description"
+                *ngIf="convertToText(job.description); let desc"
+              >
+                {{ desc.length > 250 ? (desc | slice: 0:250) + '...' : desc }}
               </p>
             </div>
           </div>

@@ -2,7 +2,8 @@
   <div class="ten wide column">
     <div class="container-item">
       <h3>Description</h3>
-      <p class="description">{{ job.description }}</p>
+      <div class="ui divider"></div>
+      <div class="description" [innerHtml]="job.description"></div>
     </div>
   </div>
 
@@ -35,7 +36,7 @@
 
     <div class="ui divider"></div>
 
-    <div class="horizontal center aligned">
+    <div class="horizontal center aligned" *ngIf="hasApply">
       <button class="ui large primary button" (click)="onApply.emit()">
         APPLY <i class="paper plane icon"></i>
       </button>

@@ -12,4 +12,4 @@
 
 @height-footer: 80px;
 @height-top-menu: 60px;
-@height-content: ~'calc(100vh - 60px - 80px)';
+@height-content: ~'calc(100vh - @{height-top-menu} - @{height-footer})';
