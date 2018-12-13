@@ -8,6 +8,9 @@ import { map } from 'rxjs/operators';
 import { tagColoros } from '../constants/colors';
 import { Observable } from 'rxjs';
 import { ThrowStmt } from '@angular/compiler';
+import { AuthService } from './auth.service';
+import { Application } from '../models/application';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +18,7 @@ import { ThrowStmt } from '@angular/compiler';
 export class JobService {
   private jobsCollection: AngularFirestoreCollection<Job>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private authService: AuthService) {
     this.jobsCollection = this.afs.collection<Job>('jobs');
   }
 
@@ -133,12 +136,41 @@ export class JobService {
     return (await this.jobsCollection.get().toPromise()).docs.length;
   }
 
-  addJobApplication(job: Job, date: Date, uid: string) {
-    const application = { date, uid };
-    job.applications.push(application);
+  addJobApplication(job: Job, user: User, date: Date, message: string) {
+    const employeeRef = this.afs.collection('users').doc(user.uid).ref;
+    const displayName = this.authService.user.displayName;
+    const photoUrl = this.authService.user.photoUrl;
+
+    const jobRef = this.afs.collection('jobs').doc(job.id).ref;
+    const employerName = job.employer.displayName;
+    const employerPhotoUrl = job.employer.photoUrl;
+    const title = job.title;
+
+    const applicationJob: Application = {
+      date,
+      employeeRef,
+      employee: { displayName, photoUrl },
+      message
+    };
+    const applicationUser: Application = {
+      date,
+      jobRef,
+      job: { title, employerName, employerPhotoUrl },
+      message
+    };
+
+    if (!job.applications) job.applications = [];
+    if (!user.applications) user.applications = [];
+    job.applications.push(applicationJob);
+    user.applications.push(applicationUser);
+
     this.afs
       .collection('jobs')
       .doc(job.id)
-      .set(job);
+      .update(job);
+    this.afs
+      .collection('users')
+      .doc(user.uid)
+      .update(user);
   }
 }

@@ -1,8 +1,5 @@
-<div class="content-wrapper" *ngIf="(user$ | async) as user">
-  <nav class="ui vertical inverted menu main-menu" [class.closed]="!isMenuOpen">
-    <a class="ui label" (click)="isMenuOpen = !isMenuOpen">
-      <i class="angle big left icon" [class.rotate]="!isMenuOpen"></i>
-    </a>
+<div class="wrapper" *ngIf="(user$ | async) as user">
+  <div class="ui vertical inverted menu main-menu">
     <a
       class="item"
       *ngFor="let menuItem of menuItems"
@@ -11,22 +8,8 @@
     >
       <i class="{{ menuItem.icon }} icon"></i> {{ menuItem.text }}
     </a>
-  </nav>
+  </div>
   <section class="content">
     <router-outlet name="dashboard"></router-outlet>
-    <sui-modal [isClosable]="true" (dismissed)="alert($event)" #modal>
-      <div class="header">Example</div>
-      <div class="content"><p>Modal content</p></div>
-      <div class="actions">
-        <button class="ui red button" (click)="modal.deny()">Cancel</button>
-        <button
-          class="ui green button"
-          (click)="modal.approve('done')"
-          autofocus
-        >
-          OK
-        </button>
-      </div>
-    </sui-modal>
   </section>
 </div>

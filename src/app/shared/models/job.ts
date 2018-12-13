@@ -1,5 +1,6 @@
 import { DocumentReference } from '@angular/fire/firestore';
 import { User } from './user';
+import { Application } from './application';
 
 export interface Job {
   id: string;
@@ -12,5 +13,5 @@ export interface Job {
   period: string;
   salary?: string;
   publishedDate: Date;
-  applications: { date: Date; uid: string }[];
+  applications: Application[];
 }

@@ -62,6 +62,10 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  get userRef() {
+    return this.afs.collection('users').doc(this.user.uid).ref;
+  }
+
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider).then(credential => {
       this.updateUserData(credential.user);

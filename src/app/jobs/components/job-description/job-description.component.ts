@@ -16,6 +16,9 @@ export class JobDescriptionComponent implements OnInit {
   @Input('hasApply')
   hasApply: boolean = true;
 
+  @Input('message')
+  message: string;
+
   constructor() {}
 
   ngOnInit() {}

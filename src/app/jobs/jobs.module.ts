@@ -7,19 +7,27 @@ import { JobDescriptionComponent } from './components/job-description/job-descri
 import { JobSimilarComponent } from './components/job-similar/job-similar.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { JobsRoutingModule } from './jobs-routing.module';
+import { JobApplicationComponent } from './components/job-application/job-application.component';
+import {
+  MatDialogModule,
+  MAT_DIALOG_DEFAULT_OPTIONS
+} from '@angular/material/dialog';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     InfiniteScrollModule,
-    JobsRoutingModule
+    JobsRoutingModule,
+    MatDialogModule
   ],
   declarations: [
     JobsListComponent,
     JobInfoComponent,
     JobDescriptionComponent,
-    JobSimilarComponent
-  ]
+    JobSimilarComponent,
+    JobApplicationComponent
+  ],
+  entryComponents: [JobApplicationComponent]
 })
 export class JobsModule {}
