@@ -82,11 +82,10 @@ export class AuthService {
     const data: User = {
       uid: user.uid,
       email: user.email,
-      displayName: user.displayName ? user.displayName : user.email,
-      applications: []
+      displayName: user.displayName ? user.displayName : user.email
     };
 
     data.photoUrl = user.photoURL ? user.photoURL : urls.defaultPhoto;
-    return userRef.update(data);
+    return userRef.set(data, { merge: true });
   }
 }
