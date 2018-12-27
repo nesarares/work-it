@@ -16,6 +16,7 @@ export class JobInfoComponent implements OnInit {
   job: Job;
   showModal: boolean = false;
   applyDisabled: boolean = false;
+  isUserTitularOfTheJob: boolean = false;
 
   constructor(
     private jobService: JobService,
@@ -36,6 +37,8 @@ export class JobInfoComponent implements OnInit {
                 application.employeeRef === this.authService.userRef
             )
           : false;
+        this.isUserTitularOfTheJob =
+          this.job.employerRef.id === this.authService.userRef.id;
       });
     });
   }

@@ -12,6 +12,7 @@ import {
   MatDialogModule,
   MAT_DIALOG_DEFAULT_OPTIONS
 } from '@angular/material/dialog';
+import { JobApplicationsListComponent } from './components/job-applications-list/job-applications-list.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {
     JobInfoComponent,
     JobDescriptionComponent,
     JobSimilarComponent,
-    JobApplicationComponent
+    JobApplicationComponent,
+    JobApplicationsListComponent
   ],
   entryComponents: [JobApplicationComponent]
 })
