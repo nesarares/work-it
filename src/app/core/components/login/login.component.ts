@@ -16,7 +16,10 @@ export class LoginComponent implements OnInit {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.auth.user !== undefined)
+      this.router.navigateByUrl(`/user/${this.auth.user.uid}`);
+  }
 
   async googleLogin() {
     try {
