@@ -30,9 +30,6 @@ export class JobApplicationsListComponent implements OnInit {
    */
   loadData() {
     // TODO: add router link to profile of the applicant?
-    let jobId = this.job.id;
-    this.jobService.getJobById(jobId).subscribe(job => {
-      this.applicationList = job.applications;
-    });
+    this.applicationList = this.job.applications;
   }
 }
