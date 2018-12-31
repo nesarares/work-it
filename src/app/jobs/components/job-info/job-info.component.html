@@ -17,4 +17,8 @@
     [message]="applyDisabled ? 'You already applied for this job!' : null"
   ></app-job-description>
 </div>
+<app-job-applications-list
+  *ngIf="isUserTitularOfTheJob"
+  [job]="job"
+></app-job-applications-list>
 <app-job-similar *ngIf="job" [job]="job"> </app-job-similar>
