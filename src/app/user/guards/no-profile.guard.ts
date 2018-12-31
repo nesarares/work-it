@@ -22,6 +22,7 @@ export class NoProfileGuard implements CanActivate {
     return this.auth.user$.pipe(
       take(1),
       tap(user => {
+        console.log(user);
         if (!user.userProfile) {
           console.log('access denied - user does not have a profile');
           this.router.navigate([`/user/${this.auth.user.uid}/create-profile`]);

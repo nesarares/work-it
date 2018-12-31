@@ -35,14 +35,14 @@ export class AuthService {
     );
   }
 
-  googleLogin() {
+  async googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    return this.oAuthLogin(provider);
+    return await this.oAuthLogin(provider);
   }
 
-  facebookLogin() {
+  async facebookLogin() {
     const provider = new firebase.auth.FacebookAuthProvider();
-    return this.oAuthLogin(provider);
+    return await this.oAuthLogin(provider);
   }
 
   emailLogin(email: string, password: string) {
@@ -72,12 +72,11 @@ export class AuthService {
     return this.afs.collection('users').doc(this.user.uid).ref;
   }
 
-  private oAuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider).then(credential => {
-      console.log({ credential });
-      this.updateUserData(credential.user);
-      return credential.user;
-    });
+  private async oAuthLogin(provider) {
+    const credential = await this.afAuth.auth.signInWithPopup(provider);
+    console.log({ credential });
+    await this.updateUserData(credential.user);
+    return credential.user;
   }
 
   private updateUserData(user) {
