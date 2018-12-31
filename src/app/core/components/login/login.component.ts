@@ -27,6 +27,15 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  async facebookLogin() {
+    try {
+      const user = await this.auth.facebookLogin();
+      this.router.navigateByUrl(`/user/${user.uid}`);
+    } catch (error) {
+      this.loginError = error;
+    }
+  }
+
   async emailLogin() {
     try {
       const user = await this.auth.emailLogin(
