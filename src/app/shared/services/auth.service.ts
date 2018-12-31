@@ -74,7 +74,6 @@ export class AuthService {
 
   private async oAuthLogin(provider) {
     const credential = await this.afAuth.auth.signInWithPopup(provider);
-    console.log({ credential });
     await this.updateUserData(credential.user);
     return credential.user;
   }

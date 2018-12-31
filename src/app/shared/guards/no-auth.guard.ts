@@ -6,13 +6,13 @@ import {
   Router
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { take, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NoProfileGuard implements CanActivate {
+export class NoAuthGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) {}
 
   canActivate(
@@ -21,13 +21,13 @@ export class NoProfileGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.auth.user$.pipe(
       take(1),
-      tap(user => {
-        if (!user.userProfile) {
-          console.log('access denied - user does not have a profile');
-          this.router.navigate([`/user/${this.auth.user.uid}/create-profile`]);
+      map(user => !!user),
+      tap(authenticated => {
+        if (authenticated) {
+          console.log('access denied - user is already logged');
+          this.router.navigate(['/']);
         }
-      }),
-      map(user => !!user.userProfile)
+      })
     );
   }
 }
