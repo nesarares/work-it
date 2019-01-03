@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -14,29 +15,40 @@ export class LoginComponent implements OnInit {
     password: ''
   };
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit() {}
 
   async googleLogin() {
+    this.spinner.show();
     try {
       const user = await this.auth.googleLogin();
       this.router.navigateByUrl(`/user/${user.uid}`);
     } catch (error) {
       this.loginError = error;
+    } finally {
+      this.spinner.hide();
     }
   }
 
   async facebookLogin() {
+    this.spinner.show();
     try {
       const user = await this.auth.facebookLogin();
       this.router.navigateByUrl(`/user/${user.uid}`);
     } catch (error) {
       this.loginError = error;
+    } finally {
+      this.spinner.hide();
     }
   }
 
   async emailLogin() {
+    this.spinner.show();
     try {
       const user = await this.auth.emailLogin(
         this.user.email,
@@ -53,6 +65,8 @@ export class LoginComponent implements OnInit {
         default:
           this.loginError = error.message;
       }
+    } finally {
+      this.spinner.hide();
     }
   }
 }

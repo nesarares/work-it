@@ -31,7 +31,9 @@ export class AuthService {
       switchMap(user =>
         user ? this.afs.doc<User>(`users/${user.uid}`).valueChanges() : of(null)
       ),
-      tap(user => (this.user = user))
+      tap(user => {
+        this.user = user;
+      })
     );
   }
 
@@ -64,13 +66,13 @@ export class AuthService {
 
   signOut() {
     this.afAuth.auth.signOut();
-    // this.router.navigate(['/login']);
+    this.router.navigate(['/login']);
   }
 
-  async userRef() {
+  userRef() {
     // TODO: replace this.user.uid to user$ (this.user can be null)
-    const uid = (await this.user$.toPromise()).uid;
-    return this.afs.collection('users').doc(this.user.uid).ref;
+    const uid = this.user.uid;
+    return this.afs.collection('users').doc(uid).ref;
   }
 
   private async oAuthLogin(provider) {

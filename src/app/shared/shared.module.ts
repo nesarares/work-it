@@ -4,10 +4,11 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SuiModule } from 'ng2-semantic-ui';
-import { AuthService } from './services/auth.service';
-import { AuthGuard } from './guards/auth.guard';
 import { RouterModule } from '@angular/router';
+import { SuiModule } from 'ng2-semantic-ui';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
+import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
@@ -19,9 +20,10 @@ import { MessageComponent } from './components/message/message.component';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+    NgxSpinnerModule,
     RouterModule
   ],
-  declarations: [MessageComponent],
+  declarations: [MessageComponent, LoadingIndicatorComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -31,7 +33,8 @@ import { MessageComponent } from './components/message/message.component';
     AngularFirestoreModule,
     AngularFireStorageModule,
     RouterModule,
-    MessageComponent
+    MessageComponent,
+    LoadingIndicatorComponent
   ],
   providers: []
 })
