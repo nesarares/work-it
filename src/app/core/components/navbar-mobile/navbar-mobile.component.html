@@ -1,0 +1,26 @@
+<div class="full">
+  <i class="close-icon material-icons" (click)="this.onClose.emit(true)">
+    close
+  </i>
+  <a *ngFor="let menuItem of menuItemsTop" (click)="navigate(menuItem.link)">
+    {{ menuItem.text }}
+  </a>
+
+  <hr />
+
+  <ng-container *ngIf="(user$ | async) as user; else login">
+    <img src="{{ user.photoUrl }}" alt="User photo" class="ui avatar image" />
+    <a
+      *ngFor="let menuItem of menuItemsBottom"
+      (click)="navigate(menuItem.link(user))"
+    >
+      {{ menuItem.text }}
+    </a>
+    <a (click)="signOut()" class="top spaced more"> Sign out </a>
+  </ng-container>
+
+  <ng-template #login>
+    <a (click)="navigate('/login')">Login</a>
+    <a (click)="navigate('/register')">Register</a>
+  </ng-template>
+</div>

@@ -64,11 +64,12 @@ export class AuthService {
 
   signOut() {
     this.afAuth.auth.signOut();
-    this.router.navigate(['/login']);
+    // this.router.navigate(['/login']);
   }
 
-  get userRef() {
+  async userRef() {
     // TODO: replace this.user.uid to user$ (this.user can be null)
+    const uid = (await this.user$.toPromise()).uid;
     return this.afs.collection('users').doc(this.user.uid).ref;
   }
 
@@ -90,6 +91,10 @@ export class AuthService {
     };
 
     data.photoUrl = user.photoURL ? user.photoURL : urls.defaultPhoto;
+
+    if (data.photoUrl.startsWith('https://graph.facebook.com')) {
+      data.photoUrl = data.photoUrl.concat('?height=130');
+    }
     return userRef.set(data, { merge: true });
   }
 }

@@ -3,13 +3,18 @@
     <a class="ui label" (click)="isMenuOpen = !isMenuOpen">
       <i class="angle big left icon" [class.rotate]="!isMenuOpen"></i>
     </a>
+
+    <img src="{{ user.photoUrl }}" alt="User avatar" class="ui avatar image" />
+    <p class="username">{{ user.displayName }}</p>
+
     <a
       class="item"
       *ngFor="let menuItem of menuItems"
       [routerLink]="menuItem.link(user)"
       routerLinkActive="active"
     >
-      <i class="{{ menuItem.icon }} icon"></i> {{ menuItem.text }}
+      <i class="material-icons">{{ menuItem.icon }}</i>
+      <span>{{ menuItem.text }}</span>
     </a>
   </nav>
   <section class="content">

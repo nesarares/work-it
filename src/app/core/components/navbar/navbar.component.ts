@@ -10,6 +10,27 @@ import { User } from 'src/app/shared/models/user';
 })
 export class NavbarComponent implements OnInit {
   user$: Observable<User>;
+  mobileMenuActive: boolean = false;
+  menuItems = [
+    {
+      icon: 'home',
+      text: 'Home',
+      link: '/'
+    },
+    {
+      icon: 'bullhorn',
+      text: 'Jobs',
+      link: '/jobs'
+    }
+  ];
+  menuItemsUser = [
+    {
+      icon: 'dashboard',
+      materialIcon: true,
+      text: 'Dashboard',
+      link: user => `/user/${user.uid}`
+    }
+  ];
 
   constructor(private auth: AuthService) {}
 
@@ -19,5 +40,13 @@ export class NavbarComponent implements OnInit {
 
   signOut() {
     this.auth.signOut();
+  }
+
+  openMobileMenu() {
+    this.mobileMenuActive = true;
+  }
+
+  closeMobileMenu() {
+    this.mobileMenuActive = false;
   }
 }

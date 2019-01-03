@@ -29,16 +29,17 @@ export class JobInfoComponent implements OnInit {
     this.route.paramMap.subscribe(() => {
       // get job's id
       const jobId = this.route.snapshot.paramMap.get('id');
-      this.jobService.getJobById(jobId).subscribe(job => {
+      this.jobService.getJobById(jobId).subscribe(async job => {
         this.job = job;
+        const userRef = await this.authService.userRef();
+
         this.applyDisabled = job.applications
           ? !!job.applications.find(
-              application =>
-                application.employeeRef === this.authService.userRef
+              application => application.employeeRef === userRef
             )
           : false;
         this.isUserTitularOfTheJob =
-          this.job.employerRef.id === this.authService.userRef.id;
+          this.job.employerRef.id === this.authService.user.uid;
       });
     });
   }

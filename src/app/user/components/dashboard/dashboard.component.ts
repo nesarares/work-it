@@ -18,12 +18,12 @@ export class DashboardComponent implements OnInit {
   user$: Observable<User>;
   menuItems = [
     {
-      icon: 'chart bar outline',
+      icon: 'dashboard',
       text: 'Dashboard',
       link: user => [`/user/${user.uid}`, { outlets: { dashboard: ['home'] } }]
     },
     {
-      icon: 'briefcase',
+      icon: 'work',
       text: 'Add job',
       link: user => [`/user/${user.uid}`, { outlets: { dashboard: ['job'] } }]
     }

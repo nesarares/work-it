@@ -21,9 +21,9 @@ export class NoAuthGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.auth.user$.pipe(
       take(1),
-      map(user => !!user),
-      tap(authenticated => {
-        if (authenticated) {
+      map(user => !user),
+      tap(notAuthenticated => {
+        if (!notAuthenticated) {
           console.log('access denied - user is already logged');
           this.router.navigate(['/']);
         }

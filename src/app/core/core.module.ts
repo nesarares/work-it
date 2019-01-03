@@ -8,6 +8,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { FooterComponent } from './components/footer/footer.component';
 import { ParticlesModule } from 'angular-particle';
+import { NavbarMobileComponent } from './components/navbar-mobile/navbar-mobile.component';
 
 @NgModule({
   imports: [CommonModule, SharedModule, PasswordStrengthMeterModule, ParticlesModule],
@@ -16,7 +17,8 @@ import { ParticlesModule } from 'angular-particle';
     LoginComponent,
     NavbarComponent,
     RegisterComponent,
-    FooterComponent
+    FooterComponent,
+    NavbarMobileComponent
   ],
   exports: [HomeComponent, LoginComponent, NavbarComponent, FooterComponent]
 })

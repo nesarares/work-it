@@ -14,6 +14,7 @@
     margin-bottom: 0;
     position: relative;
     transition: all @transition-duration ease;
+    display: flex;
 
     background-image: radial-gradient(
       darken(@primary-color, 25%),
@@ -44,6 +45,22 @@
       }
     }
 
+    .avatar {
+      @image-size: 120px;
+      width: @image-size;
+      height: @image-size;
+      align-self: center;
+      margin: 3em 0 2em;
+    }
+
+    .username {
+      text-align: center;
+      font-family: @font-family-accent;
+      color: white;
+      font-size: 1.3em;
+      margin-bottom: 3em;
+    }
+
     .item {
       display: flex;
       align-items: center;
@@ -55,10 +72,12 @@
       border-right-color: @primary-color;
       border-right-style: solid;
 
-      .icon {
-        float: none;
+      .material-icons {
         margin-right: 1em;
-        font-size: 1.4em;
+      }
+
+      span {
+        padding-top: 3px;
       }
     }
 

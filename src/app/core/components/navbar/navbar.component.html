@@ -1,37 +1,64 @@
 <div class="ui top attached menu wrapper">
   <div class="ui container">
-    <div class="left menu">
-      <a class="ui item" routerLink="/">
-        <i class="home icon right spaced"></i> Home
-      </a>
-      <a class="ui item" routerLink="/jobs">
-        <i class="bullhorn icon right spaced"></i> Jobs
-      </a>
+    <div class="left menu vertical center aligned">
+      <img
+        src="../../../../assets/logo.svg"
+        alt=""
+        class="right spaced logo"
+        routerLink="/"
+      />
     </div>
-    <div class="right menu">
+    <div class="right menu vertical center aligned desktop-menu">
+      <a
+        *ngFor="let menuItem of menuItems"
+        routerLink="{{ menuItem.link }}"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="{{ menuItem.icon }} icon right spaced"></i>
+        {{ menuItem.text }}
+      </a>
       <div
         class="ui pointing dropdown avt vertical center aligned"
         suiDropdown
-        *ngIf="(user$ | async) as user; else: login"
+        *ngIf="(user$ | async) as user; else login"
       >
-        <img class="ui right spaced avatar image" src="{{ user.photoUrl }}" />
-        <span>{{ user.displayName }}</span> <i class="dropdown icon"></i>
+        <img class="ui avatar image" src="{{ user.photoUrl }}" />
         <div class="menu menu-user" suiDropdownMenu>
-          <div class="item" routerLink="/user/{{ user.uid }}">
-            <i class="chart bar outline icon"></i> <span>Dashboard</span>
-          </div>
+          <a
+            *ngFor="let menuItem of menuItemsUser"
+            [routerLink]="menuItem.link(user)"
+          >
+            <i class="material-icons" *ngIf="menuItem.materialIcon">{{
+              menuItem.icon
+            }}</i>
+            <i
+              class="{{ menuItem.icon }} icon"
+              *ngIf="!menuItem.materialIcon"
+            ></i>
+            <span>{{ menuItem.text }}</span>
+          </a>
           <div class="ui divider"></div>
-          <div class="item" (click)="signOut()">
+          <a (click)="signOut()">
             <i class="sign-out icon"></i> <span>Sign out</span>
-          </div>
+          </a>
         </div>
       </div>
 
       <ng-template #login>
-        <a class="ui item" routerLink="/login">
+        <a routerLink="/login">
           <i class="sign-in icon right spaced"></i> Login
         </a>
       </ng-template>
     </div>
+    <div class="right menu vertical center aligned mobile-menu">
+      <i class="bars icon" (click)="openMobileMenu()"></i>
+    </div>
   </div>
 </div>
+<app-navbar-mobile
+  [menuItemsTop]="menuItems"
+  [menuItemsBottom]="menuItemsUser"
+  *ngIf="mobileMenuActive"
+  (onClose)="closeMobileMenu()"
+></app-navbar-mobile>

@@ -1,0 +1,60 @@
+@import '../../../../variables';
+
+@margin-bottom-items: 40px;
+
+.full {
+  width: 100% !important;
+  height: 100vh !important;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+
+  .avatar {
+    @image-size: 100px;
+    margin-bottom: @margin-bottom-items;
+    width: @image-size;
+    height: @image-size;
+  }
+
+  a {
+    font-size: 2.3em;
+    margin-bottom: @margin-bottom-items;
+    color: white;
+    font-family: @font-family-accent;
+    cursor: pointer;
+    transition: 0.2s all ease;
+
+    &:hover {
+      color: @primary-color;
+    }
+  }
+
+  hr {
+    width: 35%;
+    border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    margin-bottom: @margin-bottom-items;
+  }
+
+  .close-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 1.1em;
+    right: 1.1em;
+    font-size: 3em;
+    transition: 0.2s all ease;
+
+    &:hover {
+      color: @primary-color;
+    }
+  }
+}
