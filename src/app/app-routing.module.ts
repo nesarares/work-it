@@ -5,11 +5,16 @@ import { HomeComponent } from './core/components/home/home.component';
 import { RegisterComponent } from './core/components/register/register.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { NoAuthGuard } from './shared/guards/no-auth.guard';
+import { PrivacyPolicyComponent } from './core/components/privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent
   },
   {
     path: 'login',

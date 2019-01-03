@@ -3,13 +3,21 @@
 footer {
   background-color: @dark-color;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: @height-footer;
 
-  p {
+  p,
+  a {
     color: white;
     text-align: center;
     font-family: @font-family-accent;
+  }
+
+  a {
+    &:hover {
+      color: @primary-color;
+    }
   }
 }

@@ -9,6 +9,7 @@ import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { FooterComponent } from './components/footer/footer.component';
 import { ParticlesModule } from 'angular-particle';
 import { NavbarMobileComponent } from './components/navbar-mobile/navbar-mobile.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 
 @NgModule({
   imports: [CommonModule, SharedModule, PasswordStrengthMeterModule, ParticlesModule],
@@ -18,8 +19,9 @@ import { NavbarMobileComponent } from './components/navbar-mobile/navbar-mobile.
     NavbarComponent,
     RegisterComponent,
     FooterComponent,
-    NavbarMobileComponent
+    NavbarMobileComponent,
+    PrivacyPolicyComponent
   ],
-  exports: [HomeComponent, LoginComponent, NavbarComponent, FooterComponent]
+  exports: [HomeComponent, LoginComponent, NavbarComponent, FooterComponent, PrivacyPolicyComponent]
 })
 export class CoreModule {}
