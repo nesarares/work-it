@@ -1,4 +1,4 @@
-import { UserType } from "./userType";
+import { UserType } from './userType';
 
 export interface UserProfile {
   userType?: UserType;
@@ -7,6 +7,7 @@ export interface UserProfile {
   companyName?: string;
   birthDate: Date;
   interests?: string;
+  tags?: string[];
   workExperience?: string;
   educationalExperience?: string;
 }

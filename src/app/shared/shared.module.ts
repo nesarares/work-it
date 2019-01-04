@@ -10,6 +10,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 import { MessageComponent } from './components/message/message.component';
+import { BadgeGroupComponent } from './components/badge-group/badge-group.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,11 @@ import { MessageComponent } from './components/message/message.component';
     NgxSpinnerModule,
     RouterModule
   ],
-  declarations: [MessageComponent, LoadingIndicatorComponent],
+  declarations: [
+    MessageComponent,
+    LoadingIndicatorComponent,
+    BadgeGroupComponent
+  ],
   exports: [
     CommonModule,
     FormsModule,
@@ -34,7 +39,8 @@ import { MessageComponent } from './components/message/message.component';
     AngularFireStorageModule,
     RouterModule,
     MessageComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    BadgeGroupComponent
   ],
   providers: []
 })
