@@ -95,7 +95,7 @@ export class AuthService {
     data.photoUrl = user.photoURL ? user.photoURL : urls.defaultPhoto;
 
     if (data.photoUrl.startsWith('https://graph.facebook.com')) {
-      data.photoUrl = data.photoUrl.concat('?height=130');
+      data.photoUrl = data.photoUrl.concat('?height=250');
     }
     return userRef.set(data, { merge: true });
   }

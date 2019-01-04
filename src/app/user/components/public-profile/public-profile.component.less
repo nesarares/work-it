@@ -1,0 +1,89 @@
+@import '../../../../variables';
+
+.my-grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  // align-items: center;
+
+  p {
+    line-height: 1.8;
+  }
+
+  .employerDiv {
+    max-width: 600px;
+
+    .header {
+      text-align: center;
+      margin-bottom: 1em;
+    }
+
+    p {
+      font-size: 1.2em;
+      text-align: justify;
+    }
+  }
+
+  > .divider {
+    padding-left: 3em;
+  }
+
+  .column:nth-child(1) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .second.column {
+    flex-grow: 1;
+    padding: 2em 2em 2em 3em;
+    border-left: 1px solid @light-border;
+  }
+
+  .header {
+    font-family: @font-family-accent;
+    font-weight: 500;
+  }
+
+  .header.spaced {
+    margin-top: 2em;
+  }
+
+  p {
+    font-size: 1.1em;
+  }
+
+  .avatar {
+    @img-size: 200px;
+    width: @img-size;
+    height: @img-size;
+    max-width: initial;
+  }
+
+  .username {
+    font-family: @font-family-accent;
+    font-weight: 500;
+    margin-top: 1.3em;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: @largestTabletScreen) {
+  .my-grid {
+    flex-direction: column;
+    justify-content: center;
+
+    > .divider {
+      padding-top: 3em;
+      padding-left: 0;
+    }
+
+    .second.column {
+      flex-grow: 1;
+      padding: 3em 0 0 0;
+      border-top: 1px solid @light-border;
+      border-left: 0;
+    }
+  }
+}

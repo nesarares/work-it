@@ -51,6 +51,13 @@
       height: @image-size;
       align-self: center;
       margin: 3em 0 2em;
+      cursor: pointer;
+      border: 2px solid @light-color;
+      transition: 0.2s all ease;
+
+      &:hover {
+        border: 5px solid @primary-color;
+      }
     }
 
     .username {

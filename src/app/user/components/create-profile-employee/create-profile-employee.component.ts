@@ -32,7 +32,7 @@ export class CreateProfileEmployeeComponent implements OnInit {
     this.isFormSubmitted = true;
     if (this.userProfileForm.status === 'VALID') {
       userProfile = {
-        userType: UserType.Employer,
+        userType: UserType.Employee,
         firstName: this.userProfileForm.controls.firstName.value,
         lastName: this.userProfileForm.controls.lastName.value,
         birthDate: this.userProfileForm.controls.birthDate.value,

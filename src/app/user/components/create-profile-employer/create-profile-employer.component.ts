@@ -28,11 +28,12 @@ export class CreateProfileEmployerComponent implements OnInit {
     this.isFormSubmitted = true;
     if (this.userProfileForm.status === 'VALID') {
       userProfile = {
-        userType: UserType.Employee,
+        userType: UserType.Employer,
         firstName: this.userProfileForm.controls.firstName.value,
         lastName: this.userProfileForm.controls.lastName.value,
         birthDate: this.userProfileForm.controls.birthDate.value,
-        companyName: this.userProfileForm.controls.companyName.value
+        companyName: this.userProfileForm.controls.companyName.value,
+        aboutCompany: this.userProfileForm.controls.aboutCompany.value
       };
       this.createProfileService
         .updateUserProfile(this.userId, userProfile)
@@ -54,6 +55,7 @@ export class CreateProfileEmployerComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       companyName: ['', [Validators.required]],
+      aboutCompany: ['', [Validators.required]],
       birthDate: ['', [Validators.required]]
     });
   }

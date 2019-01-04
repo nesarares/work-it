@@ -10,6 +10,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { JobDetailsComponent } from './components/job-details/job-details.component';
 import { UserHomeComponent } from './components/user-home/user-home.component';
 import { UserRoutingModule } from './user-routing.module';
+import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { UserRoutingModule } from './user-routing.module';
     CreateProfileComponent,
     JobDetailsComponent,
     CreateProfileEmployerComponent,
-    CreateProfileEmployeeComponent
+    CreateProfileEmployeeComponent,
+    PublicProfileComponent
   ]
 })
 export class UserModule {}

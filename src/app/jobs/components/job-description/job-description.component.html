@@ -14,7 +14,11 @@
         alt="Employer avatar"
         class="ui circular small image"
       />
-      <p class="employer-name">{{ job.employer.displayName }}</p>
+      <a
+        class="employer-name"
+        routerLink="/user/{{ job.employerRef.id }}/public"
+        >{{ job.employer.displayName }}</a
+      >
     </div>
 
     <div class="ui divider"></div>

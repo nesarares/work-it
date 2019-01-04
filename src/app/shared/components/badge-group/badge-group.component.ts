@@ -8,6 +8,8 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 export class BadgeGroupComponent implements OnInit, OnChanges {
   @Input()
   private tags: string = '';
+
+  @Input()
   private tagLst: string[] = [];
 
   constructor() {}
