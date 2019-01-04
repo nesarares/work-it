@@ -11,6 +11,7 @@ import { Job } from 'src/app/shared/models/job';
 import { JobService } from 'src/app/shared/services/job.service';
 import { User } from 'src/app/shared/models/user';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
   selector: 'app-job-application',
@@ -23,6 +24,7 @@ export class JobApplicationComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private jobService: JobService,
+    private messageService: MessageService,
     public dialogRef: MatDialogRef<JobApplicationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Job
   ) {}
@@ -33,7 +35,11 @@ export class JobApplicationComponent implements OnInit {
     const user: User = this.authService.user;
     const date: Date = new Date();
     this.jobService.addJobApplication(this.data, user, date, this.message);
-    // TODO: add success message
+    this.messageService.showMessage({
+      type: 'success',
+      text: 'The application has been added succesfully.',
+      header: 'Success'
+    });
     this.close();
   }
 

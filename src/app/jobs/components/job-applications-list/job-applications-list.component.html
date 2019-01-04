@@ -1,25 +1,23 @@
-<div class="ui padded container">
+<div class="ui container">
   <h2 class="ui dividing header">Applications</h2>
-  <div class="ui four column stackable grid container">
-    <div
-      class="eight wide tablet four wide computer column"
-      *ngFor="let application of applicationList"
-    >
-      <div class="ui card">
-        <div class="content">
-          <img
-            class="ui centered circular image"
-            [src]="application.employee.photoUrl"
-          />
-          <p class="employee-name">{{ application.employee.displayName }}</p>
-        </div>
-        <div class="extra content">
-          <h4>{{ application.message }}</h4>
-        </div>
-      </div>
+  <div class="two-column-grid" *ngFor="let application of applicationList">
+    <div class="column">
+      <img
+        src="{{ application.employee.photoUrl }}"
+        alt="user avatar"
+        class="ui circular image"
+      />
+      <a
+        class="employee-name"
+        routerLink="/user/{{ application.employeeRef.id }}/public"
+        >{{ application.employee.displayName }}</a
+      >
     </div>
-    <p *ngIf="applicationList.length == 0" class="empty">
-      There are no applications at the moment
-    </p>
+    <div class="column">
+      <p>{{ application.message }}</p>
+    </div>
   </div>
+  <p *ngIf="applicationList.length == 0" class="empty">
+    There are no applications at the moment
+  </p>
 </div>

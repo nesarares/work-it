@@ -39,7 +39,7 @@
     </ng-container>
 
     <div class="ui divider"></div>
-    <p *ngIf="message">{{ message }}</p>
+    <p class="my-message" *ngIf="message">{{ message }}</p>
 
     <div class="horizontal center aligned" *ngIf="hasApply">
       <button class="ui large primary button" (click)="onApply.emit()">

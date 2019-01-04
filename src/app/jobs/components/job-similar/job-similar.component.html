@@ -1,11 +1,11 @@
-<div class="ui padded container">
+<div class="ui wrapper container">
   <h2 class="ui dividing header">Similar jobs</h2>
   <div class="ui four column stackable grid container" *ngIf="job">
     <div
       class="eight wide tablet four wide computer column"
       *ngFor="let job of similarJobList"
     >
-      <div class="ui card" routerLink="/jobs/{{job.id}}">
+      <div class="ui card" routerLink="/jobs/{{ job.id }}">
         <div class="content">
           <img
             class="ui centered circular image"

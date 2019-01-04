@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {
   AngularFirestore,
-  AngularFirestoreDocument
+  AngularFirestoreDocument,
+  DocumentReference
 } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { Observable, of } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap, take } from 'rxjs/operators';
 
 import { User } from '../models/user';
 import { Router } from '@angular/router';
@@ -66,13 +67,19 @@ export class AuthService {
 
   signOut() {
     this.afAuth.auth.signOut();
+    this.user$ = of(null);
     this.router.navigate(['/login']);
   }
 
-  userRef() {
+  userRef(): Observable<DocumentReference> {
     // TODO: replace this.user.uid to user$ (this.user can be null)
-    const uid = this.user.uid;
-    return this.afs.collection('users').doc(uid).ref;
+    return this.user$.pipe(
+      switchMap((user: User) => {
+        return user
+          ? of(this.afs.collection('users').doc(user.uid).ref)
+          : of(null);
+      })
+    );
   }
 
   private async oAuthLogin(provider) {
@@ -97,6 +104,8 @@ export class AuthService {
     if (data.photoUrl.startsWith('https://graph.facebook.com')) {
       data.photoUrl = data.photoUrl.concat('?height=250');
     }
+
+    this.user$ = userRef.valueChanges();
     return userRef.set(data, { merge: true });
   }
 }
