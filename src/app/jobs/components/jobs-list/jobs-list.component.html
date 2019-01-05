@@ -5,6 +5,9 @@
   (scrolled)="onScrollDown()"
   class="ui container"
 >
+  <p class="employer-name">Search:</p>
+  <input [(ngModel)]="titleToSearch" />
+  <button (click)="searchByTitle()">Search</button>
   <main class="ui one column stackable grid">
     <div class="column" *ngFor="let job of jobList">
       <div class="ui card" (click)="cardClicked(job.id)">

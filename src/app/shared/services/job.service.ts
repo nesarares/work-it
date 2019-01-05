@@ -11,6 +11,7 @@ import { ThrowStmt } from '@angular/compiler';
 import { AuthService } from './auth.service';
 import { Application } from '../models/application';
 import { User } from '../models/user';
+import { isNullOrUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -84,6 +85,36 @@ export class JobService {
    */
   getJobById(jobId: string): Observable<Job> {
     return this.jobsCollection.doc<Job>(jobId).valueChanges();
+  }
+
+  /**
+   * Get jobs that contain the given text (lowercase)
+   * @param title: string representing text for job filtering
+   */
+  getJobsFilteredByTitleByQueryParam(
+    queryParam = {
+      orderBy: 'id',
+      startingAt: undefined,
+      limitTo: 5,
+      old: []
+    },
+    title: string
+  ) {
+    // get the number of elements from database
+    if (isNullOrUndefined(title)) title = '';
+    let limit;
+    this.getCollectionSize().then(x => (limit = x));
+
+    return this.afs
+      .collection<Job>('jobs', ref => this.getQueryForm(queryParam, ref))
+      .valueChanges()
+      .pipe(
+        map(jobsArray =>
+          jobsArray.filter(job =>
+            job.title.toLowerCase().includes(title.toLowerCase())
+          )
+        )
+      );
   }
 
   /**
