@@ -34,17 +34,21 @@ export class JobsListComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.subscriptions.push(
       this.route.queryParamMap.subscribe(queryParamMap => {
-        this.titleToSearch = queryParamMap.get('title');
+        this.filters.title = queryParamMap.get('title') || '';
         console.log('Query param changed!', this.titleToSearch);
-        this.searchByTitle();
+        this.search();
+        this.jobService
+          .getJobsFilteredByQueryParam(this.queryParam, this.filters)
+          .subscribe(jobs => {
+            this.jobList = jobs;
+          });
       })
     );
     this.subscriptions.push(
       this.jobService
-        .getJobsFilteredByTitleByQueryParam(this.queryParam, this.titleToSearch)
+        .getJobsFilteredByQueryParam(this.queryParam, this.filters)
         .subscribe(jobs => {
           this.jobList = jobs;
-          console.log(this.jobList);
           this.spinner.hide();
         })
     );
@@ -69,13 +73,13 @@ export class JobsListComponent implements OnInit, OnDestroy {
     this.queryParam.old = this.jobList;
 
     this.jobService
-      .getJobsFilteredByTitleByQueryParam(this.queryParam, this.titleToSearch)
+      .getJobsFilteredByQueryParam(this.queryParam, this.filters)
       .subscribe(jobs => {
         this.jobList = jobs;
       });
   }
 
-  searchByTitle() {
+  search() {
     if (this.titleToSearch !== '') {
       const urlTree = this.router.createUrlTree([], {
         queryParams: { title: this.titleToSearch },
@@ -86,7 +90,7 @@ export class JobsListComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl(urlTree);
     } else {
       const urlTree = this.router.createUrlTree([], {
-        queryParams: {},
+        queryParams: { title: null },
         queryParamsHandling: 'merge',
         preserveFragment: true
       });
@@ -112,5 +116,9 @@ export class JobsListComponent implements OnInit, OnDestroy {
     limitTo: this.jobsPerScroll,
     startingAt: undefined,
     old: []
+  };
+
+  private filters = {
+    title: ''
   };
 }

@@ -87,34 +87,52 @@ export class JobService {
     return this.jobsCollection.doc<Job>(jobId).valueChanges();
   }
 
-  /**
-   * Get jobs that contain the given text (lowercase)
-   * @param title: string representing text for job filtering
-   */
-  getJobsFilteredByTitleByQueryParam(
+  getJobsFilteredByQueryParam(
     queryParam = {
       orderBy: 'id',
       startingAt: undefined,
       limitTo: 5,
       old: []
     },
-    title: string
+    filters = {
+      title: ''
+    }
   ) {
     // get the number of elements from database
-    if (isNullOrUndefined(title)) title = '';
     let limit;
     this.getCollectionSize().then(x => (limit = x));
 
     return this.afs
-      .collection<Job>('jobs', ref => this.getQueryForm(queryParam, ref))
+      .collection<Job>('jobs')
       .valueChanges()
       .pipe(
         map(jobsArray =>
           jobsArray.filter(job =>
-            job.title.toLowerCase().includes(title.toLowerCase())
+            job.title.toLowerCase().includes(filters.title.toLowerCase())
           )
         )
       );
+    // .pipe(
+    //   map(jobsArray => {
+    //     console.log('Filtered:', jobsArray);
+    //     let jobs = queryParam.old;
+
+    //     if (queryParam.old.length >= limit) {
+    //       return jobs;
+    //     }
+
+    //     jobsArray.forEach(job => {
+    //       // remove the first element of the list, because is already displayed
+    //       if (jobs.length > 0 && job.id == jobs[jobs.length - 1].id) {
+    //         return;
+    //       }
+
+    //       jobs.push(job);
+    //     });
+
+    //     return jobs;
+    //   })
+    // );
   }
 
   /**
