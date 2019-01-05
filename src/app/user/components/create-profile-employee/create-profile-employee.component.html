@@ -13,7 +13,7 @@
           userProfileForm.controls.lastName.errors)
     }"
   >
-    <label>Name</label>
+    <label for="firstNameNormalUser">Name</label>
   </div>
 
   <div class="two fields">
@@ -73,7 +73,7 @@
       error: isFormSubmitted && userProfileForm.controls.birthDate.errors
     }"
   >
-    <label class="large">Birthdate</label>
+    <label class="large" for="birthDateNormal">Birthdate</label>
     <input
       type="date"
       formControlName="birthDate"
@@ -92,28 +92,38 @@
   </div>
 
   <!-- Interest -->
-  <label>Interests</label>
+  <label for="interests">Interests</label>
   <div class="field">
-    <textarea formControlName="interests" maxlength="500" rows="4"></textarea>
+    <input
+      formControlName="interests"
+      type="text"
+      name="interests"
+      id="interests"
+    />
   </div>
+  <app-badge-group
+    [tags]="userProfileForm.controls.interests.value"
+  ></app-badge-group>
 
   <!-- Education details -->
-  <label>Education details</label>
-  <div class="field">
-    <textarea
-      formControlName="workExperience"
-      maxlength="500"
-      rows="5"
-    ></textarea>
-  </div>
-
-  <!-- Work Experience -->
-  <label>Work Experience</label>
+  <label for="education">Education details</label>
   <div class="field">
     <textarea
       formControlName="educationalExperience"
       maxlength="500"
+      rows="5"
+      id="education"
+    ></textarea>
+  </div>
+
+  <!-- Work Experience -->
+  <label for="workExperience">Work Experience</label>
+  <div class="field">
+    <textarea
+      formControlName="workExperience"
+      maxlength="500"
       rows="4"
+      id="workExperience"
     ></textarea>
   </div>
 

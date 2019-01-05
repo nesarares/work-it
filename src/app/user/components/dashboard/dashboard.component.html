@@ -4,8 +4,16 @@
       <i class="angle big left icon" [class.rotate]="!isMenuOpen"></i>
     </a>
 
-    <img src="{{ user.photoUrl }}" alt="User avatar" class="ui avatar image" />
-    <p class="username">{{ user.displayName }}</p>
+    <img
+      src="{{ user.photoUrl }}"
+      alt="User avatar"
+      class="ui avatar image"
+      suiPopup
+      popupText="Check your public profile"
+      popupPlacement="right"
+      (click)="navigateToUserProfile(user.uid)"
+    />
+    <a class="username">{{ user.displayName }}</a>
 
     <a
       class="item"

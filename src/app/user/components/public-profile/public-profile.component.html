@@ -1,0 +1,38 @@
+<div class="ui padded container my-grid" *ngIf="user">
+  <div class="column">
+    <img
+      src="{{ user.photoUrl }}"
+      alt="user avatar"
+      class="ui avatar image top spaced"
+    />
+    <h1 class="username">{{ user.displayName }}</h1>
+
+    <div *ngIf="user.userProfile.aboutCompany" class="employerDiv">
+      <div class="ui divider"></div>
+      <!-- <h2 class="ui header">About the company</h2> -->
+      <p>{{ user.userProfile.aboutCompany }}</p>
+    </div>
+  </div>
+  <ng-container *ngIf="user.userProfile.userType === employeeUserType">
+    <div class="divider"></div>
+    <div class="second column">
+      <ng-container *ngIf="user.userProfile.tags">
+        <h2 class="ui header">Interests</h2>
+        <div class="ui divider"></div>
+        <app-badge-group [tagLst]="user.userProfile.tags"></app-badge-group>
+      </ng-container>
+
+      <ng-container *ngIf="user.userProfile.workExperience">
+        <h2 class="ui header spaced">Work experience</h2>
+        <div class="ui divider"></div>
+        <p>{{ user.userProfile.workExperience }}</p>
+      </ng-container>
+
+      <ng-container *ngIf="user.userProfile.educationalExperience">
+        <h2 class="ui header spaced">Education</h2>
+        <div class="ui divider"></div>
+        <p>{{ user.userProfile.educationalExperience }}</p>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

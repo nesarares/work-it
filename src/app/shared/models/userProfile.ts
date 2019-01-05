@@ -1,12 +1,14 @@
-import { UserType } from "./userType";
+import { UserType } from './userType';
 
 export interface UserProfile {
   userType?: UserType;
   firstName: string;
   lastName: string;
-  companyName?: string;
   birthDate: Date;
+  companyName?: string;
+  aboutCompany?: string;
   interests?: string;
+  tags?: string[];
   workExperience?: string;
   educationalExperience?: string;
 }

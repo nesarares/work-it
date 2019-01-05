@@ -7,6 +7,7 @@ import {
   Transition,
   TransitionDirection
 } from 'ng2-semantic-ui';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,9 +30,13 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.user$ = this.auth.user$;
+  }
+
+  navigateToUserProfile(uid: string) {
+    this.router.navigateByUrl(`/user/${uid}/public`);
   }
 }

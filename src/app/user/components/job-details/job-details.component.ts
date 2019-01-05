@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Job } from 'src/app/shared/models/job';
 import { take } from 'rxjs/operators';
 import { JobService } from 'src/app/shared/services/job.service';
 import { MessageService } from 'src/app/shared/services/message.service';
+import { BadgeGroupComponent } from 'src/app/shared/components/badge-group/badge-group.component';
 
 @Component({
   selector: 'app-job-details',
@@ -26,6 +27,9 @@ export class JobDetailsComponent implements OnInit {
 
   userId: string;
 
+  @ViewChild(BadgeGroupComponent)
+  tagGroupComponent: BadgeGroupComponent;
+
   constructor(
     private auth: AuthService,
     private jobService: JobService,
@@ -44,7 +48,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
   addJob() {
-    this.job.tags = this.tags.split(',').map(tag => tag.trim());
+    this.job.tags = this.tagGroupComponent.tagList;
     this.job.publishedDate = new Date();
     this.jobService.addJob(this.job, this.userId);
 

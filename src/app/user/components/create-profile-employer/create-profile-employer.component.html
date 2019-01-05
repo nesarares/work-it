@@ -115,6 +115,31 @@
     >
   </div>
 
+  <!-- About company details -->
+  <div
+    class="field"
+    [ngClass]="{
+      error: isFormSubmitted && userProfileForm.controls.aboutCompany.errors
+    }"
+  >
+    <label for="aboutCompany">About company</label>
+    <textarea
+      formControlName="aboutCompany"
+      maxlength="500"
+      rows="5"
+      id="aboutCompany"
+    ></textarea>
+    <span
+      class="error text"
+      *ngIf="
+        isFormSubmitted &&
+        userProfileForm.controls.aboutCompany.errors &&
+        userProfileForm.controls.aboutCompany.errors.required
+      "
+      >About company required.
+    </span>
+  </div>
+
   <!-- Submit button -->
   <button class="ui submit button" id="submituserProfileForm">Submit</button>
 </form>

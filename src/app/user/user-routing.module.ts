@@ -7,6 +7,7 @@ import { CreateProfileComponent } from './components/create-profile/create-profi
 import { CreateProfileGuard } from './guards/create-profile.guard';
 import { NoProfileGuard } from './guards/no-profile.guard';
 import { AuthGuard } from '../shared/guards/auth.guard';
+import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
     path: ':id/create-profile',
     component: CreateProfileComponent,
     canActivate: [AuthGuard, CreateProfileGuard]
+  },
+  {
+    path: ':id/public',
+    component: PublicProfileComponent
   }
 ];
 
@@ -42,4 +47,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class UserRoutingModule { }
+export class UserRoutingModule {}
