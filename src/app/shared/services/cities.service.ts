@@ -12,6 +12,7 @@ export class CitiesService {
 
   getByTerm(term: string): Promise<string[]> {
     return new Promise((resolve, reject) => {
+      if (!term) resolve([]);
       term = term.toLowerCase().trim();
       if (term.length < 2) resolve([]);
       const results = cities

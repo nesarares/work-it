@@ -4,6 +4,9 @@
       Published date: {{ job.publishedDate.toDate() | date: medium }}
     </h5>
     <h1 class="ui inverted header">{{ job.title }}</h1>
+    <h4 class="ui inverted header location" *ngIf="job.city">
+      <i class="material-icons">location_on</i> <span>{{ job.city }}</span>
+    </h4>
     <h4 class="ui inverted header">{{ job.employer.displayName }}</h4>
   </div>
 </header>

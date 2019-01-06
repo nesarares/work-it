@@ -24,7 +24,11 @@
             >
               <h2 class="header">{{ job.title }}</h2>
               <p class="meta">
-                {{ job.publishedDate.toDate() | date: medium }}
+                <span>{{ job.publishedDate.toDate() | date: medium }}</span>
+                <ng-container *ngIf="job.city">
+                  <span> - </span> <i class="material-icons">location_on</i>
+                  <span>{{ job.city }}</span>
+                </ng-container>
               </p>
               <p
                 class="description"

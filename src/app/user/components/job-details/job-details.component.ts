@@ -5,6 +5,13 @@ import { take } from 'rxjs/operators';
 import { JobService } from 'src/app/shared/services/job.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { BadgeGroupComponent } from 'src/app/shared/components/badge-group/badge-group.component';
+import { LookupFn } from 'ng2-semantic-ui';
+import { CitiesService } from 'src/app/shared/services/cities.service';
+
+interface IOption {
+  label: string;
+  value: string;
+}
 
 @Component({
   selector: 'app-job-details',
@@ -18,6 +25,7 @@ export class JobDetailsComponent implements OnInit {
     title: '',
     description: '',
     requirements: '',
+    city: null,
     tags: [],
     period: '',
     salary: '',
@@ -33,7 +41,8 @@ export class JobDetailsComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private jobService: JobService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private citiesService: CitiesService
   ) {}
 
   ngOnInit() {
@@ -48,6 +57,21 @@ export class JobDetailsComponent implements OnInit {
   }
 
   addJob() {
+    if (
+      !this.job.title ||
+      !this.job.description ||
+      !this.job.city ||
+      !this.job.period ||
+      !this.job.requirements
+    ) {
+      this.messageService.showMessage({
+        type: 'error',
+        text: 'Please complete all the required fields.',
+        header: 'Error'
+      });
+      return;
+    }
+
     this.job.tags = this.tagGroupComponent.tagList;
     this.job.publishedDate = new Date();
     this.jobService.addJob(this.job, this.userId);
@@ -58,4 +82,12 @@ export class JobDetailsComponent implements OnInit {
       header: 'Success'
     });
   }
+
+  // Lookup function structure:
+  optionsLookupCity: LookupFn<IOption, number> = (query: string, initial?) => {
+    return this.citiesService.getByTerm(query).then(results => {
+      const res = results.map(city => ({ label: city, value: city }));
+      return res;
+    });
+  };
 }

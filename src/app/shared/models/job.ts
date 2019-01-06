@@ -4,14 +4,15 @@ import { Application } from './application';
 
 export interface Job {
   id: string;
-  employerRef?: DocumentReference;
-  employer?: { displayName: string; photoUrl: string };
   title: string;
   description: string;
   requirements: string;
-  tags?: string[];
   period: string;
-  salary?: string;
   publishedDate: Date;
-  applications: Application[];
+  city: string;
+  applications?: Application[];
+  employerRef?: DocumentReference;
+  employer?: { displayName: string; photoUrl: string };
+  tags?: string[];
+  salary?: string;
 }
