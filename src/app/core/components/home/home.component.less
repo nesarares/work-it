@@ -1,12 +1,61 @@
-.content-wrapper,
-.container {
+.content-wrapper {
   display: flex;
   align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  padding-top: 28vh;
+  transition: 0.3s padding-top ease;
 
-  img {
-    border-radius: 10px;
-    z-index: 150;
-    max-width: 95%;
+  &.results {
+    transition: 0.3s padding-top ease;
+    padding-top: 5em !important;
+    padding-bottom: 5em !important;
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .field {
+      font-size: 2em;
+      width: 100%;
+      margin-bottom: 0;
+
+      label {
+        margin-bottom: 1em;
+      }
+
+      input {
+        position: relative;
+        width: 100%;
+        transition: 0.3s all ease;
+        box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0);
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+
+        &:focus {
+          box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.13),
+            0 4px 15px 0 rgba(0, 0, 0, 0.1);
+          transition: 0.3s all ease;
+        }
+      }
+    }
+
+    .cities {
+      width: 100%;
+      margin-top: 0;
+      border-radius: 0 0 5px 5px;
+      overflow: hidden;
+      border: 1px solid rgba(34, 36, 38, 0.15);
+      border-top: 0;
+
+      .item {
+        font-size: 1.3em;
+        font-weight: bold;
+        padding: 1em !important;
+        background-color: #fafafa;
+        cursor: pointer;
+      }
+    }
   }
 }

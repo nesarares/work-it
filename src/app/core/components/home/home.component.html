@@ -1,5 +1,20 @@
-<div class="content-wrapper">
-  <div class="ui padded container">
-    <img src="https://i.imgur.com/VyuvyTs.jpg" alt="Under construction" />
+<div class="content-wrapper" [class.results]="gotResults">
+  <div class="ui padded relaxed container form">
+    <div class="field">
+      <label for="term">Enter city:</label>
+      <input type="text" name="term" id="term" [formControl]="searchField" />
+    </div>
+    <ng-container *ngIf="(results$ | async) as results">
+      <div class="ui relaxed divided list cities">
+        <div
+          *ngFor="let result of results"
+          class="item"
+          routerLink="/jobs"
+          [queryParams]="{ city: result }"
+        >
+          {{ result }}
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>

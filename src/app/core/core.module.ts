@@ -10,9 +10,17 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ParticlesModule } from 'angular-particle';
 import { NavbarMobileComponent } from './components/navbar-mobile/navbar-mobile.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
+import { JsonpModule } from '@angular/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [CommonModule, SharedModule, PasswordStrengthMeterModule, ParticlesModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    PasswordStrengthMeterModule,
+    ParticlesModule,
+    JsonpModule
+  ],
   declarations: [
     HomeComponent,
     LoginComponent,
@@ -22,6 +30,12 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
     NavbarMobileComponent,
     PrivacyPolicyComponent
   ],
-  exports: [HomeComponent, LoginComponent, NavbarComponent, FooterComponent, PrivacyPolicyComponent]
+  exports: [
+    HomeComponent,
+    LoginComponent,
+    NavbarComponent,
+    FooterComponent,
+    PrivacyPolicyComponent
+  ]
 })
 export class CoreModule {}
