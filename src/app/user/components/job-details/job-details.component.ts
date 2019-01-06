@@ -83,7 +83,6 @@ export class JobDetailsComponent implements OnInit {
     });
   }
 
-  // Lookup function structure:
   optionsLookupCity: LookupFn<IOption, number> = (query: string, initial?) => {
     return this.citiesService.getByTerm(query).then(results => {
       const res = results.map(city => ({ label: city, value: city }));

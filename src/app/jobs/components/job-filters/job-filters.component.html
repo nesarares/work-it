@@ -1,0 +1,57 @@
+<div class="ui wrapper form">
+  <h2 class="ui header">Search...</h2>
+  <div class="ui divider"></div>
+
+  <div class="field">
+    <label for="title">...by title</label>
+    <input
+      type="text"
+      name="title"
+      id="title"
+      placeholder="Enter title"
+      [formControl]="titleField"
+      class="bottom spaced"
+    />
+  </div>
+
+  <div class="field">
+    <label for="tags">...by tags</label>
+    <input
+      type="text"
+      name="tags"
+      id="tags"
+      placeholder="Enter tags separated by ,"
+      [formControl]="tagsField"
+      class="bottom spaced"
+      #tags
+    />
+    <app-badge-group tags="{{ tags.value }}" class="tagGroup"></app-badge-group>
+  </div>
+
+  <div class="field">
+    <label for="location">...by city</label>
+    <sui-select
+      class="selection"
+      [(ngModel)]="filters.city"
+      [optionsLookup]="optionsLookupCity"
+      labelField="label"
+      valueField="value"
+      [isSearchable]="true"
+      name="city"
+      id="city"
+      placeholder="City"
+      (ngModelChange)="search()"
+      #searchSelect
+    >
+      <sui-select-option
+        *ngFor="let o of searchSelect.filteredOptions"
+        [value]="o"
+        >{{ o }}</sui-select-option
+      >
+    </sui-select>
+  </div>
+
+  <button class="ui button top spaced" (click)="clearFilters()">
+    Clear filters
+  </button>
+</div>

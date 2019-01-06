@@ -5,6 +5,8 @@
 }
 
 .container {
+  padding: 1.5em 0.4em;
+
   > .grid {
     margin-top: 1em;
   }
@@ -15,8 +17,15 @@
     transition: all 0.25s ease;
 
     &:hover {
-      cursor: pointer;
       box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    }
+
+    .content {
+      cursor: pointer;
+
+      &.extra {
+        cursor: initial;
+      }
     }
 
     .header {
@@ -53,6 +62,11 @@
       margin-top: 1.12em;
       font-family: @font-family-accent;
       text-align: center;
+      word-break: break-word;
+    }
+
+    .job-title {
+      word-break: break-word;
     }
 
     .description {

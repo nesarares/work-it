@@ -1,17 +1,13 @@
-<div
-  infinite-scroll
-  [infiniteScrollDistance]="scrollDistance"
-  [infiniteScrollThrottle]="throttle"
-  (scrolled)="onScrollDown()"
-  class="ui container"
->
-  <p class="employer-name">Search:</p>
-  <input [(ngModel)]="titleToSearch" />
-  <button (click)="search()">Search</button>
-  <main class="ui one column stackable grid">
-    <div class="column" *ngFor="let job of jobList">
-      <div class="ui card" (click)="cardClicked(job.id)">
-        <div class="content">
+<!-- infinite-scroll
+[infiniteScrollDistance]="scrollDistance"
+[infiniteScrollThrottle]="throttle"
+(scrolled)="onScrollDown()" -->
+<div class="ui container">
+  <main class="ui stackable relaxed grid">
+    <div class="five wide column"><app-job-filters></app-job-filters></div>
+    <div class="eleven wide column">
+      <div class="ui card" *ngFor="let job of jobList">
+        <div class="content" (click)="cardClicked(job.id)">
           <div class="ui divided grid">
             <div
               class="five wide mobile four wide tablet three wide computer column"
@@ -25,7 +21,7 @@
             <div
               class="eleven wide mobile twelve wide tablet thirteen wide computer column"
             >
-              <h2 class="header">{{ job.title }}</h2>
+              <h2 class="header job-title">{{ job.title }}</h2>
               <p class="meta">
                 <span>{{ job.publishedDate.toDate() | date: medium }}</span>
                 <ng-container *ngIf="job.city">
@@ -53,6 +49,8 @@
                 color: 'white',
                 'font-weight': 'bold'
               }"
+              routerLink="/jobs"
+              [queryParams]="{ tags: tag }"
             >
               {{ tag }}
             </a>

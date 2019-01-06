@@ -12,6 +12,7 @@ import { AuthService } from './auth.service';
 import { Application } from '../models/application';
 import { User } from '../models/user';
 import { isNullOrUndefined } from 'util';
+import { intersection, toLower } from '../utils/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -87,52 +88,28 @@ export class JobService {
     return this.jobsCollection.doc<Job>(jobId).valueChanges();
   }
 
-  getJobsFilteredByQueryParam(
-    queryParam = {
-      orderBy: 'id',
-      startingAt: undefined,
-      limitTo: 5,
-      old: []
-    },
-    filters = {
-      title: ''
-    }
-  ) {
-    // get the number of elements from database
-    let limit;
-    this.getCollectionSize().then(x => (limit = x));
-
+  getJobsFiltered(filters: any = {}) {
     return this.afs
-      .collection<Job>('jobs')
+      .collection<Job>('jobs', ref => ref.orderBy('publishedDate', 'desc'))
       .valueChanges()
       .pipe(
-        map(jobsArray =>
-          jobsArray.filter(job =>
-            job.title.toLowerCase().includes(filters.title.toLowerCase())
-          )
-        )
+        map(jobsArray => {
+          return jobsArray.filter(job => {
+            let ok = true;
+            if (filters.title)
+              ok =
+                ok &&
+                job.title.toLowerCase().includes(filters.title.toLowerCase());
+            if (filters.tags)
+              ok =
+                ok &&
+                intersection(job.tags.map(toLower), filters.tags.map(toLower))
+                  .length !== 0;
+            if (filters.city) ok = ok && job.city === filters.city;
+            return ok;
+          });
+        })
       );
-    // .pipe(
-    //   map(jobsArray => {
-    //     console.log('Filtered:', jobsArray);
-    //     let jobs = queryParam.old;
-
-    //     if (queryParam.old.length >= limit) {
-    //       return jobs;
-    //     }
-
-    //     jobsArray.forEach(job => {
-    //       // remove the first element of the list, because is already displayed
-    //       if (jobs.length > 0 && job.id == jobs[jobs.length - 1].id) {
-    //         return;
-    //       }
-
-    //       jobs.push(job);
-    //     });
-
-    //     return jobs;
-    //   })
-    // );
   }
 
   /**

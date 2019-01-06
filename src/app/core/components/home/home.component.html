@@ -1,8 +1,14 @@
 <div class="content-wrapper" [class.results]="gotResults">
   <div class="ui padded relaxed container form">
     <div class="field">
-      <label for="term">Enter city:</label>
-      <input type="text" name="term" id="term" [formControl]="searchField" />
+      <label for="term">Where do you want to work?</label>
+      <input
+        type="text"
+        name="term"
+        id="term"
+        [formControl]="searchField"
+        placeholder="Type the city..."
+      />
     </div>
     <ng-container *ngIf="(results$ | async) as results">
       <div class="ui relaxed divided list cities">

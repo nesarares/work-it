@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.searchField = new FormControl();
-    // this.results$ = from(this.search('int'));
     this.results$ = this.searchField.valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),

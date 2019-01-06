@@ -13,6 +13,7 @@ import {
   MAT_DIALOG_DEFAULT_OPTIONS
 } from '@angular/material/dialog';
 import { JobApplicationsListComponent } from './components/job-applications-list/job-applications-list.component';
+import { JobFiltersComponent } from './components/job-filters/job-filters.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { JobApplicationsListComponent } from './components/job-applications-list
     JobDescriptionComponent,
     JobSimilarComponent,
     JobApplicationComponent,
-    JobApplicationsListComponent
+    JobApplicationsListComponent,
+    JobFiltersComponent
   ],
   entryComponents: [JobApplicationComponent]
 })

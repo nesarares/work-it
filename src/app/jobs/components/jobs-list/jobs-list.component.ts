@@ -15,13 +15,26 @@ import { Title } from '@angular/platform-browser';
 })
 export class JobsListComponent implements OnInit, OnDestroy {
   jobList: Job[];
-  throttle = 1000;
-  scrollDistance = 1;
-  jobsPerScroll = 4;
   mappedTags: Map<string, string> = new Map();
-  titleToSearch: string;
+
+  filters = {
+    title: null,
+    tags: null,
+    city: null
+  };
 
   subscriptions: Subscription[] = [];
+
+  // throttle = 1000;
+  // scrollDistance = 1;
+  // jobsPerScroll = 4;
+
+  // private queryParam = {
+  //   orderBy: 'publishedDate',
+  //   limitTo: this.jobsPerScroll,
+  //   startingAt: undefined,
+  //   old: []
+  // };
 
   constructor(
     private jobService: JobService,
@@ -32,25 +45,20 @@ export class JobsListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.spinner.show();
+
     this.subscriptions.push(
       this.route.queryParamMap.subscribe(queryParamMap => {
-        this.filters.title = queryParamMap.get('title') || '';
-        console.log('Query param changed!', this.titleToSearch);
-        this.search();
-        this.jobService
-          .getJobsFilteredByQueryParam(this.queryParam, this.filters)
-          .subscribe(jobs => {
+        this.filters.title = queryParamMap.get('title') || null;
+        const queryTags = queryParamMap.get('tags');
+        this.filters.tags = queryTags ? queryTags.split(',') : null;
+        this.filters.city = queryParamMap.get('city') || null;
+        this.subscriptions.push(
+          this.jobService.getJobsFiltered(this.filters).subscribe(jobs => {
             this.jobList = jobs;
-          });
+            this.spinner.hide();
+          })
+        );
       })
-    );
-    this.subscriptions.push(
-      this.jobService
-        .getJobsFilteredByQueryParam(this.queryParam, this.filters)
-        .subscribe(jobs => {
-          this.jobList = jobs;
-          this.spinner.hide();
-        })
     );
 
     this.subscriptions.push(
@@ -64,40 +72,20 @@ export class JobsListComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  onScrollDown() {
-    // get the last displayed data on the screen
-    this.queryParam.startingAt = this.jobList[
-      this.jobList.length - 1
-    ].publishedDate;
+  // onScrollDown() {
+  //   // get the last displayed data on the screen
+  //   this.queryParam.startingAt = this.jobList[
+  //     this.jobList.length - 1
+  //   ].publishedDate;
 
-    this.queryParam.old = this.jobList;
+  //   this.queryParam.old = this.jobList;
 
-    this.jobService
-      .getJobsFilteredByQueryParam(this.queryParam, this.filters)
-      .subscribe(jobs => {
-        this.jobList = jobs;
-      });
-  }
-
-  search() {
-    if (this.titleToSearch !== '') {
-      const urlTree = this.router.createUrlTree([], {
-        queryParams: { title: this.titleToSearch },
-        queryParamsHandling: 'merge',
-        preserveFragment: true
-      });
-
-      this.router.navigateByUrl(urlTree);
-    } else {
-      const urlTree = this.router.createUrlTree([], {
-        queryParams: { title: null },
-        queryParamsHandling: 'merge',
-        preserveFragment: true
-      });
-
-      this.router.navigateByUrl(urlTree);
-    }
-  }
+  //   this.jobService
+  //     .getJobsFilteredByQueryParam(this.queryParam, this.filters)
+  //     .subscribe(jobs => {
+  //       this.jobList = jobs;
+  //     });
+  // }
 
   cardClicked(jobId: string) {
     this.router.navigate(['/jobs', jobId]);
@@ -110,15 +98,4 @@ export class JobsListComponent implements OnInit, OnDestroy {
   convertToText(html: string) {
     return stripHtmlToText(html);
   }
-
-  private queryParam = {
-    orderBy: 'publishedDate',
-    limitTo: this.jobsPerScroll,
-    startingAt: undefined,
-    old: []
-  };
-
-  private filters = {
-    title: ''
-  };
 }
