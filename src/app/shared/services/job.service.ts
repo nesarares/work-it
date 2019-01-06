@@ -11,6 +11,7 @@ import { ThrowStmt } from '@angular/compiler';
 import { AuthService } from './auth.service';
 import { Application } from '../models/application';
 import { User } from '../models/user';
+import { isNullOrUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -84,6 +85,54 @@ export class JobService {
    */
   getJobById(jobId: string): Observable<Job> {
     return this.jobsCollection.doc<Job>(jobId).valueChanges();
+  }
+
+  getJobsFilteredByQueryParam(
+    queryParam = {
+      orderBy: 'id',
+      startingAt: undefined,
+      limitTo: 5,
+      old: []
+    },
+    filters = {
+      title: ''
+    }
+  ) {
+    // get the number of elements from database
+    let limit;
+    this.getCollectionSize().then(x => (limit = x));
+
+    return this.afs
+      .collection<Job>('jobs')
+      .valueChanges()
+      .pipe(
+        map(jobsArray =>
+          jobsArray.filter(job =>
+            job.title.toLowerCase().includes(filters.title.toLowerCase())
+          )
+        )
+      );
+    // .pipe(
+    //   map(jobsArray => {
+    //     console.log('Filtered:', jobsArray);
+    //     let jobs = queryParam.old;
+
+    //     if (queryParam.old.length >= limit) {
+    //       return jobs;
+    //     }
+
+    //     jobsArray.forEach(job => {
+    //       // remove the first element of the list, because is already displayed
+    //       if (jobs.length > 0 && job.id == jobs[jobs.length - 1].id) {
+    //         return;
+    //       }
+
+    //       jobs.push(job);
+    //     });
+
+    //     return jobs;
+    //   })
+    // );
   }
 
   /**
