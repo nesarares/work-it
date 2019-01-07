@@ -17,10 +17,7 @@ export class BadgeGroupComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges() {
-    if (!this.tags) {
-      this.tagLst = [];
-      return;
-    }
+    if (!this.tags) return;
 
     this.tagLst = this.tags
       .split(',')

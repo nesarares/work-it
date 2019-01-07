@@ -44,8 +44,9 @@ export class JobInfoComponent implements OnInit, OnDestroy {
             this.subscriptions.push(
               this.authService.userRef().subscribe(userRef => {
                 if (
+                  this.authService.user &&
                   this.authService.user.userProfile.userType ===
-                  UserType.Employer
+                    UserType.Employer
                 ) {
                   this.isUserTitularOfTheJob =
                     this.job.employerRef.id === this.authService.user.uid;

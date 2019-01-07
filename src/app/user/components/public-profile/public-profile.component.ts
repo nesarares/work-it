@@ -28,6 +28,7 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.userService.getUser(uid).subscribe(user => {
         this.user = user;
+        console.log({ user });
         this.spinnerService.hide();
       })
     );

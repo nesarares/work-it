@@ -25,7 +25,10 @@
       class="bottom spaced"
       #tags
     />
-    <app-badge-group tags="{{ tags.value }}" class="tagGroup"></app-badge-group>
+    <app-badge-group
+      tags="{{ tags.value || ' ' }}"
+      class="tagGroup"
+    ></app-badge-group>
   </div>
 
   <div class="field">
