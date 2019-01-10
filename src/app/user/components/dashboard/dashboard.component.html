@@ -15,15 +15,21 @@
     />
     <a class="username">{{ user.displayName }}</a>
 
-    <a
-      class="item"
-      *ngFor="let menuItem of menuItems"
-      [routerLink]="menuItem.link(user)"
-      routerLinkActive="active"
-    >
-      <i class="material-icons">{{ menuItem.icon }}</i>
-      <span>{{ menuItem.text }}</span>
-    </a>
+    <ng-container *ngFor="let menuItem of menuItems">
+      <a
+        class="item"
+        [routerLink]="menuItem.link(user)"
+        *ngIf="
+          menuItem.userType != undefined
+            ? user.userProfile.userType === menuItem.userType
+            : true
+        "
+        routerLinkActive="active"
+      >
+        <i class="material-icons">{{ menuItem.icon }}</i>
+        <span>{{ menuItem.text }}</span>
+      </a>
+    </ng-container>
   </nav>
   <section class="content">
     <router-outlet name="dashboard"></router-outlet>

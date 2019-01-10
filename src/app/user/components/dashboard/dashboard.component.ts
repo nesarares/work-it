@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/models/user';
-import {
-  TransitionController,
-  Transition,
-  TransitionDirection
-} from 'ng2-semantic-ui';
-import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { UserType } from 'src/app/shared/models/userType';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,11 +23,13 @@ export class DashboardComponent implements OnInit {
     {
       icon: 'work',
       text: 'Add job',
+      userType: UserType.Employer.valueOf(),
       link: user => [`/user/${user.uid}`, { outlets: { dashboard: ['job'] } }]
     },
     {
       icon: 'list',
       text: 'My jobs',
+      userType: UserType.Employer.valueOf(),
       link: user => [
         `/user/${user.uid}`,
         { outlets: { dashboard: ['my-jobs'] } }
@@ -39,6 +38,7 @@ export class DashboardComponent implements OnInit {
     {
       icon: 'done',
       text: 'My applications',
+      userType: UserType.Employee.valueOf(),
       link: user => [
         `/user/${user.uid}`,
         { outlets: { dashboard: ['my-applications'] } }
@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.user$ = this.auth.user$;
+    this.user$ = this.auth.user$.pipe(tap(console.log));
   }
 
   navigateToUserProfile(uid: string) {
