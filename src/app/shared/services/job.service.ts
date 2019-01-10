@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
-  AngularFirestoreCollection
+  AngularFirestoreCollection,
+  DocumentReference
 } from '@angular/fire/firestore';
 import { Job } from '../models/job';
 import { map } from 'rxjs/operators';
@@ -201,5 +202,11 @@ export class JobService {
       .collection('users')
       .doc(user.uid)
       .update(user);
+  }
+
+  getJobsByEmployer(userRef: DocumentReference) {
+    return this.afs
+      .collection<Job>('jobs', ref => ref.where('employerRef', '==', userRef))
+      .valueChanges();
   }
 }

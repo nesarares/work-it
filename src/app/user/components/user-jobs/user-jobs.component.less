@@ -1,0 +1,46 @@
+@import '../../../../variables';
+
+.card {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.13), 0 4px 15px 0 rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.25s ease;
+
+  &:hover {
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5 !important;
+  }
+
+  .content {
+    padding: 2em 1.5em 1em !important;
+    cursor: pointer;
+
+    .meta {
+      margin: 0.7em 0;
+    }
+
+    &.extra {
+      cursor: initial;
+      padding: 1em 1.5em !important;
+
+      .edit-icon {
+        cursor: pointer;
+        transition: 0.2s all ease;
+
+        &:hover {
+          color: @primary-color;
+        }
+      }
+    }
+  }
+
+  span {
+    position: relative;
+
+    .location-icon {
+      margin-left: -4px;
+      margin-right: 0 !important;
+    }
+
+    * {
+      vertical-align: middle;
+    }
+  }
+}
