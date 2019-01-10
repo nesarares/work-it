@@ -1,0 +1,43 @@
+<ng-container *ngIf="(applications$ | async) as applications; else empty">
+  <div
+    class="ui three doubling stackable cards"
+    *ngIf="applications.length != 0; else empty"
+  >
+    <div class="card" *ngFor="let application of applications">
+      <div class="content" routerLink="/jobs/{{ application.jobRef.id }}">
+        <img
+          src="{{ application.job.employerPhotoUrl }}"
+          alt="Employer photo"
+          class="ui circular image"
+        />
+        <p class="employer-name">{{ application.job.employerName }}</p>
+      </div>
+      <div class="content" routerLink="/jobs/{{ application.jobRef.id }}">
+        <div class="header">{{ application.job.title }}</div>
+        <div class="meta">
+          <span class="date">
+            {{ application.date.toDate() | date: medium }}
+          </span>
+        </div>
+        <div class="description">{{ application.message }}</div>
+      </div>
+      <div class="extra content">
+        <span class="right floated">
+          <i
+            class="material-icons delete-icon"
+            (click)="onDelete(application.jobRef)"
+            suiPopup
+            popupText="Delete this application"
+            popupPlacement="bottom"
+          >
+            delete
+          </i>
+        </span>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #empty>
+  <app-empty-placeholder></app-empty-placeholder>
+</ng-template>

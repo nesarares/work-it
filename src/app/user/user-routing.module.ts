@@ -9,6 +9,7 @@ import { NoProfileGuard } from './guards/no-profile.guard';
 import { AuthGuard } from '../shared/guards/auth.guard';
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { UserJobsComponent } from './components/user-jobs/user-jobs.component';
+import { UserApplicationsComponent } from './components/user-applications/user-applications.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,11 @@ const routes: Routes = [
       {
         path: 'my-jobs',
         component: UserJobsComponent,
+        outlet: 'dashboard'
+      },
+      {
+        path: 'my-applications',
+        component: UserApplicationsComponent,
         outlet: 'dashboard'
       }
     ]
