@@ -206,7 +206,9 @@ export class JobService {
 
   getJobsByEmployer(userRef: DocumentReference) {
     return this.afs
-      .collection<Job>('jobs', ref => ref.where('employerRef', '==', userRef))
+      .collection<Job>('jobs', ref =>
+        ref.where('employerRef', '==', userRef).orderBy('publishedDate', 'desc')
+      )
       .valueChanges();
   }
 }
