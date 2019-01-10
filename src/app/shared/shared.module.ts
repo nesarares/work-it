@@ -11,6 +11,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 import { MessageComponent } from './components/message/message.component';
 import { BadgeGroupComponent } from './components/badge-group/badge-group.component';
+import { EmptyPlaceholderComponent } from './components/empty-placeholder/empty-placeholder.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { BadgeGroupComponent } from './components/badge-group/badge-group.compon
   declarations: [
     MessageComponent,
     LoadingIndicatorComponent,
-    BadgeGroupComponent
+    BadgeGroupComponent,
+    EmptyPlaceholderComponent
   ],
   exports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { BadgeGroupComponent } from './components/badge-group/badge-group.compon
     RouterModule,
     MessageComponent,
     LoadingIndicatorComponent,
-    BadgeGroupComponent
+    BadgeGroupComponent,
+    EmptyPlaceholderComponent
   ],
   providers: []
 })

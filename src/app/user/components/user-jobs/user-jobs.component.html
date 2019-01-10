@@ -1,31 +1,48 @@
-<div class="ui three doubling stackable cards" *ngIf="(jobs$ | async) as jobs">
-  <div class="card" *ngFor="let job of jobs">
-    <div class="content" routerLink="/jobs/{{ job.id }}">
-      <div class="header">{{ job.title }}</div>
-      <div class="meta">
-        <span class="date">
-          {{ job.publishedDate.toDate() | date: medium }}
-          <ng-container *ngIf="job.city">
-            <span> - </span>
-            <i class="material-icons location-icon">location_on</i>
-            <span>{{ job.city }}</span>
-          </ng-container>
+<ng-container *ngIf="(jobs$ | async) as jobs; else empty">
+  <div
+    *ngIf="jobs.length != 0; else empty"
+    class="ui three doubling stackable cards"
+  >
+    <div class="card" *ngFor="let job of jobs">
+      <div class="content" routerLink="/jobs/{{ job.id }}">
+        <div class="header">{{ job.title }}</div>
+        <div class="meta">
+          <span class="date">
+            {{ job.publishedDate.toDate() | date: medium }}
+            <ng-container *ngIf="job.city">
+              <span> - </span>
+              <i class="material-icons location-icon">location_on</i>
+              <span>{{ job.city }}</span>
+            </ng-container>
+          </span>
+        </div>
+        <div
+          class="description"
+          *ngIf="convertToText(job.description); let desc"
+        >
+          {{ desc.length > 250 ? (desc | slice: 0:150) + '...' : desc }}
+        </div>
+      </div>
+      <div class="extra content">
+        <span class="right floated">
+          <i
+            class="material-icons edit-icon"
+            (click)="onEdit(job.id)"
+            suiPopup
+            popupText="Edit this job"
+            popupPlacement="bottom"
+            >edit</i
+          >
+        </span>
+        <span>
+          <i class="material-icons">message</i>
+          {{ job.applications ? job.applications.length : 0 }} applications
         </span>
       </div>
-      <div class="description" *ngIf="convertToText(job.description); let desc">
-        {{ desc.length > 250 ? (desc | slice: 0:150) + '...' : desc }}
-      </div>
-    </div>
-    <div class="extra content">
-      <span class="right floated"
-        ><i class="material-icons edit-icon" (click)="onEdit(job.id)"
-          >edit</i
-        ></span
-      >
-      <span>
-        <i class="material-icons">message</i>
-        {{ job.applications ? job.applications.length : 0 }} applications
-      </span>
     </div>
   </div>
-</div>
+</ng-container>
+
+<ng-template #empty>
+  <app-empty-placeholder></app-empty-placeholder>
+</ng-template>

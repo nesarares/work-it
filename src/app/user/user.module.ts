@@ -12,6 +12,7 @@ import { UserHomeComponent } from './components/user-home/user-home.component';
 import { UserRoutingModule } from './user-routing.module';
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { UserJobsComponent } from './components/user-jobs/user-jobs.component';
+import { UserApplicationsComponent } from './components/user-applications/user-applications.component';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { UserJobsComponent } from './components/user-jobs/user-jobs.component';
     CreateProfileEmployerComponent,
     CreateProfileEmployeeComponent,
     PublicProfileComponent,
-    UserJobsComponent
+    UserJobsComponent,
+    UserApplicationsComponent
   ]
 })
 export class UserModule {}

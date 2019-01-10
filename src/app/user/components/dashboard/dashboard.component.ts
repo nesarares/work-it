@@ -31,7 +31,18 @@ export class DashboardComponent implements OnInit {
     {
       icon: 'list',
       text: 'My jobs',
-      link: user => [`/user/${user.uid}`, { outlets: { dashboard: ['my-jobs'] } }]
+      link: user => [
+        `/user/${user.uid}`,
+        { outlets: { dashboard: ['my-jobs'] } }
+      ]
+    },
+    {
+      icon: 'done',
+      text: 'My applications',
+      link: user => [
+        `/user/${user.uid}`,
+        { outlets: { dashboard: ['my-applications'] } }
+      ]
     }
   ];
 
