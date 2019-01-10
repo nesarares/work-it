@@ -29,9 +29,12 @@ export class AuthService {
     private router: Router
   ) {
     this.user$ = this.afAuth.authState.pipe(
-      switchMap(user =>
-        user ? this.afs.doc<User>(`users/${user.uid}`).valueChanges() : of(null)
-      ),
+      switchMap(user => {
+        console.log({ user });
+        return user
+          ? this.afs.doc<User>(`users/${user.uid}`).valueChanges()
+          : of(null);
+      }),
       tap(user => {
         this.user = user;
       })
@@ -48,12 +51,16 @@ export class AuthService {
     return await this.oAuthLogin(provider);
   }
 
-  emailLogin(email: string, password: string) {
-    return this.afAuth.auth
-      .signInWithEmailAndPassword(email, password)
-      .then(credential => {
-        return credential.user;
-      });
+  async emailLogin(email: string, password: string) {
+    const credential = await this.afAuth.auth.signInWithEmailAndPassword(
+      email,
+      password
+    );
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
+      `users/${credential.user.uid}`
+    );
+    this.user$ = userRef.valueChanges();
+    return credential.user;
   }
 
   emailSignUp(email: string, password: string) {
@@ -73,6 +80,8 @@ export class AuthService {
 
   userRef(): Observable<DocumentReference> {
     // TODO: replace this.user.uid to user$ (this.user can be null)
+    if (this.user)
+      return of(this.afs.collection('users').doc(this.user.uid).ref);
     return this.user$.pipe(
       switchMap((user: User) => {
         return user
