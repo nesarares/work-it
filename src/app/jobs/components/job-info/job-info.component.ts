@@ -52,12 +52,15 @@ export class JobInfoComponent implements OnInit, OnDestroy {
                     this.job.employerRef.id === this.authService.user.uid;
                   this.isEmployer = true;
                 } else {
-                  this.applyDisabled = job.applications
-                    ? !!job.applications.find(
-                        application => application.employeeRef.id === userRef.id
-                      )
-                    : false;
-                  this.isEmployer = false;
+                  if (userRef) {
+                    this.applyDisabled = job.applications
+                      ? !!job.applications.find(
+                          application =>
+                            application.employeeRef.id === userRef.id
+                        )
+                      : false;
+                    this.isEmployer = false;
+                  }
                 }
                 this.spinner.hide();
               })

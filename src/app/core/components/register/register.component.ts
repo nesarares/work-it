@@ -58,7 +58,7 @@ export class RegisterComponent implements OnInit {
     this.authService
       .emailSignUp(email, password)
       .then(logedInUser => {
-        this.router.navigate([`/user/${logedInUser.user.uid}/create-profile`]);
+        this.router.navigate([`/user/${logedInUser.uid}/create-profile`]);
       })
       .catch(err => {
         this.usedEmail = err.message;
