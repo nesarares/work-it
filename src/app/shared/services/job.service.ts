@@ -35,7 +35,11 @@ export class JobService {
   }
 
   updateJob(job: Job) {
-    this.jobsCollection.doc(job.id).set(job);
+    return this.jobsCollection.doc(job.id).set(job);
+  }
+
+  deleteJob(jobId: string) {
+    return this.jobsCollection.doc(jobId).delete();
   }
 
   /**
