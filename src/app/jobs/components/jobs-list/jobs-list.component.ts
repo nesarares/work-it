@@ -20,7 +20,8 @@ export class JobsListComponent implements OnInit, OnDestroy {
   filters = {
     title: null,
     tags: null,
-    city: null
+    city: null,
+    employer: null
   };
 
   subscriptions: Subscription[] = [];
@@ -49,9 +50,12 @@ export class JobsListComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.route.queryParamMap.subscribe(queryParamMap => {
         this.filters.title = queryParamMap.get('title') || null;
+        this.filters.employer = queryParamMap.get('employer') || null;
+
         const queryTags = queryParamMap.get('tags');
         this.filters.tags = queryTags ? queryTags.split(',') : null;
         this.filters.city = queryParamMap.get('city') || null;
+
         this.subscriptions.push(
           this.jobService.getJobsFiltered(this.filters).subscribe(jobs => {
             this.jobList = jobs;
