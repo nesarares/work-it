@@ -54,6 +54,18 @@
     </sui-select>
   </div>
 
+  <div class="field">
+    <label for="employer">...by employer</label>
+    <input
+      type="text"
+      name="employer"
+      id="employer"
+      placeholder="Enter employer name"
+      [formControl]="employerField"
+      class="bottom spaced"
+    />
+  </div>
+
   <button class="ui button top spaced" (click)="clearFilters()">
     Clear filters
   </button>

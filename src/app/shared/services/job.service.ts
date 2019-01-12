@@ -112,6 +112,14 @@ export class JobService {
               ok =
                 ok &&
                 job.title.toLowerCase().includes(filters.title.toLowerCase());
+
+            if (filters.employer)
+              ok =
+                ok &&
+                job.employer.displayName
+                  .toLowerCase()
+                  .includes(filters.employer.toLowerCase());
+
             if (filters.tags)
               ok =
                 ok &&

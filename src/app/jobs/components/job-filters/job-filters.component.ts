@@ -20,11 +20,13 @@ interface IOption {
 export class JobFiltersComponent implements OnInit, OnDestroy {
   tagsField: FormControl;
   titleField: FormControl;
+  employerField: FormControl;
 
   filters = {
     title: null,
     tags: null,
-    city: null
+    city: null,
+    employer: null
   };
 
   subscriptions: Subscription[] = [];
@@ -41,16 +43,19 @@ export class JobFiltersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.tagsField = new FormControl();
     this.titleField = new FormControl();
+    this.employerField = new FormControl();
 
     this.subscriptions.push(
       this.route.queryParamMap.subscribe(queryParamMap => {
         this.filters.title = queryParamMap.get('title') || null;
+        this.filters.employer = queryParamMap.get('employer') || null;
         const queryTags = queryParamMap.get('tags');
         this.filters.tags = queryTags ? queryTags.split(',') : null;
         this.filters.city = queryParamMap.get('city') || null;
 
         this.tagsField.setValue(queryTags);
         this.titleField.setValue(this.filters.title);
+        this.employerField.setValue(this.filters.employer);
       })
     );
 
@@ -62,6 +67,18 @@ export class JobFiltersComponent implements OnInit, OnDestroy {
         )
         .subscribe(titleTerm => {
           this.filters.title = titleTerm;
+          this.search();
+        })
+    );
+
+    this.subscriptions.push(
+      this.employerField.valueChanges
+        .pipe(
+          debounceTime(500),
+          distinctUntilChanged()
+        )
+        .subscribe(employerTerm => {
+          this.filters.employer = employerTerm;
           this.search();
         })
     );
