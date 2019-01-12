@@ -21,6 +21,11 @@ export class NavbarComponent implements OnInit {
       icon: 'bullhorn',
       text: 'Jobs',
       link: '/jobs'
+    },
+    {
+      icon: 'envelope',
+      text: 'Contact us',
+      link: '/contact'
     }
   ];
   menuItemsUser = [
