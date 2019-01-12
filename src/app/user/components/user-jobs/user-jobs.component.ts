@@ -17,6 +17,7 @@ export class UserJobsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   jobs$: Observable<Job[]>;
   userId: string;
+  ceva: boolean = true;
 
   constructor(
     private jobService: JobService,
@@ -53,5 +54,14 @@ export class UserJobsComponent implements OnInit, OnDestroy {
       `user/${this.userId}`,
       { outlets: { dashboard: ['job', jobId] } }
     ]);
+  }
+
+  /*
+    Method called when enable/disable button is pressed
+    jobId: string representing job's id
+    isEnabled: boolean representing operation type
+  */
+  onEnableDisable(jobId: string, isEnabled: boolean) {
+    console.log(isEnabled);
   }
 }

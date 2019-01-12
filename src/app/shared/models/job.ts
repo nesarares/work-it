@@ -15,4 +15,5 @@ export interface Job {
   employer?: { displayName: string; photoUrl: string };
   tags?: string[];
   salary?: string;
+  isActive?: boolean;
 }

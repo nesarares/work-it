@@ -30,7 +30,12 @@ export class JobService {
     const id = this.afs.createId();
     job.id = id;
     job.employerRef = this.afs.collection('users').doc(employerId).ref;
+    job.isActive = true;
     this.jobsCollection.doc(id).set(job);
+  }
+
+  updateJob(job: Job) {
+    this.jobsCollection.doc(job.id).set(job);
   }
 
   /**
@@ -91,7 +96,9 @@ export class JobService {
 
   getJobsFiltered(filters: any = {}) {
     return this.afs
-      .collection<Job>('jobs', ref => ref.orderBy('publishedDate', 'desc'))
+      .collection<Job>('jobs', ref =>
+        ref.where('isActive', '==', true).orderBy('publishedDate', 'desc')
+      )
       .valueChanges()
       .pipe(
         map(jobsArray => {
