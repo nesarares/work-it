@@ -28,6 +28,37 @@
           color: @primary-color;
         }
       }
+
+      .disable-icon {
+        cursor: pointer;
+        transition: 0.2s all ease;
+        color: rgb(204, 18, 18);
+        padding-left: 5px;
+
+        &:hover {
+          color: rgb(144, 16, 16);
+        }
+      }
+
+      .enable-icon {
+        cursor: pointer;
+        transition: 0.2s all ease;
+        color: rgb(43, 175, 31);
+        padding-left: 5px;
+
+        &:hover {
+          color: rgb(28, 117, 20);
+        }
+      }
+
+      .delete-icon {
+        cursor: pointer;
+        transition: 0.2s all ease;
+
+        &:hover {
+          color: @primary-color;
+        }
+      }
     }
   }
 
@@ -43,4 +74,12 @@
       vertical-align: middle;
     }
   }
+}
+
+.card-enabled {
+  opacity: 1 !important;
+}
+
+.card-disabled {
+  opacity: 0.3 !important;
 }

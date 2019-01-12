@@ -4,7 +4,14 @@
     class="ui three doubling stackable cards"
   >
     <div class="card" *ngFor="let job of jobs">
-      <div class="content" routerLink="/jobs/{{ job.id }}">
+      <div
+        class="content"
+        routerLink="/jobs/{{ job.id }}"
+        [ngClass]="{
+          'card-enabled': job.isActive === true,
+          'card-disabled': job.isActive === false
+        }"
+      >
         <div class="header">{{ job.title }}</div>
         <div class="meta">
           <span class="date">
@@ -23,6 +30,7 @@
           {{ desc.length > 250 ? (desc | slice: 0:150) + '...' : desc }}
         </div>
       </div>
+
       <div class="extra content">
         <span class="right floated">
           <i
@@ -32,6 +40,33 @@
             popupText="Edit this job"
             popupPlacement="bottom"
             >edit</i
+          >
+
+          <i
+            class="material-icons delete-icon"
+            (click)="onDelete(job.id)"
+            suiPopup
+            popupText="Delete this job"
+            popupPlacement="bottom"
+            >delete</i
+          >
+          <i
+            *ngIf="job.isActive"
+            class="material-icons disable-icon"
+            (click)="onEnableDisable(job.id, false)"
+            suiPopup
+            popupText="Disable this job"
+            popupPlacement="bottom"
+            >highlight_off</i
+          >
+          <i
+            *ngIf="!job.isActive"
+            class="material-icons enable-icon"
+            (click)="onEnableDisable(job.id, true)"
+            suiPopup
+            popupText="Enable this job"
+            popupPlacement="bottom"
+            >check_circle</i
           >
         </span>
         <span>

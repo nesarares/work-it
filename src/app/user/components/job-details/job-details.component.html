@@ -27,6 +27,7 @@
         [(ngModel)]="job.city"
         [optionsLookup]="optionsLookupCity"
         labelField="label"
+        selectedDefault="Cluj-Napoca"
         valueField="value"
         [isSearchable]="true"
         name="city"
@@ -137,7 +138,7 @@
     <div class="field">* Field is required</div>
 
     <button class="ui primary button" (click)="addJob()">
-      Add job listing
+      {{ buttonText }}
     </button>
   </div>
 </form>

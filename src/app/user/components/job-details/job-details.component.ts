@@ -7,6 +7,8 @@ import { MessageService } from 'src/app/shared/services/message.service';
 import { BadgeGroupComponent } from 'src/app/shared/components/badge-group/badge-group.component';
 import { LookupFn } from 'ng2-semantic-ui';
 import { CitiesService } from 'src/app/shared/services/cities.service';
+import { ActivatedRoute } from '@angular/router';
+import { names } from 'src/app/shared/constants/names';
 
 interface IOption {
   label: string;
@@ -34,6 +36,7 @@ export class JobDetailsComponent implements OnInit {
   };
 
   userId: string;
+  buttonText: string;
 
   @ViewChild(BadgeGroupComponent)
   tagGroupComponent: BadgeGroupComponent;
@@ -42,9 +45,15 @@ export class JobDetailsComponent implements OnInit {
     private auth: AuthService,
     private jobService: JobService,
     private messageService: MessageService,
-    private citiesService: CitiesService
+    private citiesService: CitiesService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
+  /*
+      If jobId is present in route job will be edited, and fields will be populated with coresponding
+    values from the job.
+      Otherwise will be added
+  */
   ngOnInit() {
     const user = this.auth.user;
     this.job.employer = {
@@ -54,6 +63,34 @@ export class JobDetailsComponent implements OnInit {
       photoUrl: user.photoUrl
     };
     this.userId = user.uid;
+
+    this.activatedRoute.paramMap.subscribe(obs => {
+      const jobId = obs.get('jobId');
+
+      this.buttonText = names.buttonAddJob;
+
+      // the job will be added
+      if (!jobId) {
+        return;
+      }
+
+      this.buttonText = names.buttonEditJob;
+
+      // the job will be edited
+      this.populateFields(jobId);
+    });
+  }
+
+  /**
+   * Populates fields with values coresponding to the job with id @param jobId
+   * @param jobId: string, job's id
+   */
+  private populateFields(jobId: string) {
+    this.jobService.getJobById(jobId).subscribe(job => {
+      this.job = job;
+      console.log(job.city);
+      this.tags = this.job.tags.join(',');
+    });
   }
 
   addJob() {
@@ -72,13 +109,20 @@ export class JobDetailsComponent implements OnInit {
       return;
     }
 
+    let message = 'The job has been succesfully added .';
     this.job.tags = this.tagGroupComponent.tagList;
-    this.job.publishedDate = new Date();
-    this.jobService.addJob(this.job, this.userId);
+
+    if (this.buttonText === names.buttonAddJob) {
+      this.job.publishedDate = new Date();
+      this.jobService.addJob(this.job, this.userId);
+    } else {
+      this.jobService.updateJob(this.job);
+      message = 'The job has been succesfully updated .';
+    }
 
     this.messageService.showMessage({
       type: 'success',
-      text: 'The job listing has been added succesfully.',
+      text: message,
       header: 'Success'
     });
   }
