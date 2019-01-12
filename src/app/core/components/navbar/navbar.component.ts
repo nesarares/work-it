@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/models/user';
+import { NotificationType } from 'src/app/shared/models/notificationType';
 
 @Component({
   selector: 'app-navbar',
@@ -48,5 +49,20 @@ export class NavbarComponent implements OnInit {
 
   closeMobileMenu() {
     this.mobileMenuActive = false;
+  }
+
+  getIcon(notificationType: string): string {
+    switch (notificationType) {
+      case NotificationType.APPLICATION_ACCEPTED:
+        return 'done';
+      case NotificationType.LEAVE_REVIEW:
+        return 'rate_review';
+      case NotificationType.NEW_APPLICATION:
+        return 'person_pin';
+      case NotificationType.NEW_REVIEW:
+        return 'star';
+      default:
+        return 'message';
+    }
   }
 }

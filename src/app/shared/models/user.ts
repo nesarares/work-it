@@ -8,5 +8,6 @@ export interface User {
   displayName?: string;
   photoUrl?: string;
   applications?: Application[];
+  notifications?: Notification[];
   userProfile?: UserProfile;
 }

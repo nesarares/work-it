@@ -18,34 +18,63 @@
         <i class="{{ menuItem.icon }} icon right spaced"></i>
         {{ menuItem.text }}
       </a>
-      <div
-        class="ui pointing dropdown avt vertical center aligned"
-        suiDropdown
-        *ngIf="(user$ | async) as user; else login"
-      >
-        <img class="ui avatar image" src="{{ user.photoUrl }}" />
-        <div class="menu menu-user" suiDropdownMenu>
-          <a
-            *ngFor="let menuItem of menuItemsUser"
-            [routerLink]="menuItem.link(user)"
-            class="item pad"
-          >
-            <i class="material-icons" *ngIf="menuItem.materialIcon">{{
-              menuItem.icon
-            }}</i>
-            <i
-              class="{{ menuItem.icon }} icon"
-              *ngIf="!menuItem.materialIcon"
-            ></i>
-            <span>{{ menuItem.text }}</span>
-          </a>
-          <div class="ui divider"></div>
-          <a class="item pad" (click)="signOut()">
-            <i class="sign-out icon"></i> <span>Sign out</span>
-          </a>
-        </div>
-      </div>
 
+      <ng-container *ngIf="(user$ | async) as user; else login">
+        <div
+          class="ui pointing dropdown vertical center aligned notification-dropdown"
+          suiDropdown
+        >
+          <i class="material-icons">notifications</i>
+          <div class="menu transition visible" suiDropdownMenu>
+            <ng-container *ngIf="user.notifications; else emptyNofifications">
+              <a
+                class="item pad"
+                *ngFor="let notification of user.notifications"
+              >
+                <div class="notification-icon">
+                  <i class="material-icons">{{ getIcon(notification.type) }}</i>
+                </div>
+                <div class="column info">
+                  <span class="date">
+                    {{ notification.date.toDate() | date: 'medium' }}
+                  </span>
+                  <span class="message"> {{ notification.message }} </span>
+                </div>
+              </a>
+            </ng-container>
+            <ng-template #emptyNofifications>
+              <p>You have no new notifications!</p>
+            </ng-template>
+          </div>
+        </div>
+
+        <div
+          class="ui pointing dropdown avt vertical center aligned"
+          suiDropdown
+        >
+          <img class="ui avatar image" src="{{ user.photoUrl }}" />
+          <div class="menu menu-user" suiDropdownMenu>
+            <a
+              *ngFor="let menuItem of menuItemsUser"
+              [routerLink]="menuItem.link(user)"
+              class="item pad"
+            >
+              <i class="material-icons" *ngIf="menuItem.materialIcon">{{
+                menuItem.icon
+              }}</i>
+              <i
+                class="{{ menuItem.icon }} icon"
+                *ngIf="!menuItem.materialIcon"
+              ></i>
+              <span>{{ menuItem.text }}</span>
+            </a>
+            <div class="ui divider"></div>
+            <a class="item pad" (click)="signOut()">
+              <i class="sign-out icon"></i> <span>Sign out</span>
+            </a>
+          </div>
+        </div>
+      </ng-container>
       <ng-template #login>
         <a routerLink="/login">
           <i class="sign-in icon right spaced"></i> Login
