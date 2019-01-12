@@ -110,9 +110,9 @@ export class JobDetailsComponent implements OnInit {
     }
 
     let message = 'The job has been succesfully added .';
+    this.job.tags = this.tagGroupComponent.tagList;
 
     if (this.buttonText === names.buttonAddJob) {
-      this.job.tags = this.tagGroupComponent.tagList;
       this.job.publishedDate = new Date();
       this.jobService.addJob(this.job, this.userId);
     } else {
