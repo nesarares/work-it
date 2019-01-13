@@ -15,7 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ContactComponent } from './components/contact/contact.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
-import { keys } from '../shared/constants/apiKey';
+import { apiKeys } from 'src/environments/apiKeys';
 
 @NgModule({
   imports: [
@@ -25,7 +25,7 @@ import { keys } from '../shared/constants/apiKey';
     ParticlesModule,
     JsonpModule,
     AgmCoreModule.forRoot({
-      apiKey: keys.mapsApiKey
+      apiKey: apiKeys.mapsApiKey
     }),
     HttpClientModule
   ],

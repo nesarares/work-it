@@ -43,6 +43,16 @@ export const firebaseConfig = {
 };
 ```
 
+- Also create an apiKeys file in **src/environments/apiKeys.ts** with this structure:
+
+```ts
+export const apiKeys = {
+  mapsApiKey: 'ANGULAR MAPS API KEY'
+};
+```
+
+[Angular maps](https://angular-maps.com/)
+
 ## Workflow
 
 - For workflow / git / angular information visit [this link](https://github.com/nesarares/work-it/tree/master/docs/workflow.md)
