@@ -1,15 +1,41 @@
 <ng-container *ngIf="user">
-  <app-create-profile-employer
-    *ngIf="user.userProfile.userType === employerType"
-    [user]="user"
-    (afterUpdate)="updateCallback($event)"
-  >
-  </app-create-profile-employer>
+  <div class="ui stackable grid">
+    <div class="six wide column">
+      <div class="ui circular image">
+        <img src="{{ user.photoUrl }}" alt="Profile picture" />
+        <!-- <div class="overlay"> -->
+        <input
+          type="file"
+          name="file"
+          id="file"
+          class="inputfile"
+          (change)="uploadPhoto($event)"
+        />
+        <label for="file" class="overlay">
+          <i class="material-icons">add_a_photo</i>
+        </label>
+        <!-- </div> -->
+      </div>
+      <h2>{{ user.displayName }}</h2>
+      <div class="ui divider"></div>
+      <p class="cv-message" *ngIf="!user.userProfile.cvLink">
+        You currently have no CV uploaded.
+      </p>
+    </div>
+    <div class="ten wide column">
+      <app-create-profile-employer
+        *ngIf="user.userProfile.userType === employerType"
+        [user]="user"
+        (afterUpdate)="updateCallback($event)"
+      >
+      </app-create-profile-employer>
 
-  <app-create-profile-employee
-    *ngIf="user.userProfile.userType === employeeType"
-    [user]="user"
-    (afterUpdate)="updateCallback($event)"
-  >
-  </app-create-profile-employee>
+      <app-create-profile-employee
+        *ngIf="user.userProfile.userType === employeeType"
+        [user]="user"
+        (afterUpdate)="updateCallback($event)"
+      >
+      </app-create-profile-employee>
+    </div>
+  </div>
 </ng-container>
