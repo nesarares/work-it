@@ -13,6 +13,9 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
 import { JsonpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContactComponent } from './components/contact/contact.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AgmCoreModule } from '@agm/core';
+import { keys } from '../shared/constants/apiKey';
 
 @NgModule({
   imports: [
@@ -20,7 +23,11 @@ import { ContactComponent } from './components/contact/contact.component';
     SharedModule,
     PasswordStrengthMeterModule,
     ParticlesModule,
-    JsonpModule
+    JsonpModule,
+    AgmCoreModule.forRoot({
+      apiKey: keys.mapsApiKey
+    }),
+    HttpClientModule
   ],
   declarations: [
     HomeComponent,

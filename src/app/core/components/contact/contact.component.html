@@ -1,1 +1,59 @@
-<p>contact works!</p>
+<div class="content-wrapper">
+  <div class="content">
+    <div class="lower">
+      <agm-map
+        [latitude]="latitude"
+        [longitude]="longitude"
+        [zoom]="15"
+        class="map-widget"
+      >
+        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+      </agm-map>
+    </div>
+
+    <div class="upper">
+      <div class="logo"><img src="../../../../assets/logo-text.svg" /></div>
+
+      <div class="contact">
+        <div class="info">
+          <div>
+            <i class="envelope huge icon"></i> <span>workit.235@gmail.com</span>
+          </div>
+          <div><i class="phone huge icon"></i> <span>0728664018</span></div>
+          <div class="location-wrapper">
+            <div><i class="map marker alternate huge icon"></i></div>
+            <div class="location">
+              <div>Str. Teodor Mihali, Nr.58-60</div>
+              <div>400591, Cluj Napoca, Romania</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info social">
+          <div class="text">Follow us on</div>
+          <div class="widgets">
+            <div>
+              <a
+                target="_blank"
+                href="https://www.facebook.com/Work-It-472297319966912/"
+              >
+                <i class="facebook huge icon"></i>
+              </a>
+            </div>
+            <div>
+              <a target="_blank" href="https://twitter.com/WorkIt32447080/">
+                <i class="twitter huge icon"></i>
+              </a>
+            </div>
+            <div>
+              <a target="_blank" href="https://www.instagram.com/sergiu_lz/">
+                <i class="instagram huge icon"></i>
+              </a>
+            </div>
+          </div>
+          <div class="text">Put your free time to good use!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
