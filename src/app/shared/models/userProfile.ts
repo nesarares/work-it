@@ -3,9 +3,9 @@ import { UserType } from './userType';
 export interface UserProfile {
   userType?: UserType;
   firstName: string;
-  lastName: string;
+  lastName?: string;
   birthDate: Date;
-  companyName?: string;
+  // companyName?: string;
   aboutCompany?: string;
   interests?: string;
   tags?: string[];

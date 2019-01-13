@@ -1,0 +1,15 @@
+<ng-container *ngIf="user">
+  <app-create-profile-employer
+    *ngIf="user.userProfile.userType === employerType"
+    [user]="user"
+    (afterUpdate)="updateCallback($event)"
+  >
+  </app-create-profile-employer>
+
+  <app-create-profile-employee
+    *ngIf="user.userProfile.userType === employeeType"
+    [user]="user"
+    (afterUpdate)="updateCallback($event)"
+  >
+  </app-create-profile-employee>
+</ng-container>

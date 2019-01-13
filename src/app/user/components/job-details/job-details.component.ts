@@ -57,9 +57,7 @@ export class JobDetailsComponent implements OnInit {
   ngOnInit() {
     const user = this.auth.user;
     this.job.employer = {
-      displayName: user.userProfile.companyName
-        ? user.userProfile.companyName
-        : user.displayName,
+      displayName: user.displayName,
       photoUrl: user.photoUrl
     };
     this.userId = user.uid;

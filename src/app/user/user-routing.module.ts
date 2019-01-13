@@ -10,6 +10,7 @@ import { AuthGuard } from '../shared/guards/auth.guard';
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { UserJobsComponent } from './components/user-jobs/user-jobs.component';
 import { UserApplicationsComponent } from './components/user-applications/user-applications.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,11 @@ const routes: Routes = [
       {
         path: 'my-applications',
         component: UserApplicationsComponent,
+        outlet: 'dashboard'
+      },
+      {
+        path: 'settings',
+        component: UserSettingsComponent,
         outlet: 'dashboard'
       }
     ]

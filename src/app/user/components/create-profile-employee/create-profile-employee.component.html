@@ -13,7 +13,7 @@
           userProfileForm.controls.lastName.errors)
     }"
   >
-    <label for="firstNameNormalUser">Name</label>
+    <label for="firstNameNormalUser">Name *</label>
   </div>
 
   <div class="two fields">
@@ -73,7 +73,7 @@
       error: isFormSubmitted && userProfileForm.controls.birthDate.errors
     }"
   >
-    <label class="large" for="birthDateNormal">Birthdate</label>
+    <label class="large" for="birthDateNormal">Birthdate *</label>
     <input
       type="date"
       formControlName="birthDate"
@@ -126,6 +126,8 @@
       id="workExperience"
     ></textarea>
   </div>
+
+  <div class="field">* Field is required</div>
 
   <!-- Submit button -->
   <button class="ui submit button" id="isFormSubmitted">Submit</button>

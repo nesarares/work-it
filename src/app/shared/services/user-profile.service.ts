@@ -18,10 +18,15 @@ export class UserProfileService {
    * Updates the user profile of the user with the specifiedu serId
    */
   async updateUserProfile(userId: string, userProfile: UserProfile) {
-    const displayName =
-      userProfile.userType == UserType.Employee
-        ? `${userProfile.firstName} ${userProfile.lastName}`
-        : userProfile.companyName;
+    console.log('update');
+    console.log({ userId });
+    console.log({ userProfile });
+    const displayName = userProfile.lastName
+      ? `${userProfile.firstName} ${userProfile.lastName}`
+      : userProfile.firstName;
+    // userProfile.userType == UserType.Employee
+    //   ? `${userProfile.firstName} ${userProfile.lastName}`
+    //   : userProfile.companyName;
     return this.afs
       .collection<User>('users')
       .doc(userId)

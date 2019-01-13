@@ -43,13 +43,21 @@ export class DashboardComponent implements OnInit {
         `/user/${user.uid}`,
         { outlets: { dashboard: ['my-applications'] } }
       ]
+    },
+    {
+      icon: 'settings',
+      text: 'Edit profile',
+      link: user => [
+        `/user/${user.uid}`,
+        { outlets: { dashboard: ['settings'] } }
+      ]
     }
   ];
 
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.user$ = this.auth.user$.pipe(tap(console.log));
+    this.user$ = this.auth.user$;
   }
 
   navigateToUserProfile(uid: string) {

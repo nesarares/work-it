@@ -13,6 +13,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { UserJobsComponent } from './components/user-jobs/user-jobs.component';
 import { UserApplicationsComponent } from './components/user-applications/user-applications.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { UserApplicationsComponent } from './components/user-applications/user-a
     CreateProfileEmployeeComponent,
     PublicProfileComponent,
     UserJobsComponent,
-    UserApplicationsComponent
+    UserApplicationsComponent,
+    UserSettingsComponent
   ]
 })
 export class UserModule {}

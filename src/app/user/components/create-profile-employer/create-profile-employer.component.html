@@ -13,7 +13,7 @@
           userProfileForm.controls.lastName.errors)
     }"
   >
-    <label>Name</label>
+    <label>Name / Company name *</label>
   </div>
 
   <div class="two fields">
@@ -28,7 +28,7 @@
         type="text"
         formControlName="firstName"
         id="firstNameCompany"
-        placeholder="First Name"
+        placeholder="First Name / Company name"
       />
       <span
         class="error text"
@@ -53,15 +53,6 @@
         id="lastNameCompany"
         placeholder="Last Name"
       />
-      <span
-        class="error text"
-        *ngIf="
-          isFormSubmitted &&
-          userProfileForm.controls.lastName.errors &&
-          userProfileForm.controls.lastName.errors.required
-        "
-        >Last name required.</span
-      >
     </div>
   </div>
 
@@ -72,7 +63,7 @@
       error: isFormSubmitted && userProfileForm.controls.birthDate.errors
     }"
   >
-    <label class="large">Birthdate</label>
+    <label class="large">Birthdate *</label>
     <input
       type="date"
       formControlName="birthDate"
@@ -91,7 +82,7 @@
   </div>
 
   <!-- Company name -->
-  <div
+  <!-- <div
     class="field"
     [ngClass]="{
       error: isFormSubmitted && userProfileForm.controls.companyName.errors
@@ -113,7 +104,7 @@
       "
       >Company name required.</span
     >
-  </div>
+  </div> -->
 
   <!-- About company details -->
   <div
@@ -122,7 +113,7 @@
       error: isFormSubmitted && userProfileForm.controls.aboutCompany.errors
     }"
   >
-    <label for="aboutCompany">About company</label>
+    <label for="aboutCompany">About company *</label>
     <textarea
       formControlName="aboutCompany"
       maxlength="500"
@@ -139,6 +130,8 @@
       >About company required.
     </span>
   </div>
+
+  <div class="field">* Field is required</div>
 
   <!-- Submit button -->
   <button class="ui submit button" id="submituserProfileForm">Submit</button>
