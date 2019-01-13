@@ -12,6 +12,10 @@ import { NavbarMobileComponent } from './components/navbar-mobile/navbar-mobile.
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { JsonpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ContactComponent } from './components/contact/contact.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AgmCoreModule } from '@agm/core';
+import { keys } from '../shared/constants/apiKey';
 
 @NgModule({
   imports: [
@@ -19,7 +23,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     PasswordStrengthMeterModule,
     ParticlesModule,
-    JsonpModule
+    JsonpModule,
+    AgmCoreModule.forRoot({
+      apiKey: keys.mapsApiKey
+    }),
+    HttpClientModule
   ],
   declarations: [
     HomeComponent,
@@ -28,13 +36,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     RegisterComponent,
     FooterComponent,
     NavbarMobileComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
+    ContactComponent
   ],
   exports: [
     HomeComponent,
     LoginComponent,
     NavbarComponent,
     FooterComponent,
+    ContactComponent,
     PrivacyPolicyComponent
   ]
 })
