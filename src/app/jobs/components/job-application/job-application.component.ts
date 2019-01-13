@@ -12,6 +12,7 @@ import { JobService } from 'src/app/shared/services/job.service';
 import { User } from 'src/app/shared/models/user';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MessageService } from 'src/app/shared/services/message.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-job-application',
@@ -25,16 +26,24 @@ export class JobApplicationComponent implements OnInit {
     private authService: AuthService,
     private jobService: JobService,
     private messageService: MessageService,
+    private spinner: NgxSpinnerService,
     public dialogRef: MatDialogRef<JobApplicationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Job
   ) {}
 
   ngOnInit() {}
 
-  apply() {
+  async apply() {
+    this.spinner.show();
     const user: User = this.authService.user;
     const date: Date = new Date();
-    this.jobService.addJobApplication(this.data, user, date, this.message);
+    await this.jobService.addJobApplication(
+      this.data,
+      user,
+      date,
+      this.message
+    );
+    this.spinner.hide();
     this.messageService.showMessage({
       type: 'success',
       text: 'The application has been added succesfully.',

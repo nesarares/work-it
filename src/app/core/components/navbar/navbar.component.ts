@@ -3,6 +3,9 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/models/user';
 import { NotificationType } from 'src/app/shared/models/notificationType';
+import { UserService } from 'src/app/shared/services/user.service';
+import { tap } from 'rxjs/operators';
+import { Notification } from 'src/app/shared/models/notification';
 
 @Component({
   selector: 'app-navbar',
@@ -11,6 +14,9 @@ import { NotificationType } from 'src/app/shared/models/notificationType';
 })
 export class NavbarComponent implements OnInit {
   user$: Observable<User>;
+  notifications$: Observable<Notification[]>;
+  notificationsNumber: number = 0;
+
   mobileMenuActive: boolean = false;
   menuItems = [
     {
@@ -33,10 +39,23 @@ export class NavbarComponent implements OnInit {
     }
   ];
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, public userService: UserService) {}
 
   ngOnInit() {
-    this.user$ = this.auth.user$;
+    this.user$ = this.auth.user$.pipe(
+      tap(usr => {
+        if (!usr) return;
+        this.notifications$ = this.userService
+          .getUserNotifications(usr.uid)
+          .pipe(
+            tap(notifications => {
+              this.notificationsNumber = notifications
+                ? notifications.length
+                : 0;
+            })
+          );
+      })
+    );
   }
 
   signOut() {
@@ -64,5 +83,9 @@ export class NavbarComponent implements OnInit {
       default:
         return 'message';
     }
+  }
+
+  deleteNotification(userId: string, notificationId: string) {
+    this.userService.deleteNotification(userId, notificationId);
   }
 }

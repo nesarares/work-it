@@ -8,6 +8,7 @@ import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { Application } from '../models/application';
+import { Notification } from '../models/notification';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,32 @@ export class UserService {
           (application: Application) => application.employeeRef.id != user.uid
         )
     });
+  }
+
+  getUserNotifications(uid: string): Observable<Notification[]> {
+    return this.userCollection
+      .doc<User>(uid)
+      .collection<Notification>('notifications', ref =>
+        ref.orderBy('date', 'desc')
+      )
+      .valueChanges();
+  }
+
+  deleteNotification(userId: string, notificationId: string) {
+    return this.userCollection
+      .doc<User>(userId)
+      .collection<Notification>('notifications')
+      .doc(notificationId)
+      .delete();
+  }
+
+  addNotification(userId: string, notification: Notification) {
+    const id = this.afs.createId();
+    notification.id = id;
+    return this.userCollection
+      .doc<User>(userId)
+      .collection<Notification>('notifications')
+      .doc(id)
+      .set(notification);
   }
 }

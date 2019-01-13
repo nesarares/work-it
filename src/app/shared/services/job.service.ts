@@ -14,6 +14,9 @@ import { Application } from '../models/application';
 import { User } from '../models/user';
 import { isNullOrUndefined } from 'util';
 import { intersection, toLower } from '../utils/utils';
+import { UserService } from './user.service';
+import { Notification } from '../models/notification';
+import { NotificationType } from '../models/notificationType';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +24,11 @@ import { intersection, toLower } from '../utils/utils';
 export class JobService {
   private jobsCollection: AngularFirestoreCollection<Job>;
 
-  constructor(private afs: AngularFirestore, private authService: AuthService) {
+  constructor(
+    private afs: AngularFirestore,
+    private authService: AuthService,
+    private userService: UserService
+  ) {
     this.jobsCollection = this.afs.collection<Job>('jobs');
   }
 
@@ -183,9 +190,7 @@ export class JobService {
     return (await this.jobsCollection.get().toPromise()).docs.length;
   }
 
-  addJobApplication(job: Job, user: User, date: Date, message: string) {
-    // TODO: make method return promise
-
+  async addJobApplication(job: Job, user: User, date: Date, message: string) {
     const employeeRef = this.afs.collection('users').doc(user.uid).ref;
     const displayName = this.authService.user.displayName;
     const photoUrl = this.authService.user.photoUrl;
@@ -217,10 +222,21 @@ export class JobService {
       .collection('jobs')
       .doc(job.id)
       .update(job);
+
     this.afs
       .collection('users')
       .doc(user.uid)
       .update(user);
+
+    const jobTitleShort =
+      job.title.length > 20 ? `${job.title.substr(0, 20)}...` : job.title;
+    const notification: Notification = {
+      date: new Date(),
+      type: NotificationType.NEW_APPLICATION,
+      message: `You have a new application for "${jobTitleShort}"`,
+      link: `/jobs/${job.id}`
+    };
+    this.userService.addNotification(job.employerRef.id, notification);
   }
 
   getJobsByEmployer(userRef: DocumentReference) {
