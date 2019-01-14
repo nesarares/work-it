@@ -11,6 +11,38 @@
       border-right: 1px solid @light-border;
       border-bottom: 0;
 
+      .inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      }
+
+      .upload-button {
+        font-size: 1.15em;
+        font-weight: 700;
+        padding: 0.78571429em 1.5em 0.78571429em;
+        color: white;
+        background-color: @primary-color-buttons;
+        display: inline-block;
+        border-radius: 4px;
+        cursor: pointer;
+
+        * {
+          vertical-align: middle;
+        }
+
+        i {
+          margin-right: 0.4em;
+        }
+
+        &:hover {
+          background-color: @primary-color-buttons-darken;
+        }
+      }
+
       .image {
         max-width: 240px;
         position: relative;
@@ -28,15 +60,6 @@
         img {
           cursor: pointer;
           transition: 0.3s ease;
-        }
-
-        .inputfile {
-          width: 0.1px;
-          height: 0.1px;
-          opacity: 0;
-          overflow: hidden;
-          position: absolute;
-          z-index: -1;
         }
 
         .overlay {
@@ -62,6 +85,15 @@
         }
       }
 
+      .ui.progress {
+        max-width: 240px;
+        width: 100%;
+      }
+
+      .image-error {
+        margin-bottom: -1em;
+      }
+
       h2 {
         text-align: center;
         font-family: @font-family-accent;
@@ -74,9 +106,25 @@
       }
 
       .cv-message {
-        font-size: 1.15em;
+        font-size: 1.2em;
         text-align: center;
         font-weight: bold;
+        position: relative;
+
+        * {
+          vertical-align: middle;
+        }
+
+        i {
+          margin-left: 0.5em;
+          color: @dark-color;
+          font-size: 1.8em;
+          cursor: pointer;
+
+          &:hover {
+            color: @primary-color;
+          }
+        }
       }
     }
 

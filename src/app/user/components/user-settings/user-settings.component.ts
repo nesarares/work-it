@@ -4,10 +4,11 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { User } from 'src/app/shared/models/user';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { UserType } from 'src/app/shared/models/userType';
-import { take } from 'rxjs/operators';
-import { imageConstants } from 'src/app/shared/constants/image-constants';
+import { take, finalize, tap } from 'rxjs/operators';
+import { fileConstants } from 'src/app/shared/constants/image-constants';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -19,10 +20,17 @@ export class UserSettingsComponent implements OnInit {
   employeeType: UserType = UserType.Employee;
 
   user: User;
+  user$: Observable<User>;
+
+  imageError: boolean = false;
+  cvError: boolean = false;
+  uploadPercentImage: Observable<number>;
+  uploadPercentCv: Observable<number>;
 
   constructor(
     private authService: AuthService,
     private userProfileService: UserProfileService,
+    private userService: UserService,
     private messageService: MessageService,
     private spinner: NgxSpinnerService
   ) {}
@@ -30,15 +38,21 @@ export class UserSettingsComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.user = this.authService.user;
-
     if (!this.user) {
-      this.authService.user$.pipe(take(1)).subscribe(user => {
-        console.log({ user });
-        this.user = user;
-        this.spinner.hide();
-      });
+      this.user$ = this.authService.user$.pipe(
+        tap(user => {
+          this.spinner.hide();
+          this.user = user;
+          this.uploadPercentImage = null;
+        })
+      );
     } else {
-      this.spinner.hide();
+      this.user$ = this.userService.getUser(this.user.uid).pipe(
+        tap(() => {
+          this.spinner.hide();
+          // this.uploadPercentImage = null;
+        })
+      );
     }
   }
 
@@ -60,8 +74,14 @@ export class UserSettingsComponent implements OnInit {
   }
 
   uploadPhoto(event) {
-    const file = event.target.files[0];
-    const { size } = file;
+    const file: File = event.target.files[0];
+    if (!file) return;
+    const { size, type } = file;
+
+    if (!this.checkValidImageSizeAndFormat(size, type)) {
+      this.imageError = true;
+      return;
+    }
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -71,23 +91,50 @@ export class UserSettingsComponent implements OnInit {
       img.onload = () => {
         const { width, height } = img;
         console.log({ width, height, size });
-        if (this.checkValidImage(size, width, height)) {
+        if (this.checkValidImage(width, height)) {
           // upload image
+          this.imageError = false;
+          const task = this.userProfileService.updateUserPhoto(
+            this.user.uid,
+            file
+          );
+          this.uploadPercentImage = task.percentageChanges();
         } else {
           // invalid image
-          console.log(
-            'Image must be a square, with at least 240px size and less than 300kb'
-          );
+          this.imageError = true;
         }
       };
     };
   }
 
-  checkValidImage(size: number, width: number, height: number): boolean {
+  checkValidImage(width: number, height: number): boolean {
+    return width === height && width >= fileConstants.avatarMinSizePx;
+  }
+
+  checkValidImageSizeAndFormat(size: number, format: string) {
     return (
-      size < imageConstants.maxSizeBytes &&
-      width === height &&
-      width >= imageConstants.minSizePx
+      size < fileConstants.avatarMaxSizeBytes &&
+      fileConstants.avatarFileTypes.includes(format)
+    );
+  }
+
+  uploadCv(event) {
+    const file: File = event.target.files[0];
+    if (!file) return;
+    const { size, type } = file;
+
+    if (!this.checkValidCvSizeAndFormat(size, type)) {
+      this.cvError = true;
+      return;
+    }
+    this.cvError = false;
+    const task = this.userProfileService.updateUserCv(this.user.uid, file);
+    this.uploadPercentCv = task.percentageChanges();
+  }
+
+  checkValidCvSizeAndFormat(size: number, format: string) {
+    return (
+      size < fileConstants.cvMaxSizeBytes && format === fileConstants.cvFileType
     );
   }
 }

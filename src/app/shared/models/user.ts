@@ -7,6 +7,7 @@ export interface User {
   email: string;
   displayName?: string;
   photoUrl?: string;
+  cvUrl?: string;
   applications?: Application[];
   notifications?: Notification[];
   userProfile?: UserProfile;

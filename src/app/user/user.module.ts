@@ -14,12 +14,14 @@ import { PublicProfileComponent } from './components/public-profile/public-profi
 import { UserJobsComponent } from './components/user-jobs/user-jobs.component';
 import { UserApplicationsComponent } from './components/user-applications/user-applications.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     UserRoutingModule,
+    AngularFireStorageModule,
     QuillModule.forRoot({
       modules: {
         toolbar: [
