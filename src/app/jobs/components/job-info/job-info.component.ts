@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { take } from 'rxjs/operators';
 import { UserType } from 'src/app/shared/models/userType';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
   selector: 'app-job-info',
@@ -23,10 +24,12 @@ export class JobInfoComponent implements OnInit, OnDestroy {
   isEmployer: boolean = false;
   isUserTitularOfTheJob: boolean = false;
   subscriptions: Subscription[] = [];
+  loggedUser: boolean = true;
 
   constructor(
     private jobService: JobService,
     private authService: AuthService,
+    private messageService: MessageService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private spinner: NgxSpinnerService
@@ -43,6 +46,7 @@ export class JobInfoComponent implements OnInit, OnDestroy {
             this.job = job;
             this.subscriptions.push(
               this.authService.userRef().subscribe(userRef => {
+                this.loggedUser = !!userRef;
                 if (
                   this.authService.user &&
                   this.authService.user.userProfile.userType ===
@@ -76,6 +80,15 @@ export class JobInfoComponent implements OnInit, OnDestroy {
   }
 
   handleApply() {
+    if (!this.loggedUser) {
+      this.messageService.showMessage({
+        type: 'error',
+        text: 'You need to be logged in order to apply for a job.',
+        header: 'Error'
+      });
+      return;
+    }
+
     this.dialog.open(JobApplicationComponent, {
       width: '500px',
       maxWidth: '93%',
