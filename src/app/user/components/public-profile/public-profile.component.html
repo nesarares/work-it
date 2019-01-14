@@ -7,6 +7,15 @@
     />
     <h1 class="username">{{ user.displayName }}</h1>
 
+    <a
+      *ngIf="user.cvUrl"
+      href="{{ user.cvUrl }}"
+      target="_blank"
+      class="ui primary button download-cv"
+    >
+      <i class="material-icons"> attach_file </i><span>Download CV</span>
+    </a>
+
     <div *ngIf="user.userProfile.aboutCompany" class="employerDiv">
       <div class="ui divider"></div>
       <!-- <h2 class="ui header">About the company</h2> -->

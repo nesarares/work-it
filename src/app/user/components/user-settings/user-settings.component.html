@@ -33,50 +33,53 @@
 
       <h2>{{ user.displayName }}</h2>
 
-      <div class="ui divider"></div>
+      <ng-container *ngIf="user.userProfile.userType === employeeType">
+        <div class="ui divider"></div>
 
-      <p class="cv-message" *ngIf="!user.cvUrl; else userCv">
-        You currently have no CV uploaded.
-      </p>
-      <ng-template #userCv>
-        <p class="cv-message">
-          <a href="{{ user.cvUrl }}" target="_blank"
-            >Download your current cv</a
-          >
-          <i
-            class="material-icons"
-            suiPopup
-            popupText="Delete this cv"
-            popupPlacement="bottom"
-            >delete</i
-          >
+        <p class="cv-message" *ngIf="!user.cvUrl; else userCv">
+          You currently have no CV uploaded.
         </p>
-      </ng-template>
+        <ng-template #userCv>
+          <p class="cv-message">
+            <a href="{{ user.cvUrl }}" target="_blank"
+              >Download your current cv</a
+            >
+            <i
+              class="material-icons"
+              suiPopup
+              popupText="Delete this cv"
+              popupPlacement="bottom"
+              (click)="deleteCv(user.uid)"
+              >delete</i
+            >
+          </p>
+        </ng-template>
 
-      <sui-progress
-        class="tiny indicating"
-        *ngIf="uploadPercentCv"
-        [value]="uploadPercentCv | async"
-      ></sui-progress>
+        <sui-progress
+          class="tiny indicating"
+          *ngIf="uploadPercentCv"
+          [value]="uploadPercentCv | async"
+        ></sui-progress>
 
-      <input
-        type="file"
-        name="cvFile"
-        id="cvFile"
-        class="inputfile"
-        (change)="uploadCv($event)"
-      />
-      <label for="cvFile" class="upload-button">
-        <i class="material-icons">publish</i><span>Upload CV</span>
-      </label>
+        <input
+          type="file"
+          name="cvFile"
+          id="cvFile"
+          class="inputfile"
+          (change)="uploadCv($event)"
+        />
+        <label for="cvFile" class="upload-button">
+          <i class="material-icons">publish</i><span>Upload CV</span>
+        </label>
 
-      <div class="ui error message" *ngIf="cvError">
-        <div class="header">The cv you submitted is invalid.</div>
-        <ul class="list">
-          <li>The cv format has to be .pdf</li>
-          <li>The cv needs to be less than 5MB</li>
-        </ul>
-      </div>
+        <div class="ui error message" *ngIf="cvError">
+          <div class="header">The cv you submitted is invalid.</div>
+          <ul class="list">
+            <li>The cv format has to be .pdf</li>
+            <li>The cv needs to be less than 5MB</li>
+          </ul>
+        </div>
+      </ng-container>
     </div>
     <div class="ten wide column">
       <app-create-profile-employer

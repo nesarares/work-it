@@ -13,6 +13,7 @@ import {
   AngularFireUploadTask
 } from '@angular/fire/storage';
 import { takeLast, finalize, take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -78,5 +79,14 @@ export class UserProfileService {
       )
       .subscribe();
     return task;
+  }
+
+  deleteUserCv(userId: string): Observable<any> {
+    this.afs
+      .collection<User>('users')
+      .doc(userId)
+      .update({ cvUrl: null });
+    const ref = this.storage.ref(`${userId}-cv`);
+    return ref.delete();
   }
 }

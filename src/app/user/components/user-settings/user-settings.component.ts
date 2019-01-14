@@ -56,6 +56,17 @@ export class UserSettingsComponent implements OnInit {
     }
   }
 
+  async deleteCv(userId: string) {
+    this.spinner.show();
+    await this.userProfileService.deleteUserCv(userId).toPromise();
+    this.spinner.hide();
+    this.messageService.showMessage({
+      type: 'success',
+      text: 'The cv has been removed succesfully.',
+      header: 'Success'
+    });
+  }
+
   updateCallback(success: boolean) {
     if (success) {
       this.messageService.showMessage({
@@ -99,6 +110,14 @@ export class UserSettingsComponent implements OnInit {
             file
           );
           this.uploadPercentImage = task.percentageChanges();
+          task.then(() => {
+            this.uploadPercentImage = null;
+            this.messageService.showMessage({
+              type: 'success',
+              text: 'The profile picture has been updated succesfully.',
+              header: 'Success'
+            });
+          });
         } else {
           // invalid image
           this.imageError = true;
@@ -130,6 +149,14 @@ export class UserSettingsComponent implements OnInit {
     this.cvError = false;
     const task = this.userProfileService.updateUserCv(this.user.uid, file);
     this.uploadPercentCv = task.percentageChanges();
+    task.then(() => {
+      this.uploadPercentCv = null;
+      this.messageService.showMessage({
+        type: 'success',
+        text: 'The cv has been uploaded succesfully.',
+        header: 'Success'
+      });
+    });
   }
 
   checkValidCvSizeAndFormat(size: number, format: string) {
