@@ -1,4 +1,56 @@
 <div class="content-wrapper">
+  <div class="ui three column stackable very relaxed grid container">
+    <div class="column"><img src="../../../../assets/logo-text.svg" /></div>
+    <div class="column">
+      <div class="ui very relaxed divided list">
+        <div class="item">
+          <i class="material-icons">email</i>
+          <div class="content">workit.235@gmail.com</div>
+        </div>
+        <div class="item">
+          <i class="material-icons">phone</i>
+          <div class="content">0728664018</div>
+        </div>
+        <div class="item">
+          <i class="material-icons">location_on</i>
+          <div class="content">
+            Str. Teodor Mihali, Nr.58-60, 400591, Cluj Napoca, Romania
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <h2 class="header">Follow us on...</h2>
+      <div class="social">
+        <a
+          target="_blank"
+          href="https://www.facebook.com/Work-It-472297319966912/"
+        >
+          <i class="facebook f icon"></i>
+        </a>
+        <a target="_blank" href="https://twitter.com/WorkIt32447080/">
+          <i class="twitter icon"></i>
+        </a>
+        <a target="_blank" href="https://www.instagram.com/sergiu_lz/">
+          <i class="instagram icon"></i>
+        </a>
+      </div>
+      <h2 class="header">Put your free time to good use!</h2>
+    </div>
+  </div>
+  <div class="row">
+    <agm-map
+      [latitude]="latitude"
+      [longitude]="longitude"
+      [zoom]="15"
+      class="map-widget"
+    >
+      <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+    </agm-map>
+  </div>
+</div>
+
+<!-- <div class="content-wrapper">
   <div class="content">
     <div class="lower">
       <agm-map
@@ -56,4 +108,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
