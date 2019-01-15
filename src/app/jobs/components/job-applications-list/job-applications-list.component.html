@@ -1,23 +1,25 @@
 <div class="ui container">
   <h2 class="ui dividing header">Applications</h2>
-  <div class="two-column-grid" *ngFor="let application of applicationList">
-    <div class="column">
-      <img
-        src="{{ application.employee.photoUrl }}"
-        alt="user avatar"
-        class="ui circular image"
-      />
-      <a
-        class="employee-name"
-        routerLink="/user/{{ application.employeeRef.id }}/public"
-        >{{ application.employee.displayName }}</a
-      >
+  <ng-container *ngIf="applicationList">
+    <div class="two-column-grid" *ngFor="let application of applicationList">
+      <div class="column">
+        <img
+          src="{{ application.employee.photoUrl }}"
+          alt="user avatar"
+          class="ui circular image"
+        />
+        <a
+          class="employee-name"
+          routerLink="/user/{{ application.employeeRef.id }}/public"
+          >{{ application.employee.displayName }}</a
+        >
+      </div>
+      <div class="column">
+        <p>{{ application.message }}</p>
+      </div>
     </div>
-    <div class="column">
-      <p>{{ application.message }}</p>
-    </div>
-  </div>
-  <p *ngIf="applicationList.length == 0" class="empty">
+  </ng-container>
+  <p *ngIf="!applicationList || applicationList.length == 0" class="empty">
     There are no applications at the moment
   </p>
 </div>

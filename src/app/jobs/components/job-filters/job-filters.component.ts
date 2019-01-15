@@ -122,6 +122,7 @@ export class JobFiltersComponent implements OnInit, OnDestroy {
     this.filters.city = null;
     this.filters.tags = null;
     this.filters.title = null;
+    this.filters.employer = null;
     this.tagsField.setValue(null);
     this.search();
   }
