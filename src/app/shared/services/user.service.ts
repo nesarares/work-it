@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { Application } from '../models/application';
 import { Notification } from '../models/notification';
+import { Review } from '../models/review';
 
 @Injectable({
   providedIn: 'root'
@@ -65,5 +66,34 @@ export class UserService {
       .collection<Notification>('notifications')
       .doc(id)
       .set(notification);
+  }
+
+  getUserAverageReview(reviews: Review[]): Number {
+    let sum = 0;
+    let reviewCount = 0;
+    for (let review of reviews) {
+      sum = sum + review.stars;
+      reviewCount = reviewCount + 1;
+    }
+    if (reviewCount !== 0) return sum / reviewCount;
+    else return null;
+  }
+
+  getUserReviews(uid: string): Observable<Review[]> {
+    return this.userCollection
+      .doc<User>(uid)
+      .collection<Review>('reviews', ref => ref.orderBy('date', 'desc'))
+      .valueChanges();
+  }
+
+  addReview(review: Review) {
+    const id = this.afs.createId();
+    review.id = id;
+    const userId = review.userRef.id;
+    return this.userCollection
+      .doc<User>(userId)
+      .collection<Review>('reviews')
+      .doc(id)
+      .set(review);
   }
 }

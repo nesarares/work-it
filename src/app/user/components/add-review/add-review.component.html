@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Add review</h1>
+<div>
+  <sui-rating
+    class="star ui massive star rating"
+    [ngModel]="stars"
+    [maximum]="5"
+    [isReadonly]="true"
+  ></sui-rating>
+</div>
+<div mat-dialog-content>
+  <form class="ui form">
+    <div class="field">
+      <label for="message">Please justify your review:</label>
+      <textarea id="message" name="message" [(ngModel)]="message"></textarea>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button class="ui red button" (click)="close()">Cancel</button>
+  <button class="ui green button" (click)="addReview()" autofocus>
+    Add review
+  </button>
+</div>

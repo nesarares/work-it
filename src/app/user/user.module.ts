@@ -15,6 +15,8 @@ import { UserJobsComponent } from './components/user-jobs/user-jobs.component';
 import { UserApplicationsComponent } from './components/user-applications/user-applications.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AddReviewComponent } from './components/add-review/add-review.component';
+import { MatDialogModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -22,6 +24,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     SharedModule,
     UserRoutingModule,
     AngularFireStorageModule,
+    MatDialogModule,
     QuillModule.forRoot({
       modules: {
         toolbar: [
@@ -51,7 +54,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     PublicProfileComponent,
     UserJobsComponent,
     UserApplicationsComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    AddReviewComponent
   ]
 })
 export class UserModule {}

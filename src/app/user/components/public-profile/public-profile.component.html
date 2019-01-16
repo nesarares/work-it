@@ -21,6 +21,15 @@
       <!-- <h2 class="ui header">About the company</h2> -->
       <p>{{ user.userProfile.aboutCompany }}</p>
     </div>
+
+    <div>
+      <sui-rating
+        class="star ui massive star rating"
+        [ngModel]="averageReview"
+        [maximum]="5"
+        (ngModelChange)="addReview()"
+      ></sui-rating>
+    </div>
   </div>
   <ng-container *ngIf="user.userProfile.userType === employeeUserType">
     <div class="divider"></div>
