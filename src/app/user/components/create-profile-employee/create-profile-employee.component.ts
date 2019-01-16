@@ -1,21 +1,20 @@
 import {
   Component,
-  OnInit,
-  ViewChild,
+  EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
-  EventEmitter
+  ViewChild
 } from '@angular/core';
-import { UserProfileService } from 'src/app/shared/services/user-profile.service';
-import { UserType } from 'src/app/shared/models/userType';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { UserProfile } from 'src/app/shared/models/userProfile';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { BadgeGroupComponent } from 'src/app/shared/components/badge-group/badge-group.component';
 import { User } from 'src/app/shared/models/user';
-import { MessageService } from 'src/app/shared/services/message.service';
+import { UserProfile } from 'src/app/shared/models/userProfile';
+import { UserType } from 'src/app/shared/models/userType';
+import { UserProfileService } from 'src/app/shared/services/user-profile.service';
 
 @Component({
   selector: 'app-create-profile-employee',
@@ -52,12 +51,14 @@ export class CreateProfileEmployeeComponent implements OnInit, OnChanges {
     let firstName = '';
     let lastName = '';
     let birthDate: any = '';
+    let phone = '';
     let workExperience = '';
     let educationalExperience = '';
     if (this.user) {
       this.userId = this.user.uid;
       firstName = this.user.userProfile.firstName || '';
       lastName = this.user.userProfile.lastName || '';
+      phone = this.user.userProfile.phone || '';
       birthDate = this.user.userProfile.birthDate || '';
       workExperience = this.user.userProfile.workExperience || '';
       educationalExperience = this.user.userProfile.educationalExperience || '';
@@ -71,6 +72,7 @@ export class CreateProfileEmployeeComponent implements OnInit, OnChanges {
       firstName: [firstName, [Validators.required]],
       lastName: [lastName, [Validators.required]],
       birthDate: [birthDate, Validators.required],
+      phone: [phone, Validators.maxLength(15)],
       interests: [interests, Validators.maxLength(250)],
       workExperience: [workExperience, Validators.maxLength(250)],
       educationalExperience: [educationalExperience, Validators.maxLength(250)]
@@ -88,6 +90,7 @@ export class CreateProfileEmployeeComponent implements OnInit, OnChanges {
         firstName: this.userProfileForm.controls.firstName.value,
         lastName: this.userProfileForm.controls.lastName.value,
         birthDate: this.userProfileForm.controls.birthDate.value,
+        phone: this.userProfileForm.controls.phone.value,
         workExperience: this.userProfileForm.controls.workExperience.value,
         educationalExperience: this.userProfileForm.controls
           .educationalExperience.value,

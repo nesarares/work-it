@@ -3,7 +3,11 @@
     class="ui three doubling stackable cards"
     *ngIf="applications.length != 0; else empty"
   >
-    <div class="card" *ngFor="let application of applications">
+    <div
+      class="card"
+      *ngFor="let application of applications"
+      [class.accepted]="application.accepted"
+    >
       <div class="content" routerLink="/jobs/{{ application.jobRef.id }}">
         <img
           src="{{ application.job.employerPhotoUrl }}"
@@ -21,7 +25,7 @@
         </div>
         <div class="description">{{ application.message }}</div>
       </div>
-      <div class="extra content">
+      <div class="extra content" *ngIf="!application.accepted">
         <span class="right floated">
           <i
             class="material-icons delete-icon"
