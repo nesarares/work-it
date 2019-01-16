@@ -7,6 +7,15 @@
     />
     <h1 class="username">{{ user.displayName }}</h1>
 
+    <ng-container *ngIf="(loggedUser$ | async)">
+      <ng-container *ngIf="showUserDetails">
+        <h3><i class="material-icons">mail</i>{{ user.email }}</h3>
+        <h3 *ngIf="user.userProfile.phone" class="bottom spaced more">
+          <i class="material-icons">phone</i>{{ user.userProfile.phone }}
+        </h3>
+      </ng-container>
+    </ng-container>
+
     <a
       *ngIf="user.cvUrl"
       href="{{ user.cvUrl }}"

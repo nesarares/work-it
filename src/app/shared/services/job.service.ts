@@ -210,6 +210,7 @@ export class JobService {
       date,
       jobRef,
       job: { title, employerName, employerPhotoUrl },
+      employerRef: job.employerRef,
       message
     };
 
@@ -237,6 +238,41 @@ export class JobService {
       link: `/jobs/${job.id}`
     };
     this.userService.addNotification(job.employerRef.id, notification);
+  }
+
+  acceptApplication(userId: string, job: Job) {
+    const application = job.applications.find(
+      application => application.employeeRef.id === userId
+    );
+    if (!application) return;
+    application.accepted = true;
+    const ret = this.afs
+      .collection('jobs')
+      .doc(job.id)
+      .update({ applications: job.applications });
+
+    application.employeeRef.get().then(employeeDoc => {
+      // set accepted to true in user's application
+      // should be a cloud function
+      const employee: User = employeeDoc.data() as User;
+      const app = employee.applications.find(
+        application => application.jobRef.id === job.id
+      );
+      app.accepted = true;
+      application.employeeRef.update({ applications: employee.applications });
+    });
+
+    const jobTitleShort =
+      job.title.length > 20 ? `${job.title.substr(0, 20)}...` : job.title;
+    const notification: Notification = {
+      date: new Date(),
+      type: NotificationType.APPLICATION_ACCEPTED,
+      message: `Your application for "${jobTitleShort}" has been accepted!`,
+      link: `/jobs/${job.id}`
+    };
+    this.userService.addNotification(userId, notification);
+
+    return ret;
   }
 
   getJobsByEmployer(userRef: DocumentReference) {

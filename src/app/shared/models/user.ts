@@ -9,6 +9,5 @@ export interface User {
   photoUrl?: string;
   cvUrl?: string;
   applications?: Application[];
-  notifications?: Notification[];
   userProfile?: UserProfile;
 }

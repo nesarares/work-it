@@ -6,5 +6,7 @@ export interface Application {
   employee?: { displayName: string; photoUrl: string };
   jobRef?: DocumentReference;
   job?: { title: string; employerName: string; employerPhotoUrl: string };
+  employerRef?: DocumentReference;
   message?: string;
+  accepted?: boolean;
 }

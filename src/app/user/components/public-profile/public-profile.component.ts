@@ -2,9 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/shared/models/user';
 import { UserService } from 'src/app/shared/services/user.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UserType } from 'src/app/shared/models/userType';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { tap } from 'rxjs/operators';
 import { Review } from 'src/app/shared/models/review';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialog } from '@angular/material';
@@ -18,6 +20,8 @@ import { isNullOrUndefined } from 'util';
 })
 export class PublicProfileComponent implements OnInit, OnDestroy {
   user: User;
+  loggedUser$: Observable<User>;
+  loggedUser: User;
   subscriptions: Subscription[] = [];
   employeeUserType: number = UserType.Employee.valueOf();
   review: Review = {
@@ -25,6 +29,7 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
     message: ''
   };
   averageReview: number;
+  showUserDetails: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +42,7 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.spinnerService.show();
     const uid = this.route.snapshot.paramMap.get('id');
+
     this.subscriptions.push(
       this.userService.getUser(uid).subscribe(user => {
         this.user = user;
@@ -49,6 +55,14 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
         this.spinnerService.hide();
       })
     );
+
+    this.loggedUser$ = this.authService.user$.pipe(
+      tap(loggedUser => {
+        console.log(loggedUser);
+        this.checkToShowUserDetails(loggedUser);
+      })
+    );
+
     this.subscriptions.push(
       this.authService.userRef().subscribe(userRef => {
         if (!isNullOrUndefined(userRef)) this.review.userRef = userRef;
@@ -75,5 +89,23 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  checkToShowUserDetails(loggedUser: User) {
+    const userProfileType = this.user.userProfile.userType; // user from page (not logged user)
+    if (!loggedUser || loggedUser.userProfile.userType === userProfileType)
+      this.showUserDetails = false;
+
+    if (userProfileType === UserType.Employee) {
+      this.showUserDetails = this.userService.checkUsersAreLinked(
+        this.user,
+        loggedUser
+      );
+    } else {
+      this.showUserDetails = this.userService.checkUsersAreLinked(
+        loggedUser,
+        this.user
+      );
+    }
   }
 }

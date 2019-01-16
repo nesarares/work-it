@@ -5,6 +5,7 @@ export interface UserProfile {
   firstName: string;
   lastName?: string;
   birthDate: Date;
+  phone?: string;
   // companyName?: string;
   aboutCompany?: string;
   interests?: string;

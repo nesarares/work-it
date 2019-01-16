@@ -1,23 +1,57 @@
 <div class="ui container">
   <h2 class="ui dividing header">Applications</h2>
   <ng-container *ngIf="applicationList">
-    <div class="two-column-grid" *ngFor="let application of applicationList">
-      <div class="column">
-        <img
-          src="{{ application.employee.photoUrl }}"
-          alt="user avatar"
-          class="ui circular image"
-        />
-        <a
-          class="employee-name"
-          routerLink="/user/{{ application.employeeRef.id }}/public"
-          >{{ application.employee.displayName }}</a
-        >
+    <ng-container *ngFor="let application of applicationList">
+      <div class="three-column-grid" [class.accepted]="application.accepted">
+        <div class="column">
+          <img
+            src="{{ application.employee.photoUrl }}"
+            alt="user avatar"
+            class="ui circular image"
+          />
+          <a
+            class="employee-name"
+            routerLink="/user/{{ application.employeeRef.id }}/public"
+            >{{ application.employee.displayName }}</a
+          >
+        </div>
+        <div class="column">
+          <p>{{ application.message }}</p>
+        </div>
+        <div class="column">
+          <a
+            *ngIf="!application.accepted; else acceptedMark"
+            class="ui circular button"
+            suiPopup
+            popupText="Accept this application"
+            popupPlacement="bottom"
+            (click)="acceptEmployee(application.employeeRef.id)"
+          >
+            <i class="material-icons">done</i>
+          </a>
+          <ng-template #acceptedMark>
+            <a
+              class="ui circular positive button accepted-mark"
+              suiPopup
+              popupText="You accepted this application"
+              popupPlacement="bottom"
+            >
+              <i class="material-icons">done_all</i>
+            </a>
+          </ng-template>
+        </div>
       </div>
-      <div class="column">
-        <p>{{ application.message }}</p>
+      <div *ngIf="application.accepted" class="user-info">
+        <ng-container *ngIf="acceptedUsers[application.employeeRef.id] as user">
+          <span>Contact {{ application.employee.displayName }}:</span>
+          <i class="material-icons">email</i> <span>{{ user.email }}</span>
+          <ng-container *ngIf="user.userProfile.phone">
+            <i class="material-icons">phone</i>
+            <span>{{ user.userProfile.phone }}</span>
+          </ng-container>
+        </ng-container>
       </div>
-    </div>
+    </ng-container>
   </ng-container>
   <p *ngIf="!applicationList || applicationList.length == 0" class="empty">
     There are no applications at the moment

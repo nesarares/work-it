@@ -96,4 +96,16 @@ export class UserService {
       .doc(id)
       .set(review);
   }
+
+  checkUsersAreLinked(employee: User, employer: User): boolean {
+    // check in applications for employer id
+    if (!employee.applications) return false;
+    return (
+      employee.applications.filter(
+        application =>
+          application.employerRef.id === employer.uid && application.accepted
+      ).length !== 0
+    );
+    // return true;
+  }
 }
