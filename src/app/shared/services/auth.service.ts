@@ -103,6 +103,11 @@ export class AuthService {
       `users/${user.uid}`
     );
 
+    this.user$ = userRef.valueChanges();
+
+    const existingUser: User = (await userRef.ref.get()).data() as User;
+    if (existingUser && existingUser.userProfile) return;
+
     const data: User = {
       uid: user.uid,
       email: user.email,
@@ -116,7 +121,6 @@ export class AuthService {
     }
 
     await userRef.set(data, { merge: true });
-    this.user$ = userRef.valueChanges();
     return data;
   }
 }
