@@ -20,12 +20,8 @@
       </a>
 
       <ng-container *ngIf="(user$ | async) as user; else login">
-        <ng-container
-          *ngTemplateOutlet="notificationsDropdown; context: { user: user }"
-        ></ng-container>
-        <ng-container
-          *ngTemplateOutlet="userDropdown; context: { user: user }"
-        ></ng-container>
+        <ng-container *ngTemplateOutlet="notificationsDropdown"></ng-container>
+        <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
       </ng-container>
 
       <ng-template #login>
@@ -35,10 +31,8 @@
       </ng-template>
     </div>
     <div class="right menu vertical center aligned mobile-menu">
-      <ng-container *ngIf="(user$ | async) as user">
-        <ng-container
-          *ngTemplateOutlet="notificationsDropdown; context: { user: user }"
-        ></ng-container>
+      <ng-container *ngIf="user">
+        <ng-container *ngTemplateOutlet="notificationsDropdown"></ng-container>
       </ng-container>
       <i class="bars icon" (click)="openMobileMenu()"></i>
     </div>
@@ -52,7 +46,7 @@
   (onClose)="closeMobileMenu()"
 ></app-navbar-mobile>
 
-<ng-template #notificationsDropdown let-user="user">
+<ng-template #notificationsDropdown>
   <div
     class="ui pointing dropdown vertical center aligned notification-dropdown"
     suiDropdown
@@ -98,7 +92,7 @@
   </div>
 </ng-template>
 
-<ng-template #userDropdown let-user="user">
+<ng-template #userDropdown>
   <div class="ui pointing dropdown avt vertical center aligned" suiDropdown>
     <img class="ui avatar image" src="{{ user.photoUrl }}" />
     <div class="menu menu-user" suiDropdownMenu>

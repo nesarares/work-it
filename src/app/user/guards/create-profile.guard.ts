@@ -25,7 +25,7 @@ export class CreateProfileGuard implements CanActivate {
       tap(user => {
         if (user.userProfile) {
           console.log('access denied - user already has a profile');
-          this.router.navigate([`/user/${this.auth.user.uid}`]);
+          this.router.navigate([`/user/${user.uid}`]);
         }
       }),
       map(user => !user.userProfile)

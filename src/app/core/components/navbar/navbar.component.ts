@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   user$: Observable<User>;
+  user: User;
+
   notifications$: Observable<Notification[]>;
   notificationsNumber: number = 0;
 
@@ -54,6 +56,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.user$ = this.auth.user$.pipe(
       tap(usr => {
+        console.log({ usr });
+        this.user = usr;
         if (!usr) return;
         this.notifications$ = this.userService
           .getUserNotifications(usr.uid)
