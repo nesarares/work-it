@@ -10,6 +10,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class LoginComponent implements OnInit {
   loginError: string;
+  errorType: string = 'error';
+
   user = {
     email: '',
     password: ''
@@ -61,6 +63,11 @@ export class LoginComponent implements OnInit {
         case 'auth/user-not-found':
           this.loginError =
             'The email or password is incorrect. Please check the details and try again.';
+          this.errorType = 'error';
+          break;
+        case 'auth/email-not-verified':
+          this.loginError = 'Please verify your email first';
+          this.errorType = 'warning';
           break;
         default:
           this.loginError = error.message;
