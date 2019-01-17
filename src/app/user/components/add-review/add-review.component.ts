@@ -4,6 +4,7 @@ import { Review } from 'src/app/shared/models/review';
 import { UserService } from 'src/app/shared/services/user.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { User } from 'firebase';
 
 @Component({
   selector: 'app-add-review',
@@ -11,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./add-review.component.less']
 })
 export class AddReviewComponent implements OnInit {
+  stars: Number;
   message: string;
 
   constructor(
@@ -18,15 +20,17 @@ export class AddReviewComponent implements OnInit {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     public dialogRef: MatDialogRef<AddReviewComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Review
+    @Inject(MAT_DIALOG_DATA) public data: { user: User; review: Review }
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.stars = this.data.review.stars;
+  }
 
-  async apply() {
+  async addReview() {
     this.spinner.show();
-    this.data.message = this.message;
-    await this.userService.addReview(this.data);
+    this.data.review.message = this.message;
+    await this.userService.addReview(this.data.user, this.data.review);
     this.spinner.hide();
     this.messageService.showMessage({
       type: 'success',

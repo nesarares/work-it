@@ -34,9 +34,10 @@
     <div>
       <sui-rating
         class="star ui massive star rating"
-        [ngModel]="averageReview"
+        [(ngModel)]="averageReview"
         [maximum]="5"
         (ngModelChange)="addReview()"
+        [isReadonly]="isRatingReadonly"
       ></sui-rating>
     </div>
   </div>
@@ -60,6 +61,35 @@
         <div class="ui divider"></div>
         <p>{{ user.userProfile.educationalExperience }}</p>
       </ng-container>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="reviews">
+    <div
+      class="ui three doubling stackable cards"
+      *ngIf="reviews.length != 0; else empty"
+    >
+      <div class="card" *ngFor="let review of reviews">
+        <div class="content" routerLink="/users/{{ review.userRef.id }}">
+          <img
+            src="{{ review.user.photoUrl }}"
+            alt="User photo"
+            class="ui circular image"
+          />
+          <p class="employer-name">{{ review.user.displayName }}</p>
+        </div>
+        <div class="header"></div>
+        <div class="meta">
+          <span class="date"> {{ review.date.toDate() | date: medium }} </span>
+          <sui-rating
+            class="star ui massive star rating"
+            [ngModel]="review.stars"
+            [maximum]="5"
+            [isReadonly]="true"
+          ></sui-rating>
+        </div>
+        <div class="description">{{ review.message }}</div>
+      </div>
     </div>
   </ng-container>
 </div>

@@ -56,6 +56,7 @@ import { MatDialogModule } from '@angular/material';
     UserApplicationsComponent,
     UserSettingsComponent,
     AddReviewComponent
-  ]
+  ],
+  entryComponents: [AddReviewComponent]
 })
 export class UserModule {}

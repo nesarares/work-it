@@ -76,7 +76,7 @@ export class UserService {
       reviewCount = reviewCount + 1;
     }
     if (reviewCount !== 0) return sum / reviewCount;
-    else return null;
+    else return 0;
   }
 
   getUserReviews(uid: string): Observable<Review[]> {
@@ -86,12 +86,11 @@ export class UserService {
       .valueChanges();
   }
 
-  addReview(review: Review) {
+  addReview(user: User, review: Review) {
     const id = this.afs.createId();
     review.id = id;
-    const userId = review.userRef.id;
     return this.userCollection
-      .doc<User>(userId)
+      .doc<User>(user.uid)
       .collection<Review>('reviews')
       .doc(id)
       .set(review);

@@ -5,7 +5,6 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { Subscription, Observable } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UserType } from 'src/app/shared/models/userType';
-import { AuthService } from 'src/app/shared/services/auth.service';
 import { tap } from 'rxjs/operators';
 import { Review } from 'src/app/shared/models/review';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -30,6 +29,8 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
   };
   averageReview: number;
   showUserDetails: boolean = false;
+  reviews: Review[] = [];
+  isRatingReadonly: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,11 +47,7 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.userService.getUser(uid).subscribe(user => {
         this.user = user;
-        if (!isNullOrUndefined(user))
-          this.review.user = {
-            displayName: user.displayName,
-            photoUrl: user.photoUrl
-          };
+
         console.log({ user });
         this.spinnerService.hide();
       })
@@ -58,8 +55,26 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
 
     this.loggedUser$ = this.authService.user$.pipe(
       tap(loggedUser => {
+        this.loggedUser = loggedUser;
         console.log(loggedUser);
         this.checkToShowUserDetails(loggedUser);
+        if (!isNullOrUndefined(loggedUser)) {
+          this.review.user = {
+            displayName: loggedUser.displayName,
+            photoUrl: loggedUser.photoUrl
+          };
+          this.subscriptions.push(
+            this.userService
+              .getUserReviews(this.user.uid)
+              .subscribe(reviews => {
+                this.reviews = reviews;
+                if (reviews) {
+                  this.setIsRatingReadonly();
+                  this.setAverageReview();
+                }
+              })
+          );
+        }
       })
     );
 
@@ -68,13 +83,19 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
         if (!isNullOrUndefined(userRef)) this.review.userRef = userRef;
       })
     );
-    this.subscriptions.push(
-      this.userService.getUserReviews(this.user.uid).subscribe(reviews => {
-        this.averageReview = this.userService
-          .getUserAverageReview(reviews)
-          .valueOf();
-      })
-    );
+  }
+
+  setIsRatingReadonly() {
+    let hasSubmittedReviewBefore =
+      this.reviews.find(review => review.userRef.id === this.loggedUser.uid) !==
+      undefined;
+    this.isRatingReadonly = !this.showUserDetails || hasSubmittedReviewBefore;
+  }
+
+  setAverageReview() {
+    this.averageReview = this.userService
+      .getUserAverageReview(this.reviews)
+      .valueOf();
   }
 
   addReview() {
@@ -83,7 +104,7 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
     this.dialog.open(AddReviewComponent, {
       width: '500px',
       maxWidth: '93%',
-      data: this.review
+      data: { user: this.user, review: this.review }
     });
   }
 
