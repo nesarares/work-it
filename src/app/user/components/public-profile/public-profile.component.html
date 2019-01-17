@@ -72,9 +72,11 @@
     </ng-container>
   </div>
   <div class="ui padded container">
-    <app-user-reviews
-      [reviews]="reviews"
-      [username]="user.displayName"
-    ></app-user-reviews>
+    <ng-container *ngIf="(reviews$ | async) as reviews">
+      <app-user-reviews
+        [reviews]="reviews"
+        [username]="user.displayName"
+      ></app-user-reviews>
+    </ng-container>
   </div>
 </ng-container>

@@ -28,8 +28,10 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
 
   showUserDetails: boolean = false;
 
-  averageReview: number;
   reviews: Review[] = [];
+  reviews$: Observable<Review[]>;
+
+  averageReview: number;
   isRatingReadonly: boolean = true;
   review: Review = {
     stars: 0,
@@ -58,6 +60,15 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
         this.user$ = this.userService.getUser(uid).pipe(
           tap(user => {
             this.user = user;
+            this.reviews$ = this.userService.getUserReviews(this.user.uid).pipe(
+              tap(reviews => {
+                this.reviews = reviews;
+                if (reviews) {
+                  this.setIsRatingReadonly();
+                  this.setAverageReview();
+                }
+              })
+            );
             this.spinnerService.hide();
           })
         );
@@ -73,17 +84,7 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
             displayName: loggedUser.displayName,
             photoUrl: loggedUser.photoUrl
           };
-          this.subscriptions.push(
-            this.userService
-              .getUserReviews(this.user.uid)
-              .subscribe(reviews => {
-                this.reviews = reviews;
-                if (reviews) {
-                  this.setIsRatingReadonly();
-                  this.setAverageReview();
-                }
-              })
-          );
+          this.setIsRatingReadonly();
         }
       })
     );
@@ -96,6 +97,11 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
   }
 
   setIsRatingReadonly() {
+    if (!this.loggedUser) {
+      this.isRatingReadonly = true;
+      return;
+    }
+
     let hasSubmittedReviewBefore =
       this.reviews.find(review => review.userRef.id === this.loggedUser.uid) !==
       undefined;
@@ -103,6 +109,8 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
     if (!this.isRatingReadonly) {
       this.reviewPopup.open();
       setTimeout(() => this.reviewPopup.close(), 3000);
+    } else {
+      this.reviewPopup.close();
     }
   }
 
@@ -128,8 +136,10 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
 
   checkToShowUserDetails(loggedUser: User) {
     const userProfileType = this.user.userProfile.userType; // user from page (not logged user)
-    if (!loggedUser || loggedUser.userProfile.userType === userProfileType)
+    if (!loggedUser || loggedUser.userProfile.userType === userProfileType) {
       this.showUserDetails = false;
+      return;
+    }
 
     if (userProfileType === UserType.Employee) {
       this.showUserDetails = this.userService.checkUsersAreLinked(
