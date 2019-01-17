@@ -18,19 +18,24 @@ import { isNullOrUndefined } from 'util';
   styleUrls: ['./public-profile.component.less']
 })
 export class PublicProfileComponent implements OnInit, OnDestroy {
+  employeeUserType: number = UserType.Employee.valueOf();
+
+  user$: Observable<User>;
   user: User;
   loggedUser$: Observable<User>;
   loggedUser: User;
-  subscriptions: Subscription[] = [];
-  employeeUserType: number = UserType.Employee.valueOf();
+
+  showUserDetails: boolean = false;
+
+  averageReview: number;
+  reviews: Review[] = [];
+  isRatingReadonly: boolean = false;
   review: Review = {
     stars: 0,
     message: ''
   };
-  averageReview: number;
-  showUserDetails: boolean = false;
-  reviews: Review[] = [];
-  isRatingReadonly: boolean = false;
+
+  subscriptions: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -42,21 +47,22 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.spinnerService.show();
-    const uid = this.route.snapshot.paramMap.get('id');
-
     this.subscriptions.push(
-      this.userService.getUser(uid).subscribe(user => {
-        this.user = user;
-
-        console.log({ user });
-        this.spinnerService.hide();
+      this.route.paramMap.subscribe(paramMap => {
+        this.spinnerService.show();
+        const uid = paramMap.get('id');
+        this.user$ = this.userService.getUser(uid).pipe(
+          tap(user => {
+            this.user = user;
+            this.spinnerService.hide();
+          })
+        );
       })
     );
 
     this.loggedUser$ = this.authService.user$.pipe(
       tap(loggedUser => {
         this.loggedUser = loggedUser;
-        console.log(loggedUser);
         this.checkToShowUserDetails(loggedUser);
         if (!isNullOrUndefined(loggedUser)) {
           this.review.user = {

@@ -17,6 +17,7 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AddReviewComponent } from './components/add-review/add-review.component';
 import { MatDialogModule } from '@angular/material';
+import { UserReviewsComponent } from './components/user-reviews/user-reviews.component';
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import { MatDialogModule } from '@angular/material';
     UserJobsComponent,
     UserApplicationsComponent,
     UserSettingsComponent,
-    AddReviewComponent
+    AddReviewComponent,
+    UserReviewsComponent
   ],
   entryComponents: [AddReviewComponent]
 })

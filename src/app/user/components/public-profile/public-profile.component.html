@@ -1,95 +1,75 @@
-<div class="ui padded container my-grid" *ngIf="user">
-  <div class="column">
-    <img
-      src="{{ user.photoUrl }}"
-      alt="user avatar"
-      class="ui avatar image top spaced"
-    />
-    <h1 class="username">{{ user.displayName }}</h1>
+<ng-container *ngIf="(user$ | async) as user">
+  <div class="ui padded container my-grid">
+    <div class="column">
+      <img
+        src="{{ user.photoUrl }}"
+        alt="user avatar"
+        class="ui avatar image top spaced"
+      />
+      <h1 class="username">{{ user.displayName }}</h1>
 
-    <ng-container *ngIf="(loggedUser$ | async)">
-      <ng-container *ngIf="showUserDetails">
-        <h3><i class="material-icons">mail</i>{{ user.email }}</h3>
-        <h3 *ngIf="user.userProfile.phone" class="bottom spaced more">
-          <i class="material-icons">phone</i>{{ user.userProfile.phone }}
-        </h3>
+      <div class="rating-div">
+        <sui-rating
+          class="ui massive star rating"
+          [(ngModel)]="averageReview"
+          [maximum]="5"
+          (ngModelChange)="addReview()"
+          [isReadonly]="isRatingReadonly"
+        ></sui-rating>
+        <div class="ui yellow circular label">{{ averageReview }}</div>
+      </div>
+
+      <ng-container *ngIf="(loggedUser$ | async)">
+        <ng-container *ngIf="showUserDetails">
+          <h3><i class="material-icons">mail</i>{{ user.email }}</h3>
+          <h3 *ngIf="user.userProfile.phone" class="bottom spaced more">
+            <i class="material-icons">phone</i>{{ user.userProfile.phone }}
+          </h3>
+        </ng-container>
       </ng-container>
-    </ng-container>
 
-    <a
-      *ngIf="user.cvUrl"
-      href="{{ user.cvUrl }}"
-      target="_blank"
-      class="ui primary button download-cv"
-    >
-      <i class="material-icons"> attach_file </i><span>Download CV</span>
-    </a>
+      <a
+        *ngIf="user.cvUrl"
+        href="{{ user.cvUrl }}"
+        target="_blank"
+        class="ui primary button download-cv"
+      >
+        <i class="material-icons"> attach_file </i><span>Download CV</span>
+      </a>
 
-    <div *ngIf="user.userProfile.aboutCompany" class="employerDiv">
-      <div class="ui divider"></div>
-      <!-- <h2 class="ui header">About the company</h2> -->
-      <p>{{ user.userProfile.aboutCompany }}</p>
-    </div>
-
-    <div>
-      <sui-rating
-        class="star ui massive star rating"
-        [(ngModel)]="averageReview"
-        [maximum]="5"
-        (ngModelChange)="addReview()"
-        [isReadonly]="isRatingReadonly"
-      ></sui-rating>
-    </div>
-  </div>
-  <ng-container *ngIf="user.userProfile.userType === employeeUserType">
-    <div class="divider"></div>
-    <div class="second column">
-      <ng-container *ngIf="user.userProfile.tags">
-        <h2 class="ui header">Interests</h2>
+      <div *ngIf="user.userProfile.aboutCompany" class="employerDiv">
         <div class="ui divider"></div>
-        <app-badge-group [tagLst]="user.userProfile.tags"></app-badge-group>
-      </ng-container>
-
-      <ng-container *ngIf="user.userProfile.workExperience">
-        <h2 class="ui header spaced">Work experience</h2>
-        <div class="ui divider"></div>
-        <p>{{ user.userProfile.workExperience }}</p>
-      </ng-container>
-
-      <ng-container *ngIf="user.userProfile.educationalExperience">
-        <h2 class="ui header spaced">Education</h2>
-        <div class="ui divider"></div>
-        <p>{{ user.userProfile.educationalExperience }}</p>
-      </ng-container>
-    </div>
-  </ng-container>
-
-  <ng-container *ngIf="reviews">
-    <div
-      class="ui three doubling stackable cards"
-      *ngIf="reviews.length != 0; else empty"
-    >
-      <div class="card" *ngFor="let review of reviews">
-        <div class="content" routerLink="/users/{{ review.userRef.id }}">
-          <img
-            src="{{ review.user.photoUrl }}"
-            alt="User photo"
-            class="ui circular image"
-          />
-          <p class="employer-name">{{ review.user.displayName }}</p>
-        </div>
-        <div class="header"></div>
-        <div class="meta">
-          <span class="date"> {{ review.date.toDate() | date: medium }} </span>
-          <sui-rating
-            class="star ui massive star rating"
-            [ngModel]="review.stars"
-            [maximum]="5"
-            [isReadonly]="true"
-          ></sui-rating>
-        </div>
-        <div class="description">{{ review.message }}</div>
+        <!-- <h2 class="ui header">About the company</h2> -->
+        <p>{{ user.userProfile.aboutCompany }}</p>
       </div>
     </div>
-  </ng-container>
-</div>
+    <ng-container *ngIf="user.userProfile.userType === employeeUserType">
+      <div class="divider"></div>
+      <div class="second column">
+        <ng-container *ngIf="user.userProfile.tags">
+          <h2 class="ui header">Interests</h2>
+          <div class="ui divider"></div>
+          <app-badge-group [tagLst]="user.userProfile.tags"></app-badge-group>
+        </ng-container>
+
+        <ng-container *ngIf="user.userProfile.workExperience">
+          <h2 class="ui header spaced">Work experience</h2>
+          <div class="ui divider"></div>
+          <p>{{ user.userProfile.workExperience }}</p>
+        </ng-container>
+
+        <ng-container *ngIf="user.userProfile.educationalExperience">
+          <h2 class="ui header spaced">Education</h2>
+          <div class="ui divider"></div>
+          <p>{{ user.userProfile.educationalExperience }}</p>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+  <div class="ui padded container">
+    <app-user-reviews
+      [reviews]="reviews"
+      [username]="user.displayName"
+    ></app-user-reviews>
+  </div>
+</ng-container>

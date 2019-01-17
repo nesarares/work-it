@@ -1,0 +1,34 @@
+<h2 class="ui header">Reviews</h2>
+<div class="ui divider"></div>
+<ng-container *ngIf="reviews && reviews.length != 0; else empty">
+  <div class="two-column-grid" *ngFor="let review of reviews">
+    <div class="column">
+      <img
+        src="{{ review.user.photoUrl }}"
+        alt="User photo"
+        class="ui circular image"
+      />
+      <a
+        class="employee-name"
+        routerLink="/user/{{ review.userRef.id }}/public"
+      >
+        {{ review.user.displayName }}
+      </a>
+    </div>
+    <div class="column">
+      <div class="date">
+        <span>{{ review.date.toDate() | date }}</span>
+        <sui-rating
+          class="ui large star rating"
+          [ngModel]="review.stars"
+          [maximum]="5"
+          [isReadonly]="true"
+        ></sui-rating>
+      </div>
+      <p class="description">{{ review.message }}</p>
+    </div>
+  </div>
+</ng-container>
+<ng-template #empty>
+  <p class="empty">{{ username }} does not have any reviews at this moment.</p>
+</ng-template>
