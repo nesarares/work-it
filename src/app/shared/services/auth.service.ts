@@ -15,6 +15,7 @@ import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { urls } from '../constants/urls';
 import { UserType } from '../models/userType';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +27,11 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
+    private message: MessageService,
     private router: Router
   ) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
-        // console.log({ user });
         return user
           ? this.afs.doc<User>(`users/${user.uid}`).valueChanges()
           : of(null);
@@ -56,6 +57,11 @@ export class AuthService {
       email,
       password
     );
+
+    if (!credential.user.emailVerified) {
+      throw { code: 'auth/email-not-verified' };
+    }
+
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${credential.user.uid}`
     );
@@ -68,8 +74,10 @@ export class AuthService {
       email,
       password
     );
-    const userN = await this.updateUserData(user.user);
-    return userN;
+
+    user.user.sendEmailVerification();
+
+    return await this.updateUserData(user.user);
   }
 
   signOut() {
