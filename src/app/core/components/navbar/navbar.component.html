@@ -83,7 +83,7 @@
               </div>
               <div class="column info">
                 <span class="date">
-                  {{ notification.date.toDate() | date: 'medium' }}
+                  {{ notification.date.toDate() | timeAgo }}
                 </span>
                 <span class="message"> {{ notification.message }} </span>
               </div>
