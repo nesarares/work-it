@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
         this.user.password
       );
       this.router.navigate([`/user/${user.uid}`]);
+      window.location.reload(); // quick fix
     } catch (error) {
       switch (error.code) {
         case 'auth/wrong-password':
