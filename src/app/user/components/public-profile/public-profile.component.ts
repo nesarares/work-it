@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/shared/models/user';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialog } from '@angular/material';
 import { AddReviewComponent } from '../add-review/add-review.component';
 import { isNullOrUndefined } from 'util';
+import { IPopup } from 'ng2-semantic-ui';
 
 @Component({
   selector: 'app-public-profile',
@@ -29,13 +30,16 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
 
   averageReview: number;
   reviews: Review[] = [];
-  isRatingReadonly: boolean = false;
+  isRatingReadonly: boolean = true;
   review: Review = {
     stars: 0,
     message: ''
   };
 
   subscriptions: Subscription[] = [];
+
+  @ViewChild('popup')
+  reviewPopup: IPopup;
 
   constructor(
     private route: ActivatedRoute,
@@ -96,6 +100,10 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
       this.reviews.find(review => review.userRef.id === this.loggedUser.uid) !==
       undefined;
     this.isRatingReadonly = !this.showUserDetails || hasSubmittedReviewBefore;
+    if (!this.isRatingReadonly) {
+      this.reviewPopup.open();
+      setTimeout(() => this.reviewPopup.close(), 3000);
+    }
   }
 
   setAverageReview() {

@@ -77,7 +77,7 @@
               (click)="deleteNotification(user.uid, notification.id)"
               >close</i
             >
-            <a class="item pad" routerLink="{{ notification.link || '' }}">
+            <a class="item pad" (click)="navigate(notification.link || '')">
               <div class="notification-icon">
                 <i class="material-icons"> {{ getIcon(notification.type) }} </i>
               </div>

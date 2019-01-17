@@ -10,6 +10,7 @@ import { AuthService } from './auth.service';
 import { Application } from '../models/application';
 import { Notification } from '../models/notification';
 import { Review } from '../models/review';
+import { NotificationType } from '../models/notificationType';
 
 @Injectable({
   providedIn: 'root'
@@ -89,11 +90,21 @@ export class UserService {
   addReview(user: User, review: Review) {
     const id = this.afs.createId();
     review.id = id;
-    return this.userCollection
+    const ret = this.userCollection
       .doc<User>(user.uid)
       .collection<Review>('reviews')
       .doc(id)
       .set(review);
+
+    const notification: Notification = {
+      date: new Date(),
+      type: NotificationType.NEW_REVIEW,
+      message: `${review.user.displayName} gave you a review!`,
+      link: `/user/${user.uid}/public`
+    };
+    this.addNotification(user.uid, notification);
+
+    return ret;
   }
 
   checkUsersAreLinked(employee: User, employer: User): boolean {

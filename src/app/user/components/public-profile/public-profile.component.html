@@ -15,6 +15,11 @@
           [maximum]="5"
           (ngModelChange)="addReview()"
           [isReadonly]="isRatingReadonly"
+          suiPopup
+          popupText="Leave a review for {{ user.displayName }}"
+          popupTrigger="manual"
+          popupPlacement="bottom"
+          #popup="suiPopup"
         ></sui-rating>
         <div class="ui yellow circular label">{{ averageReview }}</div>
       </div>

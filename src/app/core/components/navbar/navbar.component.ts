@@ -6,6 +6,7 @@ import { NotificationType } from 'src/app/shared/models/notificationType';
 import { UserService } from 'src/app/shared/services/user.service';
 import { tap } from 'rxjs/operators';
 import { Notification } from 'src/app/shared/models/notification';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -44,7 +45,11 @@ export class NavbarComponent implements OnInit {
     }
   ];
 
-  constructor(private auth: AuthService, public userService: UserService) {}
+  constructor(
+    private auth: AuthService,
+    public userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.user$ = this.auth.user$.pipe(
@@ -92,5 +97,9 @@ export class NavbarComponent implements OnInit {
 
   deleteNotification(userId: string, notificationId: string) {
     this.userService.deleteNotification(userId, notificationId);
+  }
+
+  navigate(url: string) {
+    this.router.navigateByUrl(url);
   }
 }
