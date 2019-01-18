@@ -9,7 +9,7 @@ import {
 } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { Observable, of } from 'rxjs';
-import { switchMap, tap, take } from 'rxjs/operators';
+import { switchMap, tap, take, mergeMap } from 'rxjs/operators';
 
 import { User } from '../models/user';
 import { Router } from '@angular/router';
@@ -30,7 +30,12 @@ export class AuthService {
   ) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
-        // console.log({ user });
+        // mergeMap(user => {
+        console.log('usr ' + user);
+        if (user && !user.emailVerified) {
+          return of(null);
+        }
+
         return user
           ? this.afs.doc<User>(`users/${user.uid}`).valueChanges()
           : of(null);
@@ -56,6 +61,11 @@ export class AuthService {
       email,
       password
     );
+
+    if (!credential.user.emailVerified) {
+      throw { code: 'auth/email-not-verified' };
+    }
+
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${credential.user.uid}`
     );
@@ -68,8 +78,10 @@ export class AuthService {
       email,
       password
     );
-    const userN = await this.updateUserData(user.user);
-    return userN;
+
+    user.user.sendEmailVerification();
+
+    return await this.updateUserData(user.user, false);
   }
 
   signOut() {
@@ -98,10 +110,15 @@ export class AuthService {
     return credential.user;
   }
 
-  private async updateUserData(user) {
+  private async updateUserData(user, signin: boolean = true) {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${user.uid}`
     );
+
+    if (signin) this.user$ = userRef.valueChanges();
+
+    const existingUser: User = (await userRef.ref.get()).data() as User;
+    if (existingUser && existingUser.userProfile) return;
 
     const data: User = {
       uid: user.uid,
@@ -116,7 +133,6 @@ export class AuthService {
     }
 
     await userRef.set(data, { merge: true });
-    this.user$ = userRef.valueChanges();
     return data;
   }
 }

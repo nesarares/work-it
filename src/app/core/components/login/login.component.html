@@ -33,7 +33,7 @@
         </div>
       </form>
 
-      <div class="ui error message" *ngIf="loginError">
+      <div class="ui {{ errorType }} message" *ngIf="loginError">
         <div class="header">Error</div>
         <p>{{ loginError }}</p>
       </div>
