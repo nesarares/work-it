@@ -4,7 +4,7 @@
 
 # Typescript v1 declaration files
 typings/
-
+emailingKeys.ts
 /node_modules
 
 package-lock.json
