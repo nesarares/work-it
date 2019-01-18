@@ -24,6 +24,10 @@ export class MessageComponent implements OnInit {
     );
   }
 
+  /**
+   * Utility function used to display a message box
+   * @param message: string, the message to be displayed
+   */
   showMessage(message: Message) {
     if (message == null) return;
 
@@ -32,6 +36,10 @@ export class MessageComponent implements OnInit {
     setTimeout(() => this.animate(TransitionDirection.Out), 3000);
   }
 
+  /**
+   * Function to animate the message box, with a given direction
+   * @param direction: TransitionDirection, the given direction
+   */
   animate(direction: TransitionDirection) {
     this.transitionController.animate(
       new Transition('drop', 500, direction, () => {})

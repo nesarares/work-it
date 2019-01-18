@@ -33,8 +33,12 @@ export class JobService {
     this.jobsCollection = this.afs.collection<Job>('jobs');
   }
 
+  /**
+   * Adds a job in the database
+   * @param job: Job, the job that will be added
+   * @param employerId: string, representig the employer`s id
+   */
   addJob(job: Job, employerId: string) {
-    // TODO: make method return promise
     const id = this.afs.createId();
     job.id = id;
     job.employerRef = this.afs.collection('users').doc(employerId).ref;
@@ -42,10 +46,18 @@ export class JobService {
     this.jobsCollection.doc(id).set(job);
   }
 
+  /**
+   * Updates a job from the database
+   * @param job: Job, the job that will be updated
+   */
   updateJob(job: Job) {
     return this.jobsCollection.doc(job.id).set(job);
   }
 
+  /**
+   * Deletes a job from the database
+   * @param job: Job, the job that will be deleted
+   */
   deleteJob(jobId: string) {
     return this.jobsCollection.doc(jobId).delete();
   }
@@ -99,13 +111,17 @@ export class JobService {
   }
 
   /**
-   * Get the job
-   * @param jobId: string representing the job's id
+   * Get the job from the database based on id
+   * @param jobId: string, representing the job's id
    */
   getJobById(jobId: string): Observable<Job> {
     return this.jobsCollection.doc<Job>(jobId).valueChanges();
   }
 
+  /**
+   * Returns a list of jobs from database filtered by a given condition
+   * @param filters: Object, reepresenting the filter condition
+   */
   getJobsFiltered(filters: any = {}) {
     return this.afs
       .collection<Job>('jobs', ref =>
@@ -225,10 +241,20 @@ export class JobService {
       .limit((queryParam.limitTo as number) + 1);
   }
 
+  /**
+   * Returns the size of the jobs collection
+   */
   private async getCollectionSize() {
     return (await this.jobsCollection.get().toPromise()).docs.length;
   }
 
+  /**
+   * Adds a job application
+   * @param job: Job, the application`s job
+   * @param user: User, the user that applies to the job
+   * @param date: Date, the date of applying
+   * @param message: string, the application`s message
+   */
   async addJobApplication(job: Job, user: User, date: Date, message: string) {
     const employeeRef = this.afs.collection('users').doc(user.uid).ref;
     const displayName = this.authService.user.displayName;
@@ -279,6 +305,11 @@ export class JobService {
     this.userService.addNotification(job.employerRef.id, notification);
   }
 
+  /**
+   * Accepts a user application on a specific job
+   * @param userId: string, the id of the user which applies to the job
+   * @param job: Job, the job which the user wants to apply
+   */
   acceptApplication(userId: string, job: Job) {
     const application = job.applications.find(
       application => application.employeeRef.id === userId
@@ -314,6 +345,10 @@ export class JobService {
     return ret;
   }
 
+  /**
+   * Returns a list of jobs based on the employer of the jobs
+   * @param userRef: DocumentReference, representig the employer user refference
+   */
   getJobsByEmployer(userRef: DocumentReference) {
     return this.afs
       .collection<Job>('jobs', ref =>

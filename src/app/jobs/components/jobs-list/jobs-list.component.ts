@@ -23,17 +23,6 @@ export class JobsListComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
-  // throttle = 1000;
-  // scrollDistance = 1;
-  // jobsPerScroll = 4;
-
-  // private queryParam = {
-  //   orderBy: 'publishedDate',
-  //   limitTo: this.jobsPerScroll,
-  //   startingAt: undefined,
-  //   old: []
-  // };
-
   constructor(
     private jobService: JobService,
     private router: Router,

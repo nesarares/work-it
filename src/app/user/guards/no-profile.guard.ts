@@ -15,6 +15,11 @@ import { take, map, tap } from 'rxjs/operators';
 export class NoProfileGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) { }
 
+  /**
+   * A guard used to restrict the user`s permissions to navigate through different routes if he has not a profile.
+   * @param _next: ActivatedRouteSnapshot, the route user wants to navigate
+   * @param _state: RouterStateSnapshot, the current route state
+   */
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

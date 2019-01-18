@@ -23,10 +23,18 @@ export class UserService {
     this.userCollection = this.afs.collection<User>('users');
   }
 
+  /**
+   * Gets a specific user from database, based on @param uid
+   * @param uid: string, the user`s id
+   */
   getUser(uid: string): Observable<User> {
     return this.userCollection.doc<User>(uid).valueChanges();
   }
 
+  /**
+   * Removes a user application from a job
+   * @param jobRef: DocumentReference, representing the job`s reference
+   */
   async removeUserApplication(jobRef: DocumentReference) {
     const user = this.authService.user;
     const applications = user.applications.filter(
@@ -43,6 +51,10 @@ export class UserService {
     });
   }
 
+  /**
+   * Gets the notification list for a user with the id @param uid
+   * @param uid: string, user`s id
+   */
   getUserNotifications(uid: string): Observable<Notification[]> {
     return this.userCollection
       .doc<User>(uid)
@@ -52,6 +64,11 @@ export class UserService {
       .valueChanges();
   }
 
+  /**
+   * Deletes a user notification
+   * @param userId: string, representing the user`s id
+   * @param notificationId: string representing the notification`s id
+   */
   deleteNotification(userId: string, notificationId: string) {
     return this.userCollection
       .doc<User>(userId)
@@ -60,6 +77,11 @@ export class UserService {
       .delete();
   }
 
+  /**
+   * Adds a notification to a user
+   * @param userId: string, the id of the user
+   * @param notification: string, representing the id of notification
+   */
   addNotification(userId: string, notification: Notification) {
     const id = this.afs.createId();
     notification.id = id;
@@ -70,6 +92,10 @@ export class UserService {
       .set(notification);
   }
 
+  /**
+   * Gets the user average review score
+   * @param reviews: Review[], representing all the reviews for the user
+   */
   getUserAverageReview(reviews: Review[]): number {
     let sum = 0;
     let reviewCount = 0;
@@ -81,6 +107,10 @@ export class UserService {
     else return 0;
   }
 
+  /**
+   * Gets the user`s review list
+   * @param uid: string, representing the id of the user
+   */
   getUserReviews(uid: string): Observable<Review[]> {
     return this.userCollection
       .doc<User>(uid)
@@ -88,6 +118,11 @@ export class UserService {
       .valueChanges();
   }
 
+  /**
+   * Adds a review
+   * @param user: User, representing the user being reviewed
+   * @param review: Review, representing the review
+   */
   addReview(user: User, review: Review) {
     const id = this.afs.createId();
     review.id = id;

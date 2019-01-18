@@ -35,6 +35,10 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  /**
+   * Searches for a city with a given term
+   * @param term: string, the given term
+   */
   search(term: string) {
     return this.citiesService.getByTerm(term);
   }

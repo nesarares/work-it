@@ -20,15 +20,28 @@ export class JobViewComponent implements OnInit {
 
   ngOnInit() {}
 
+  /**
+   * Called when a card is clicked by an user.
+   * Then, the user is redirected to the job information component
+   * @param jobId: string, id of the job displayed on card.
+   */
   cardClicked(jobId: string) {
     this.router.navigateByUrl(jobId);
   }
 
+  /**
+   * Gets a color for the current tag
+   * @param tag: string, the given tag
+   */
   getColor(tag: string) {
     if (this.mappedTags) return this.mappedTags.get(tag);
     return cssConstants.secondaryColor;
   }
 
+  /**
+   * Converts html code to string
+   * @param html: string, the given html that needs to be converted
+   */
   convertToText(html: string) {
     return stripHtmlToText(html);
   }

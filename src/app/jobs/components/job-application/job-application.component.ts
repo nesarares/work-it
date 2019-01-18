@@ -33,6 +33,9 @@ export class JobApplicationComponent implements OnInit {
 
   ngOnInit() {}
 
+  /**
+   * Handles job application event triggered by the logged in user
+   */
   async apply() {
     this.spinner.show();
     const user: User = this.authService.user;
@@ -52,6 +55,9 @@ export class JobApplicationComponent implements OnInit {
     this.close();
   }
 
+  /**
+   * Closes the modal displayed on job applying
+   */
   close() {
     this.dialogRef.close();
   }

@@ -49,20 +49,35 @@ export class AuthService {
       });
   }
 
+  /**
+   *  Returns the user as observable
+   */
   get user$(): Observable<User> {
     return this.userSubject.asObservable();
   }
 
+  /**
+   * Makes the google authentication using the firebase google`s authentication provider.
+   */
   async googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     return await this.oAuthLogin(provider);
   }
 
+  /**
+   * Makes the facebook authentication using the firebase facebook`s authentication provider.
+   */
   async facebookLogin() {
     const provider = new firebase.auth.FacebookAuthProvider();
     return await this.oAuthLogin(provider);
   }
 
+  /**
+   * Makes the authentication method based on email and password.
+   * The user can`t login until the account is verified on the email
+   * @param email: string, the email of the user
+   * @param password: string, the password of the user
+   */
   async emailLogin(email: string, password: string) {
     const credential = await this.afAuth.auth.signInWithEmailAndPassword(
       email,
@@ -76,6 +91,12 @@ export class AuthService {
     return credential.user;
   }
 
+  /**
+   * Creates a new user account based on email and password
+   * If the credentials are satisfied, a confirmation link is sent on the email
+   * @param email: string, the email of the user
+   * @param password: string, the password of the user
+   */
   async emailSignUp(email: string, password: string) {
     const user = await this.afAuth.auth.createUserWithEmailAndPassword(
       email,
@@ -87,11 +108,17 @@ export class AuthService {
     return await this.updateUserData(user.user, false);
   }
 
+  /**
+   * Disconnects the signed in user from application and redirects to the login page.
+   */
   signOut() {
     this.afAuth.auth.signOut();
     this.router.navigate(['/login']);
   }
 
+  /**
+   * Returns a reference of the current user
+   */
   userRef(): Observable<DocumentReference> {
     if (this.user)
       return of(this.afs.collection('users').doc(this.user.uid).ref);
@@ -104,12 +131,21 @@ export class AuthService {
     );
   }
 
+  /**
+   * Utility function used at facebook/google login
+   * @param provider: AuthProvider, the used authentication provider
+   */
   private async oAuthLogin(provider) {
     const credential = await this.afAuth.auth.signInWithPopup(provider);
     await this.updateUserData(credential.user);
     return credential.user;
   }
 
+  /**
+   * Updates a user profile
+   * @param user: User, the user that is updated
+   * @param signin: boolean, representig if the user is signed in. On default, it is true
+   */
   private async updateUserData(user, signin: boolean = true) {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${user.uid}`

@@ -25,7 +25,9 @@ export class UserProfileService {
   ) {}
 
   /**
-   * Updates the user profile of the user with the specifiedu serId
+   * Updates the user profile of the user with the specifiedu userId
+   * @param userId: string, representing the user`s id
+   * @param userProfile: string, representing the user`s profile
    */
   async updateUserProfile(userId: string, userProfile: UserProfile) {
     const displayName = userProfile.lastName
@@ -40,6 +42,11 @@ export class UserProfileService {
       .update({ displayName, userProfile });
   }
 
+  /**
+   * Updates a user profile picture.
+   * @param userId: string, the user`s id
+   * @param file: File, the file that will be uploaded
+   */
   updateUserPhoto(userId: string, file: File): AngularFireUploadTask {
     const ref = this.storage.ref(userId);
     const task = ref.put(file);
@@ -58,6 +65,11 @@ export class UserProfileService {
     return task;
   }
 
+  /**
+   * Updates a user`s CV
+   * @param userId: string, representing the profile`s user id
+   * @param file: File, representing the file that will be uploaded ( Must be a pdf )
+   */
   updateUserCv(userId: string, file: File): AngularFireUploadTask {
     const ref = this.storage.ref(`${userId}-cv`);
     const task = ref.put(file);
@@ -77,6 +89,10 @@ export class UserProfileService {
     return task;
   }
 
+  /**
+   * Delets a user`s CV
+   * @param userId: string, representing user`s id
+   */
   deleteUserCv(userId: string): Observable<any> {
     this.afs
       .collection<User>('users')

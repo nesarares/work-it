@@ -10,6 +10,10 @@ const cities: City[] = require('../utils/orase.json');
 export class CitiesService {
   constructor() {}
 
+  /**
+   * Filters the cities list by a given term
+   * @param term: string, the given term that makes the filter
+   */
   getByTerm(term: string): Promise<string[]> {
     return new Promise((resolve, reject) => {
       if (!term) resolve([]);

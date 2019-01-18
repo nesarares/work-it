@@ -25,25 +25,28 @@ export class RegisterComponent implements OnInit {
   ) {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.email, Validators.required]],
-      password: [
-        '',
-        [Validators.required]
-        // password must contain: at least one uppercase letter, one lowercase letter, one digit
-        // and the lenght must be greater than 7
-        // Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')]
-      ],
+      password: ['', [Validators.required]],
       confirmedPassword: ['', Validators.required]
     });
   }
 
   ngOnInit() {}
 
+  /**
+   * Handles an event triggered when the password strength changes
+   * @param strengthValue:number, the password's strength
+   */
   handleStrengthChanged(strengthValue: number) {
     this.passwordStrengthFeedback =
       messages.passwordStrengthMessages[strengthValue];
     this.strengthLevel = strengthValue;
   }
 
+  /**
+   * Handles on submit action
+   * The email, password and passwordConfirmed  are taken from the fields
+   * If the password strength is accepted, then the user account is created
+   */
   onSubmit() {
     this.isFormSubmitted = true;
 

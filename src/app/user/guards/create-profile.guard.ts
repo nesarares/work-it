@@ -16,6 +16,11 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class CreateProfileGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) { }
 
+  /**
+   * A guard used to restrict the user`s permissions to create a profile if he already has one.
+   * @param _next: ActivatedRouteSnapshot, the route user wants to navigate
+   * @param _state: RouterStateSnapshot, the current route state
+   */
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

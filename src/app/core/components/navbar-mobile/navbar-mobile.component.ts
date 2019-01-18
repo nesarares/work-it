@@ -26,11 +26,18 @@ export class NavbarMobileComponent implements OnInit {
 
   ngOnInit() {}
 
+  /**
+   * Used to navigate to a specific link
+   * @param link: string, the given link
+   */
   navigate(link: string) {
     this.router.navigateByUrl(link);
     this.onClose.emit(true);
   }
 
+  /**
+   * Handles sign out action
+   */
   signOut() {
     this.authService.signOut();
     this.onClose.emit(true);

@@ -27,6 +27,10 @@ export class AddReviewComponent implements OnInit {
     this.stars = this.data.review.stars;
   }
 
+  /**
+   * Handles add review action.
+   * In case of success,a message will be displayed
+   */
   async addReview() {
     this.spinner.show();
     this.data.review.message = this.message;
@@ -40,6 +44,9 @@ export class AddReviewComponent implements OnInit {
     this.close();
   }
 
+  /**
+   * Close the pop-up
+   */
   close() {
     this.dialogRef.close();
   }
