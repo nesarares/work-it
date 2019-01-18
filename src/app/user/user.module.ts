@@ -18,6 +18,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AddReviewComponent } from './components/add-review/add-review.component';
 import { MatDialogModule } from '@angular/material';
 import { UserReviewsComponent } from './components/user-reviews/user-reviews.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { UserReviewsComponent } from './components/user-reviews/user-reviews.com
     UserRoutingModule,
     AngularFireStorageModule,
     MatDialogModule,
+    ChartsModule,
     QuillModule.forRoot({
       modules: {
         toolbar: [

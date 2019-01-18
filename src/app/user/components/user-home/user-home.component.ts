@@ -29,6 +29,28 @@ export class UserHomeComponent implements OnInit, OnDestroy {
     averageApplicationsPerJob: null
   };
 
+  doughnutChartLabels: string[] = [
+    'Pending applications',
+    'Accepted applications'
+  ];
+  doughnutChartData: number[] = [0, 0];
+  chartOptions = {
+    legend: {
+      labels: {
+        fontSize: 18
+      }
+    },
+    layout: {
+      padding: {
+        left: 10,
+        right: 10,
+        top: 10,
+        bottom: 10
+      }
+    },
+    aspectRatio: 1
+  };
+
   subscriptions: Subscription[] = [];
   reviewsSubscription: Subscription;
 
@@ -90,6 +112,11 @@ export class UserHomeComponent implements OnInit, OnDestroy {
           .map(app => app.length)
           .reduce((prev, curr) => prev + curr) / applicationsArray.length
       );
+
+      this.doughnutChartData = [
+        this.stats.pendingApplications,
+        this.stats.acceptedApplications
+      ];
     }
 
     if (this.reviewsSubscription) this.reviewsSubscription.unsubscribe();

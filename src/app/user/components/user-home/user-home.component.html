@@ -46,7 +46,7 @@
           icon="assignment"></app-stats-card>
         <app-stats-card 
           [top]="stats.averageApplicationsPerJob" 
-          bottom="Average applications" 
+          bottom="Avg. applications/job" 
           color="#974ABA"
           icon="person"></app-stats-card>
         <app-stats-card 
@@ -55,8 +55,14 @@
           color="#fbbd08"
           icon="star"></app-stats-card>
       </div>
-      <div class="ui row">
-        
+      <div class="ui row horizontal center aligned">
+        <div style="display: inline-block">
+          <canvas baseChart
+            [data]="doughnutChartData"
+            [labels]="doughnutChartLabels"
+            [options]="chartOptions"
+            chartType="doughnut"></canvas>
+        </div>
       </div>
     </div>
   </ng-template>
