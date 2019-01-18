@@ -1,12 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Job } from 'src/app/shared/models/job';
-import { JobService } from 'src/app/shared/services/job.service';
-import { stripHtmlToText } from 'src/app/shared/utils/utils';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
-import { isNullOrUndefined } from 'util';
-import { Title } from '@angular/platform-browser';
+import { Job } from 'src/app/shared/models/job';
+import { JobService } from 'src/app/shared/services/job.service';
 
 @Component({
   selector: 'app-jobs-list',
@@ -90,16 +87,4 @@ export class JobsListComponent implements OnInit, OnDestroy {
   //       this.jobList = jobs;
   //     });
   // }
-
-  cardClicked(jobId: string) {
-    this.router.navigate(['/jobs', jobId]);
-  }
-
-  getColor(tag: string) {
-    return this.mappedTags.get(tag);
-  }
-
-  convertToText(html: string) {
-    return stripHtmlToText(html);
-  }
 }

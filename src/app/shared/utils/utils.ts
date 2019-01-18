@@ -10,3 +10,8 @@ export const intersection = (arr1: any[], arr2: any[]) =>
   arr1.filter(el => arr2.includes(el));
 
 export const toLower = (str: string) => str.toLowerCase();
+
+export const flatten = (arrayOfArrays: any[]) =>
+  [].concat.apply([], arrayOfArrays);
+
+export const toOneDecimal = (n: number) => Math.round(n * 10) / 10;

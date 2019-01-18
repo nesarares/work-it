@@ -12,6 +12,8 @@ import { LoadingIndicatorComponent } from './components/loading-indicator/loadin
 import { MessageComponent } from './components/message/message.component';
 import { BadgeGroupComponent } from './components/badge-group/badge-group.component';
 import { EmptyPlaceholderComponent } from './components/empty-placeholder/empty-placeholder.component';
+import { JobViewComponent } from './components/job-view/job-view.component';
+import { StatsCardComponent } from './components/stats-card/stats-card.component';
 
 @NgModule({
   imports: [
@@ -29,7 +31,9 @@ import { EmptyPlaceholderComponent } from './components/empty-placeholder/empty-
     MessageComponent,
     LoadingIndicatorComponent,
     BadgeGroupComponent,
-    EmptyPlaceholderComponent
+    EmptyPlaceholderComponent,
+    JobViewComponent,
+    StatsCardComponent
   ],
   exports: [
     CommonModule,
@@ -43,7 +47,9 @@ import { EmptyPlaceholderComponent } from './components/empty-placeholder/empty-
     MessageComponent,
     LoadingIndicatorComponent,
     BadgeGroupComponent,
-    EmptyPlaceholderComponent
+    EmptyPlaceholderComponent,
+    JobViewComponent,
+    StatsCardComponent
   ],
   providers: []
 })

@@ -1,3 +1,63 @@
-<p>
-  dasdkskncdjsdfc
-</p>
+<ng-container *ngIf="user">
+  <div
+    class="two-column-grid stackable dashboard divided"
+    *ngIf="user.userProfile.userType === employeeUserType; else employerHome"
+  >
+    <div class="column start" *ngIf="stats.pendingApplications && stats.acceptedApplications && stats.rating">
+      <h2 class="ui header">Stats:</h2>
+      <div class="ui divider"></div>
+      <app-stats-card 
+        [top]="stats.pendingApplications" 
+        bottom="Pending applications"
+        icon="assignment"></app-stats-card>
+      <app-stats-card 
+        [top]="stats.acceptedApplications" 
+        bottom="Accepted applications" 
+        color="#21BA45"
+        icon="done"></app-stats-card>
+      <app-stats-card 
+        [top]="stats.rating" 
+        bottom="Rating" 
+        color="#fbbd08"
+        icon="star"></app-stats-card>
+    </div>
+    <div class="column">
+      <h2 class="ui header">Jobs that might interest you:</h2>
+      <div class="ui divider"></div>
+      <ng-container *ngIf="jobs && jobs.length !== 0; else empty">
+        <ng-container *ngFor="let job of jobs">
+          <app-job-view [job]="job"></app-job-view>
+        </ng-container>
+      </ng-container>
+      <ng-template #empty>
+        <app-empty-placeholder></app-empty-placeholder>
+      </ng-template>
+    </div>
+  </div>
+
+  <ng-template #employerHome>
+    <div class="ui grid grid-employer">
+      <h2 class="ui header">Stats:</h2>
+      <div class="ui divider"></div>
+      <div class="ui row">
+        <app-stats-card 
+          [top]="stats.pendingApplications" 
+          bottom="Pending applications"
+          icon="assignment"></app-stats-card>
+        <app-stats-card 
+          [top]="stats.averageApplicationsPerJob" 
+          bottom="Average applications" 
+          color="#974ABA"
+          icon="person"></app-stats-card>
+        <app-stats-card 
+          [top]="stats.rating" 
+          bottom="Rating" 
+          color="#fbbd08"
+          icon="star"></app-stats-card>
+      </div>
+      <div class="ui row">
+        
+      </div>
+    </div>
+  </ng-template>
+</ng-container>

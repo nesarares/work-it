@@ -5,9 +5,9 @@ import {
   DocumentReference
 } from '@angular/fire/firestore';
 import { Job } from '../models/job';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { tagColoros } from '../constants/colors';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ThrowStmt } from '@angular/compiler';
 import { AuthService } from './auth.service';
 import { Application } from '../models/application';
@@ -17,6 +17,7 @@ import { intersection, toLower } from '../utils/utils';
 import { UserService } from './user.service';
 import { Notification } from '../models/notification';
 import { NotificationType } from '../models/notificationType';
+import { UserType } from '../models/userType';
 
 @Injectable({
   providedIn: 'root'
@@ -137,6 +138,44 @@ export class JobService {
           });
         })
       );
+  }
+
+  /**
+   * Returns an observable of an array of relevant jobs based on
+   * the given user's tags. Must have at least two common tags.
+   * If the user is an employer, returns the employer's jobs.
+   * @param user the user for which to get the relevant jobs
+   */
+  getJobsByUserInterests(user: User): Observable<Job[]> {
+    const userProfile = user.userProfile;
+    if (!userProfile) return of(null);
+
+    if (userProfile.userType === UserType.Employer) {
+      const userRef = this.afs.collection('users').doc(user.uid).ref;
+      return this.getJobsByEmployer(userRef);
+    }
+
+    let userTags = userProfile.tags;
+    if (!userTags) return of(null);
+
+    const userApplications = user.applications;
+
+    userTags = userTags.map(tag => tag.toLowerCase());
+
+    return this.getJobs().pipe(
+      map(jobs =>
+        jobs.filter(job => {
+          if (
+            !job.tags ||
+            (userApplications &&
+              userApplications.some(app => app.jobRef.id === job.id))
+          )
+            return false;
+          const jobTags = job.tags.map(tag => tag.toLowerCase());
+          return intersection(jobTags, userTags).length > 1;
+        })
+      )
+    );
   }
 
   /**

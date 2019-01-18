@@ -9,7 +9,7 @@ import {
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { urls } from '../constants/urls';
@@ -19,7 +19,7 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class AuthService {
-  userSubject: BehaviorSubject<User> = new BehaviorSubject(null);
+  userSubject: Subject<User> = new ReplaySubject<User>(1);
   user: User = null;
 
   constructor(
@@ -43,6 +43,7 @@ export class AuthService {
         })
       )
       .subscribe(user => {
+        console.log({ user });
         this.user = user;
         this.userSubject.next(user);
       });

@@ -13,14 +13,14 @@ import { take, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class NoProfileGuard implements CanActivate {
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.auth.user$.pipe(
-      take(1),
+      // take(1),
       tap(user => {
         if (!user.userProfile) {
           console.log('access denied - user does not have a profile');

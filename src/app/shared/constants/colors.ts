@@ -1,3 +1,3 @@
 export const tagColoros = {
-  colors: ['#D46A6A', '#FFAAAA', '#801515', '#550000', '#801515', '#AA3939']
+  colors: ['#f48033', '#c7560b', '#f37623', '#d75d0c', '#e7640d', '#f26c13']
 };

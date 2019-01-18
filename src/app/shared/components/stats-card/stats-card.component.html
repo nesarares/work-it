@@ -1,0 +1,14 @@
+<div class="ui raised card" *ngIf="top && bottom">
+  <div class="content">
+    <div class="center aligned header">
+      <span>{{ top }}</span>
+    </div>
+  </div>
+  <div class="extra content" [ngStyle]="{'background-color': color}">
+    
+    <div class="center aligned description">
+      <i class="material-icons" *ngIf="icon">{{icon}}</i>
+      <span>{{ bottom }}</span>
+    </div>
+  </div>
+</div>

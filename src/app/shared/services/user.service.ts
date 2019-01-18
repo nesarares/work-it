@@ -11,6 +11,7 @@ import { Application } from '../models/application';
 import { Notification } from '../models/notification';
 import { Review } from '../models/review';
 import { NotificationType } from '../models/notificationType';
+import { toOneDecimal } from '../utils/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -69,14 +70,14 @@ export class UserService {
       .set(notification);
   }
 
-  getUserAverageReview(reviews: Review[]): Number {
+  getUserAverageReview(reviews: Review[]): number {
     let sum = 0;
     let reviewCount = 0;
     for (let review of reviews) {
       sum = sum + review.stars;
       reviewCount = reviewCount + 1;
     }
-    if (reviewCount !== 0) return sum / reviewCount;
+    if (reviewCount !== 0) return toOneDecimal(sum / reviewCount);
     else return 0;
   }
 

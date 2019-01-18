@@ -1,15 +1,103 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { JobService } from 'src/app/shared/services/job.service';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { User } from 'src/app/shared/models/user';
+import { Job } from 'src/app/shared/models/job';
+import { UserType } from 'src/app/shared/models/userType';
+import { UserService } from 'src/app/shared/services/user.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { flatten, toOneDecimal } from 'src/app/shared/utils/utils';
+import { Application } from 'src/app/shared/models/application';
 
 @Component({
   selector: 'app-user-home',
   templateUrl: './user-home.component.html',
   styleUrls: ['./user-home.component.less']
 })
-export class UserHomeComponent implements OnInit {
+export class UserHomeComponent implements OnInit, OnDestroy {
+  employeeUserType: number = UserType.Employee.valueOf();
 
-  constructor() { }
+  user: User;
+  jobs: Job[];
+
+  stats = {
+    pendingApplications: null,
+    acceptedApplications: null,
+    rating: null,
+    averageApplicationsPerJob: null
+  };
+
+  subscriptions: Subscription[] = [];
+  reviewsSubscription: Subscription;
+
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private spinnerService: NgxSpinnerService,
+    private jobService: JobService
+  ) {}
 
   ngOnInit() {
+    this.spinnerService.show();
+    this.subscriptions.push(
+      this.authService.user$
+        .pipe(
+          switchMap(user => {
+            this.user = user;
+            return this.jobService.getJobsByUserInterests(user);
+          })
+        )
+        .subscribe(jobs => {
+          this.jobs = jobs;
+          this.setUserStats();
+        })
+    );
   }
 
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
+    if (this.reviewsSubscription) this.reviewsSubscription.unsubscribe();
+  }
+
+  setUserStats() {
+    if (this.user.userProfile.userType === UserType.Employee) {
+      this.stats.pendingApplications = this.user.applications.filter(
+        app => !app.accepted
+      ).length;
+
+      this.stats.acceptedApplications = this.user.applications.filter(
+        app => app.accepted
+      ).length;
+    } else {
+      const applicationsArray = this.jobs
+        .filter(job => job.applications)
+        .map(job => job.applications);
+      const applications: Application[] = flatten(applicationsArray);
+      console.log(applications);
+
+      this.stats.pendingApplications = applications.filter(
+        app => !app.accepted
+      ).length;
+
+      this.stats.acceptedApplications = applications.filter(
+        app => app.accepted
+      ).length;
+
+      this.stats.averageApplicationsPerJob = toOneDecimal(
+        applicationsArray
+          .map(app => app.length)
+          .reduce((prev, curr) => prev + curr) / applicationsArray.length
+      );
+    }
+
+    if (this.reviewsSubscription) this.reviewsSubscription.unsubscribe();
+    this.reviewsSubscription = this.userService
+      .getUserReviews(this.user.uid)
+      .subscribe(reviews => {
+        this.stats.rating = this.userService.getUserAverageReview(reviews);
+        this.spinnerService.hide();
+      });
+  }
 }

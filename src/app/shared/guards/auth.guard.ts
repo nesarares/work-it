@@ -20,8 +20,10 @@ export class AuthGuard implements CanActivate {
     _state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.auth.user$.pipe(
+      take(1),
       map(user => !!user && _next.paramMap.get('id') === user.uid),
       tap(authenticated => {
+        console.log('auth guard ');
         if (!authenticated) {
           console.log('access denied');
           this.router.navigate(['/']);

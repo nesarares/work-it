@@ -1,0 +1,76 @@
+@import '../../../../variables';
+
+.card {
+  width: 100%;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.13), 0 4px 15px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease;
+  margin-bottom: 1em !important;
+
+  &:hover {
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+  }
+
+  .content {
+    cursor: pointer;
+
+    &.extra {
+      cursor: initial;
+    }
+  }
+
+  .header {
+    margin: 0;
+    font-weight: 500;
+    font-family: @font-family-accent;
+  }
+
+  .meta {
+    margin: 0.5em 0;
+
+    .material-icons {
+      margin-right: 0;
+      margin-left: -3px;
+      font-size: 20px;
+    }
+
+    span {
+      margin: 0;
+    }
+
+    * {
+      vertical-align: middle;
+    }
+  }
+
+  .image {
+    width: 60%;
+  }
+
+  .employer-name {
+    font-weight: 500;
+    font-size: 1.2em;
+    margin-top: 1.12em;
+    font-family: @font-family-accent;
+    text-align: center;
+    word-break: break-word;
+  }
+
+  .job-title {
+    word-break: break-word;
+  }
+
+  .description {
+    text-align: justify;
+  }
+
+  .column:nth-child(2) {
+    padding: 1.5em;
+  }
+
+  .column:nth-child(1) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

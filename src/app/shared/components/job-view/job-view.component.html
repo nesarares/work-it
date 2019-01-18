@@ -1,0 +1,51 @@
+<div class="ui card" *ngIf="job">
+  <div class="content" (click)="cardClicked(job.id)">
+    <div class="ui divided grid">
+      <div
+        class="six wide mobile five wide tablet four wide computer column"
+      >
+        <img
+          class="ui centered circular image"
+          [src]="job.employer.photoUrl"
+        />
+        <p class="employer-name">{{ job.employer.displayName }}</p>
+      </div>
+      <div
+        class="ten wide mobile eleven wide tablet twelve wide computer column"
+      >
+        <h2 class="header job-title">{{ job.title }}</h2>
+        <p class="meta">
+          <span>{{ job.publishedDate.toDate() | date: medium }}</span>
+          <ng-container *ngIf="job.city">
+            <span> - </span> <i class="material-icons">location_on</i>
+            <span>{{ job.city }}</span>
+          </ng-container>
+        </p>
+        <p
+          class="description"
+          *ngIf="convertToText(job.description); let desc"
+        >
+          {{ desc.length > 250 ? (desc | slice: 0:250) + '...' : desc }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="extra content">
+    <div class="ui elements">
+      <a
+        *ngFor="let tag of job.tags"
+        class="ui horizontal circular label"
+        [ngStyle]="{
+          'background-color': getColor(tag),
+          'color': 'white',
+          'font-weight': 'bold'
+        }"
+        routerLink="/jobs"
+        [queryParams]="{ tags: tag }"
+      >
+        {{ tag }}
+      </a>
+    </div>
+  </div>
+</div>

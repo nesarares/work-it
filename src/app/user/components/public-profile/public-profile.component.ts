@@ -49,7 +49,7 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private spinnerService: NgxSpinnerService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.spinnerService.show();
@@ -107,10 +107,10 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
       undefined;
     this.isRatingReadonly = !this.showUserDetails || hasSubmittedReviewBefore;
     if (!this.isRatingReadonly) {
-      this.reviewPopup.open();
+      this.reviewPopup && this.reviewPopup.open();
       setTimeout(() => this.reviewPopup.close(), 3000);
     } else {
-      this.reviewPopup.close();
+      this.reviewPopup && this.reviewPopup.close();
     }
   }
 
