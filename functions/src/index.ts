@@ -80,9 +80,9 @@ exports.functionNotifyNewJob = functions.firestore
         continue;
       }
 
-      var setA: string[] = Array.from(new Set(job.tags));
-      var setB: string[] = Array.from(new Set(userData.userProfile.tags));
-      var common: string[] = setA.filter(function(v) {
+      var setA: string[] = Array.from(new Set(job.tags as string[]));
+      var setB: string[] = Array.from(new Set(userData.userProfile.tags as string[]));
+      var common: string[] = setA.filter(function (v) {
         return setB.indexOf(v) > -1;
       });
       // console.log('common tags:', common);
