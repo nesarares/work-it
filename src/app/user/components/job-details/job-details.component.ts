@@ -86,7 +86,6 @@ export class JobDetailsComponent implements OnInit {
   private populateFields(jobId: string) {
     this.jobService.getJobById(jobId).subscribe(job => {
       this.job = job;
-      console.log(job.city);
       this.tags = this.job.tags.join(',');
     });
   }

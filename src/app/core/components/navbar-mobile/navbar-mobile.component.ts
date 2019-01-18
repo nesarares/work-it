@@ -16,16 +16,15 @@ export class NavbarMobileComponent implements OnInit {
   @Input()
   menuItemsBottom;
 
+  @Input()
+  user: User;
+
   @Output()
   onClose: EventEmitter<boolean> = new EventEmitter();
 
-  user$: Observable<User>;
-
   constructor(private router: Router, private authService: AuthService) {}
 
-  ngOnInit() {
-    this.user$ = this.authService.user$;
-  }
+  ngOnInit() {}
 
   navigate(link: string) {
     this.router.navigateByUrl(link);

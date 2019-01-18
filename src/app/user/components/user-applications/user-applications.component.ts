@@ -32,7 +32,7 @@ export class UserApplicationsComponent implements OnInit {
     if (authUser) {
       this.applications$ = this.userService.getUser(authUser.uid).pipe(
         tap(user => {
-          console.log(user.applications);
+          user.applications;
           this.spinner.hide();
         }),
         map(user => user.applications)
@@ -40,7 +40,6 @@ export class UserApplicationsComponent implements OnInit {
     } else {
       this.applications$ = this.authService.user$.pipe(
         tap(user => {
-          console.log(user.applications);
           this.spinner.hide();
         }),
         map(user => user.applications)

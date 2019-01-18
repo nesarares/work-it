@@ -19,7 +19,7 @@
         {{ menuItem.text }}
       </a>
 
-      <ng-container *ngIf="(user$ | async) as user; else login">
+      <ng-container *ngIf="user; else login">
         <ng-container *ngTemplateOutlet="notificationsDropdown"></ng-container>
         <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
       </ng-container>

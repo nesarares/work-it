@@ -8,7 +8,7 @@
 
   <hr />
 
-  <ng-container *ngIf="(user$ | async) as user; else login">
+  <ng-container *ngIf="user; else login">
     <img src="{{ user.photoUrl }}" alt="User photo" class="ui avatar image" />
     <a
       *ngFor="let menuItem of menuItemsBottom"

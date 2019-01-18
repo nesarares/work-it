@@ -101,7 +101,6 @@ export class UserSettingsComponent implements OnInit {
       img.src = (evt.target as any).result;
       img.onload = () => {
         const { width, height } = img;
-        console.log({ width, height, size });
         if (this.checkValidImage(width, height)) {
           // upload image
           this.imageError = false;

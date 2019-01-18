@@ -54,22 +54,17 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.user$ = this.auth.user$.pipe(
-      tap(usr => {
-        console.log({ usr });
-        this.user = usr;
-        if (!usr) return;
-        this.notifications$ = this.userService
-          .getUserNotifications(usr.uid)
-          .pipe(
-            tap(notifications => {
-              this.notificationsNumber = notifications
-                ? notifications.length
-                : 0;
-            })
-          );
-      })
-    );
+    this.auth.user$.subscribe(user => {
+      this.user = user;
+      if (!user) return;
+      this.notifications$ = this.userService
+        .getUserNotifications(user.uid)
+        .pipe(
+          tap(notifications => {
+            this.notificationsNumber = notifications ? notifications.length : 0;
+          })
+        );
+    });
   }
 
   signOut() {

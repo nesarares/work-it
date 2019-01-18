@@ -28,7 +28,6 @@ export class MessageComponent implements OnInit {
     if (message == null) return;
 
     this.message = message;
-    console.log({ message: this.message });
     this.animate(TransitionDirection.In);
     setTimeout(() => this.animate(TransitionDirection.Out), 3000);
   }

@@ -28,9 +28,6 @@ export class UserProfileService {
    * Updates the user profile of the user with the specifiedu serId
    */
   async updateUserProfile(userId: string, userProfile: UserProfile) {
-    console.log('update');
-    console.log({ userId });
-    console.log({ userProfile });
     const displayName = userProfile.lastName
       ? `${userProfile.firstName} ${userProfile.lastName}`
       : userProfile.firstName;
@@ -51,7 +48,6 @@ export class UserProfileService {
       .pipe(
         finalize(async () => {
           const downloadUrl = await ref.getDownloadURL().toPromise();
-          console.log({ downloadUrl });
           this.afs
             .collection<User>('users')
             .doc(userId)
@@ -70,7 +66,7 @@ export class UserProfileService {
       .pipe(
         finalize(async () => {
           const downloadUrl = await ref.getDownloadURL().toPromise();
-          console.log({ downloadUrl });
+          ({ downloadUrl });
           this.afs
             .collection<User>('users')
             .doc(userId)

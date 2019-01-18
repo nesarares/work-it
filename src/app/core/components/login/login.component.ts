@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
         this.user.password
       );
       this.router.navigate([`/user/${user.uid}`]);
-      window.location.reload(); // quick fix
+      // window.location.reload(); // quick fix
     } catch (error) {
       switch (error.code) {
         case 'auth/wrong-password':
@@ -69,6 +69,7 @@ export class LoginComponent implements OnInit {
         case 'auth/email-not-verified':
           this.loginError = 'Please verify your email first';
           this.errorType = 'warning';
+          this.auth.signOut();
           break;
         default:
           this.loginError = error.message;

@@ -7,20 +7,19 @@ import {
   AngularFirestoreDocument,
   DocumentReference
 } from '@angular/fire/firestore';
-import * as firebase from 'firebase/app';
-import { Observable, of } from 'rxjs';
-import { switchMap, tap, take, mergeMap } from 'rxjs/operators';
-
-import { User } from '../models/user';
 import { Router } from '@angular/router';
+import * as firebase from 'firebase/app';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
 import { urls } from '../constants/urls';
-import { UserType } from '../models/userType';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  user$: Observable<User>;
+  userSubject: BehaviorSubject<User> = new BehaviorSubject(null);
   user: User = null;
 
   constructor(
@@ -28,22 +27,29 @@ export class AuthService {
     private afs: AngularFirestore,
     private router: Router
   ) {
-    this.user$ = this.afAuth.authState.pipe(
-      switchMap(user => {
-        // mergeMap(user => {
-        console.log('usr ' + user);
-        if (user && !user.emailVerified) {
-          return of(null);
-        }
-
-        return user
-          ? this.afs.doc<User>(`users/${user.uid}`).valueChanges()
-          : of(null);
-      }),
-      tap(user => {
+    this.afAuth.authState
+      .pipe(
+        switchMap(user => {
+          if (
+            user &&
+            user.providerData[0].providerId === 'password' &&
+            !user.emailVerified
+          ) {
+            return of(null);
+          }
+          return user
+            ? this.afs.doc<User>(`users/${user.uid}`).valueChanges()
+            : of(null);
+        })
+      )
+      .subscribe(user => {
         this.user = user;
-      })
-    );
+        this.userSubject.next(user);
+      });
+  }
+
+  get user$(): Observable<User> {
+    return this.userSubject.asObservable();
   }
 
   async googleLogin() {
@@ -66,10 +72,6 @@ export class AuthService {
       throw { code: 'auth/email-not-verified' };
     }
 
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
-      `users/${credential.user.uid}`
-    );
-    this.user$ = userRef.valueChanges();
     return credential.user;
   }
 
@@ -86,13 +88,10 @@ export class AuthService {
 
   signOut() {
     this.afAuth.auth.signOut();
-    this.user$ = of(null);
-    this.user = null;
     this.router.navigate(['/login']);
   }
 
   userRef(): Observable<DocumentReference> {
-    // TODO: replace this.user.uid to user$ (this.user can be null)
     if (this.user)
       return of(this.afs.collection('users').doc(this.user.uid).ref);
     return this.user$.pipe(
@@ -114,8 +113,6 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${user.uid}`
     );
-
-    if (signin) this.user$ = userRef.valueChanges();
 
     const existingUser: User = (await userRef.ref.get()).data() as User;
     if (existingUser && existingUser.userProfile) return;

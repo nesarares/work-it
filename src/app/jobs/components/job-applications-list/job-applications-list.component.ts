@@ -51,7 +51,6 @@ export class JobApplicationsListComponent implements OnInit {
   }
 
   async acceptEmployee(userId: string) {
-    console.log(`Accept ${userId}`);
     this.spinner.show();
     try {
       await this.jobService.acceptApplication(userId, this.job);

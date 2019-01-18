@@ -81,7 +81,6 @@ export class CreateProfileEmployerComponent implements OnInit {
           }
         })
         .catch(() => {
-          console.log('Profile creation failed.');
           if (this.user) {
             this.afterUpdate.emit(false);
           } else {
