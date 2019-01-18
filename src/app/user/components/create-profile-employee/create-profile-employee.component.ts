@@ -40,7 +40,7 @@ export class CreateProfileEmployeeComponent implements OnInit, OnChanges {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private createProfileService: UserProfileService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.params.pipe(take(1)).subscribe(params => {
@@ -51,6 +51,7 @@ export class CreateProfileEmployeeComponent implements OnInit, OnChanges {
     let firstName = '';
     let lastName = '';
     let birthDate: any = '';
+    let newsletter: boolean = false;
     let phone = '';
     let workExperience = '';
     let educationalExperience = '';
@@ -62,6 +63,7 @@ export class CreateProfileEmployeeComponent implements OnInit, OnChanges {
       birthDate = this.user.userProfile.birthDate || '';
       workExperience = this.user.userProfile.workExperience || '';
       educationalExperience = this.user.userProfile.educationalExperience || '';
+      newsletter = this.user.userProfile.newsletter || false;
       if (this.user.userProfile.tags) {
         interests = this.user.userProfile.tags.join(', ');
       }
@@ -75,11 +77,12 @@ export class CreateProfileEmployeeComponent implements OnInit, OnChanges {
       phone: [phone, Validators.maxLength(15)],
       interests: [interests, Validators.maxLength(250)],
       workExperience: [workExperience, Validators.maxLength(250)],
-      educationalExperience: [educationalExperience, Validators.maxLength(250)]
+      educationalExperience: [educationalExperience, Validators.maxLength(250)],
+      newsletter: [newsletter]
     });
   }
 
-  ngOnChanges() {}
+  ngOnChanges() { }
 
   onSubmit() {
     let userProfile: UserProfile;
@@ -94,6 +97,7 @@ export class CreateProfileEmployeeComponent implements OnInit, OnChanges {
         workExperience: this.userProfileForm.controls.workExperience.value,
         educationalExperience: this.userProfileForm.controls
           .educationalExperience.value,
+        newsletter: this.userProfileForm.controls.newsletter.value,
         tags: this.tagsGroupComponent.tagList
       };
       this.createProfileService

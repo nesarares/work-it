@@ -6,10 +6,10 @@ export interface UserProfile {
   lastName?: string;
   birthDate: Date;
   phone?: string;
-  // companyName?: string;
   aboutCompany?: string;
   interests?: string;
   tags?: string[];
   workExperience?: string;
   educationalExperience?: string;
+  newsletter?: boolean;
 }
