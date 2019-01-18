@@ -47,6 +47,10 @@ export class UserApplicationsComponent implements OnInit {
     }
   }
 
+  /**
+   * Handles the deletion of a job application
+   * @param jobRef: DocumentReference, the job reference
+   */
   onDelete(jobRef: DocumentReference) {
     this.userService.removeUserApplication(jobRef);
     this.messageService.showMessage({

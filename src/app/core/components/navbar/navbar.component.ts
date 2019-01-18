@@ -67,18 +67,31 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  /**
+   * Handles sign out action
+   */
   signOut() {
     this.auth.signOut();
   }
 
+  /**
+   * Utility function used to open the menu on the phone
+   */
   openMobileMenu() {
     this.mobileMenuActive = true;
   }
 
+  /**
+   * Utility function used to close the menu on the phone
+   */
   closeMobileMenu() {
     this.mobileMenuActive = false;
   }
 
+  /**
+   * Returns a string used to display an icon coresponding to notification type
+   * @param notificationType: string, type of notification
+   */
   getIcon(notificationType: string): string {
     switch (notificationType) {
       case NotificationType.APPLICATION_ACCEPTED:
@@ -94,10 +107,19 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  /**
+   * Handles delete notification action
+   * @param userId: string, the id of the current user
+   * @param notificationId: string, the id of notification
+   */
   deleteNotification(userId: string, notificationId: string) {
     this.userService.deleteNotification(userId, notificationId);
   }
 
+  /**
+   * Used to navigate to a given url
+   * @param url: string, representing the given url
+   */
   navigate(url: string) {
     this.router.navigateByUrl(url);
   }

@@ -45,6 +45,7 @@ export class JobFiltersComponent implements OnInit, OnDestroy {
     this.titleField = new FormControl();
     this.employerField = new FormControl();
 
+    // Gets the search criteria from the url
     this.subscriptions.push(
       this.route.queryParamMap.subscribe(queryParamMap => {
         this.filters.title = queryParamMap.get('title') || null;
@@ -97,10 +98,17 @@ export class JobFiltersComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Unsubscribe each object at destroy
+   */
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
+  /**
+   * Searches for jobs, based on the filters which are populated in ngOnInit.
+   * The search arguments are received by url
+   */
   search() {
     const urlTree = this.router.createUrlTree([], {
       queryParams: { ...this.filters },
@@ -111,6 +119,9 @@ export class JobFiltersComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(urlTree);
   }
 
+  /**
+   * Handles search by a given city action
+   */
   optionsLookupCity: LookupFn<IOption, number> = (query: string, initial?) => {
     return this.citiesService.getByTerm(query).then(results => {
       const res = results.map(city => ({ label: city, value: city }));
@@ -118,6 +129,9 @@ export class JobFiltersComponent implements OnInit, OnDestroy {
     });
   };
 
+  /**
+   * Clears all filters
+   */
   clearFilters() {
     this.filters.city = null;
     this.filters.tags = null;

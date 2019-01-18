@@ -35,10 +35,9 @@ export class JobApplicationsListComponent implements OnInit {
   }
 
   /**
-   * Used to load job applications' data from database
+   * Used to load job applications data from database
    */
   loadData() {
-    // TODO: add router link to profile of the applicant?
     this.applicationList = this.job.applications;
     if (!this.applicationList) return;
     this.applicationList
@@ -50,6 +49,10 @@ export class JobApplicationsListComponent implements OnInit {
       });
   }
 
+  /**
+   * Accepts an employee based on user id
+   * @param userId: string, the id on the user
+   */
   async acceptEmployee(userId: string) {
     this.spinner.show();
     try {

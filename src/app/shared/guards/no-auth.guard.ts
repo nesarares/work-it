@@ -15,6 +15,11 @@ import { take, map, tap } from 'rxjs/operators';
 export class NoAuthGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) {}
 
+  /**
+   * A guard used to restrict the user`s permissions to login on specific routes, if he is already logged in
+   * @param next: ActivatedRouteSnapshot, the route user wants to navigate
+   * @param state: RouterStateSnapshot, the current route state
+   */
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

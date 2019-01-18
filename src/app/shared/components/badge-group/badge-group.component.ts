@@ -25,6 +25,9 @@ export class BadgeGroupComponent implements OnInit, OnChanges {
       .filter(tag => tag != '');
   }
 
+  /**
+   * Returns the list of tags
+   */
   public get tagList(): string[] {
     return this.tagLst;
   }

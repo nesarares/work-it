@@ -14,6 +14,8 @@ import { tap } from 'rxjs/operators';
 export class DashboardComponent implements OnInit {
   isMenuOpen: boolean = true;
   user$: Observable<User>;
+
+  // Represents the options of the user`s menu with coresponding routes
   menuItems = [
     {
       icon: 'dashboard',
@@ -60,6 +62,10 @@ export class DashboardComponent implements OnInit {
     this.user$ = this.auth.user$;
   }
 
+  /**
+   * Navigates to a user profile with id @param uid
+   * @param uid: string, representing the user`s id
+   */
   navigateToUserProfile(uid: string) {
     this.router.navigateByUrl(`/user/${uid}/public`);
   }

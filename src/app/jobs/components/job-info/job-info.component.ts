@@ -79,6 +79,10 @@ export class JobInfoComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
+  /**
+   * Handles the apply at a specific job.
+   * The user must be logged in to do this action. Otherwise, an error message will be shown.
+   */
   handleApply() {
     if (!this.loggedUser) {
       this.messageService.showMessage({

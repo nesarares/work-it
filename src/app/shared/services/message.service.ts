@@ -10,10 +10,17 @@ export class MessageService {
 
   constructor() {}
 
+  /**
+   * Gets the message as an Observable
+   */
   get message$() {
     return this.messageSubject.asObservable();
   }
 
+  /**
+   * Shows a given message
+   * @param message: Message, the given message
+   */
   showMessage(message: Message) {
     this.messageSubject.next(message);
   }

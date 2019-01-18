@@ -26,17 +26,6 @@ export class JobsListComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
-  // throttle = 1000;
-  // scrollDistance = 1;
-  // jobsPerScroll = 4;
-
-  // private queryParam = {
-  //   orderBy: 'publishedDate',
-  //   limitTo: this.jobsPerScroll,
-  //   startingAt: undefined,
-  //   old: []
-  // };
-
   constructor(
     private jobService: JobService,
     private router: Router,
@@ -76,29 +65,27 @@ export class JobsListComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  // onScrollDown() {
-  //   // get the last displayed data on the screen
-  //   this.queryParam.startingAt = this.jobList[
-  //     this.jobList.length - 1
-  //   ].publishedDate;
-
-  //   this.queryParam.old = this.jobList;
-
-  //   this.jobService
-  //     .getJobsFilteredByQueryParam(this.queryParam, this.filters)
-  //     .subscribe(jobs => {
-  //       this.jobList = jobs;
-  //     });
-  // }
-
+  /**
+   * Called when a card is clicked by an user.
+   * Then, the user is redirected to the job information component
+   * @param jobId: string, id of the job displayed on card.
+   */
   cardClicked(jobId: string) {
     this.router.navigate(['/jobs', jobId]);
   }
 
+  /**
+   * Gets a color for the current tag
+   * @param tag: string, the given tag
+   */
   getColor(tag: string) {
     return this.mappedTags.get(tag);
   }
 
+  /**
+   * Converts html code to string
+   * @param html: string, the given html that needs to be converted
+   */
   convertToText(html: string) {
     return stripHtmlToText(html);
   }

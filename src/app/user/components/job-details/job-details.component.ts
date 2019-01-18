@@ -50,10 +50,9 @@ export class JobDetailsComponent implements OnInit {
   ) {}
 
   /*
-      If jobId is present in route job will be edited, and fields will be populated with coresponding
-    values from the job.
-      Otherwise will be added
-  */
+   * If jobId is present in route job will be edited, and fields will be populated with coresponding values from the job.
+   * Otherwise will be added.
+   */
   ngOnInit() {
     const user = this.auth.user;
     this.job.employer = {
@@ -90,6 +89,11 @@ export class JobDetailsComponent implements OnInit {
     });
   }
 
+  /**
+   * Handles add job action.
+   * A new job will be added into database, if all requirements are satisfied
+   * A message will be displayed based on that.
+   */
   addJob() {
     if (
       !this.job.title ||
@@ -124,6 +128,9 @@ export class JobDetailsComponent implements OnInit {
     });
   }
 
+  /**
+   * Handles job filtering by city action
+   */
   optionsLookupCity: LookupFn<IOption, number> = (query: string, initial?) => {
     return this.citiesService.getByTerm(query).then(results => {
       const res = results.map(city => ({ label: city, value: city }));

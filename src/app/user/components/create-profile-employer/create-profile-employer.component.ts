@@ -59,6 +59,10 @@ export class CreateProfileEmployerComponent implements OnInit {
     });
   }
 
+  /**
+   * Handles create profile action. On success, an employer user profile is associated with the logged in user`s account.
+   * The user will be redirected to dashboard after the profile is created.
+   */
   onSubmit() {
     let userProfile: UserProfile;
     this.isFormSubmitted = true;

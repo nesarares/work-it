@@ -56,6 +56,10 @@ export class UserSettingsComponent implements OnInit {
     }
   }
 
+  /**
+   * Handles delete CV action.
+   * A message will be displayed after that action
+   */
   async deleteCv(userId: string) {
     this.spinner.show();
     await this.userProfileService.deleteUserCv(userId).toPromise();
@@ -67,6 +71,10 @@ export class UserSettingsComponent implements OnInit {
     });
   }
 
+  /**
+   * Displays a message after updating a profile
+   * @param success: boolean, representing the completion status of updating profile
+   */
   updateCallback(success: boolean) {
     if (success) {
       this.messageService.showMessage({
@@ -84,6 +92,10 @@ export class UserSettingsComponent implements OnInit {
     }
   }
 
+  /**
+   * Handles the upload photo action
+   * @param event: Event, the event trigger by file upload
+   */
   uploadPhoto(event) {
     const file: File = event.target.files[0];
     if (!file) return;
@@ -125,10 +137,20 @@ export class UserSettingsComponent implements OnInit {
     };
   }
 
+  /**
+   * Checks if the image is valid
+   * @param width: number, the width of the photo
+   * @param height: number, the height of the photo
+   */
   checkValidImage(width: number, height: number): boolean {
     return width === height && width >= fileConstants.avatarMinSizePx;
   }
 
+  /**
+   * Checks if the image constraints are satisfied
+   * @param size: number, the size of the photo
+   * @param format: string, the format of the photo
+   */
   checkValidImageSizeAndFormat(size: number, format: string) {
     return (
       size < fileConstants.avatarMaxSizeBytes &&
@@ -136,6 +158,10 @@ export class UserSettingsComponent implements OnInit {
     );
   }
 
+  /**
+   * Handle upload CV action
+   * @param event: Event, the event triggered by file upload.
+   */
   uploadCv(event) {
     const file: File = event.target.files[0];
     if (!file) return;
@@ -158,6 +184,11 @@ export class UserSettingsComponent implements OnInit {
     });
   }
 
+  /**
+   * Checks if the CV constraints are satisfied
+   * @param size: number, the size of the CV
+   * @param format: string, the format of the CV
+   */
   checkValidCvSizeAndFormat(size: number, format: string) {
     return (
       size < fileConstants.cvMaxSizeBytes && format === fileConstants.cvFileType

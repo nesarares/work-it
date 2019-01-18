@@ -25,6 +25,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {}
 
+  /**
+   * Handles the login with google account
+   * On success, the user is redirected to dashboard if the user has a profile otherwise
+   * to create profile page
+   */
   async googleLogin() {
     this.spinner.show();
     try {
@@ -37,6 +42,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Handles the login with facebook account
+   * On success, the user is redirected to dashboard if the user has a profile otherwise
+   * to create profile page
+   */
   async facebookLogin() {
     this.spinner.show();
     try {
@@ -49,6 +59,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Handles the login with email account
+   * On success, the user is redirected to dashboard if the user has a profile otherwise
+   * to create profile page
+   */
   async emailLogin() {
     this.spinner.show();
     try {

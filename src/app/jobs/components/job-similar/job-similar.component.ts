@@ -25,8 +25,8 @@ export class JobSimilarComponent implements OnInit {
   }
 
   /**
-   * Return a list of jobs which have at leas one common tag with the current job
-   * @param jobs
+   * Return a list of jobs which have at least one common tag with the current job
+   * @param jobs: Job[], A list containing all available jobs
    */
   getSimilarJobs(jobs: Job[]) {
     const simJobList: Job[] = [];

@@ -40,7 +40,7 @@ export class CreateProfileEmployeeComponent implements OnInit, OnChanges {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private createProfileService: UserProfileService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.route.params.pipe(take(1)).subscribe(params => {
@@ -82,8 +82,12 @@ export class CreateProfileEmployeeComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges() { }
+  ngOnChanges() {}
 
+  /**
+   * Handles create profile action. On success, an employee user profile is associated with the logged in user`s account.
+   * The user will be redirected to dashboard after the profile is created.
+   */
   onSubmit() {
     let userProfile: UserProfile;
     this.isFormSubmitted = true;

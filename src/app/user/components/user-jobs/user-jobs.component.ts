@@ -46,10 +46,19 @@ export class UserJobsComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
+  /**
+   * Handles the conversion from html to text action
+   * @param html: string, representing the html code that needs to be converted
+   */
   convertToText(html: string) {
     return stripHtmlToText(html);
   }
 
+  /**
+   * Handles the edit of the job action.
+   * The user is redirected to the edit job route.
+   * @param jobId: the id of the job that will be edited
+   */
   onEdit(jobId: string) {
     this.router.navigate([
       `user/${this.userId}`,
@@ -57,6 +66,10 @@ export class UserJobsComponent implements OnInit, OnDestroy {
     ]);
   }
 
+  /**
+   * Handles the delete of the job action.
+   * @param jobId: the id of the job that will be deleted
+   */
   onDelete(jobId: string) {
     this.jobService.deleteJob(jobId).then(resp => {
       this.messageService.showMessage({
@@ -68,7 +81,7 @@ export class UserJobsComponent implements OnInit, OnDestroy {
   }
 
   /**
-   *  Method called when enable/disable button is pressed
+   * Method called when enable/disable button is pressed
    * @param jobId: string, representing job's id
    * @param isActive: boolean, representing operation type
    */

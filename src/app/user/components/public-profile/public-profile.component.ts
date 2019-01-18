@@ -96,6 +96,9 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Sets the stars from rating to be readonly
+   */
   setIsRatingReadonly() {
     if (!this.loggedUser) {
       this.isRatingReadonly = true;
@@ -114,12 +117,18 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Sets the computed average review
+   */
   setAverageReview() {
     this.averageReview = this.userService
       .getUserAverageReview(this.reviews)
       .valueOf();
   }
 
+  /**
+   * Handles add review action
+   */
   addReview() {
     this.review.date = new Date();
     this.review.stars = this.averageReview;
