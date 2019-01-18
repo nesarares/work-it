@@ -49,6 +49,7 @@ export class JobInfoComponent implements OnInit, OnDestroy {
                 this.loggedUser = !!userRef;
                 if (
                   this.authService.user &&
+                  this.authService.user.userProfile &&
                   this.authService.user.userProfile.userType ===
                     UserType.Employer
                 ) {
