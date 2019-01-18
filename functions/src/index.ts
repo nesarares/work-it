@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as nodemailer from 'nodemailer';
-import { emailingKeys } from 'functions/emailingKeys';
+import { emailingKeys } from './emailingKeys';
 
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
@@ -18,18 +18,32 @@ const mailTransport = nodemailer.createTransport({
 });
 
 /**
- *
- * @param userEmail
- * @param commonTags
- * @param jobId
+ * Sends mail to the user
+ * @param userEmail user email
+ * @param userDisplayName user display name
+ * @param commonTags common tags
+ * @param jobId job id
  */
-function sendNewsMail(userEmail, commonTags, jobId) {
+function sendNewsMail(
+  userEmail: string,
+  userDisplayName: string,
+  commonTags: string[],
+  jobId: string
+) {
   const mailOptions = {
     from: `workit.235@gmail.com`,
     to: userEmail,
     subject: `We found some jobs that you might like.`,
-    text: `Hello, a job was found with the following tags :${commonTags.toString()}. 
-      https://work-it.ml/jobs/${jobId}`
+    text: `Hi, ${userDisplayName}!
+
+A new job was found that might interest you with the following common tags: ${commonTags.join(', ')}. 
+https://work-it.ml/jobs/${jobId}
+
+If you don't want to recieve this types of mails or you did not subscribe to them, please log in to your account at https://work-it.ml/login and disable notifications on your profile.
+
+Sincerely,
+Work-It Team - Put your free time to good use!
+`
   };
   console.log('sending email...', mailOptions);
 
@@ -59,21 +73,23 @@ exports.functionNotifyNewJob = functions.firestore
     // Filter only users that have common tags with the job
     const users = await querry.get();
     for (const user of users.docs) {
-      console.log(user.data());
-      console.log('user tags:', user.data().userProfile.tags);
-      if (user.data().userProfile.tags === undefined) {
+      const userData = user.data();
+      // console.log(userData);
+      // console.log('user tags:', userData.userProfile.tags);
+      if (!userData.userProfile || !userData.userProfile.tags) {
         continue;
       }
-      var setA = Array.from(new Set(job.tags));
-      var setB = Array.from(new Set(user.data().userProfile.tags));
-      var common = setA.filter(function(v) {
+
+      var setA: string[] = Array.from(new Set(job.tags));
+      var setB: string[] = Array.from(new Set(userData.userProfile.tags));
+      var common: string[] = setA.filter(function(v) {
         return setB.indexOf(v) > -1;
       });
-      console.log('common tags:', common);
+      // console.log('common tags:', common);
 
       // If at least 2 common tags found, send email
       if (common.length > 1) {
-        sendNewsMail(user.data().email, common, job.id);
+        sendNewsMail(userData.email, userData.displayName, common, job.id);
       }
     }
   });
