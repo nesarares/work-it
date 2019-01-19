@@ -85,13 +85,13 @@ export class UserHomeComponent implements OnInit, OnDestroy {
 
   setUserStats() {
     if (this.user.userProfile.userType === UserType.Employee) {
-      this.stats.pendingApplications = this.user.applications.filter(
-        app => !app.accepted
-      ).length;
+      if (!this.user.applications) this.user.applications = [];
 
-      this.stats.acceptedApplications = this.user.applications.filter(
-        app => app.accepted
-      ).length;
+      this.stats.pendingApplications =
+        this.user.applications.filter(app => !app.accepted).length || 0;
+
+      this.stats.acceptedApplications =
+        this.user.applications.filter(app => app.accepted).length || 0;
     } else {
       const applicationsArray = this.jobs
         .filter(job => job.applications)

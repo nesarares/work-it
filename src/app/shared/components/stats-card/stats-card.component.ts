@@ -7,7 +7,7 @@ import { cssConstants } from '../../constants/css-constants';
   styleUrls: ['./stats-card.component.less']
 })
 export class StatsCardComponent implements OnInit {
-  @Input() top: string;
+  @Input() top: any;
   @Input() bottom: string;
   @Input() color: string = cssConstants.primaryColor;
   @Input() icon: string;

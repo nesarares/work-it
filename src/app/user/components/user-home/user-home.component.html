@@ -3,7 +3,7 @@
     class="two-column-grid stackable dashboard divided"
     *ngIf="user.userProfile.userType === employeeUserType; else employerHome"
   >
-    <div class="column start" *ngIf="stats.pendingApplications && stats.acceptedApplications && stats.rating">
+    <div class="column start" >
       <h2 class="ui header">Stats:</h2>
       <div class="ui divider"></div>
       <app-stats-card 
