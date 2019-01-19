@@ -35,17 +35,21 @@ export class JobSimilarComponent implements OnInit {
       return simJobList;
     }
 
+    this.job.tags = this.job.tags.map(t => t.toLowerCase());
+
     for (const currentJob of jobs) {
       if (!currentJob.tags || currentJob.id === this.job.id) {
         continue;
       }
 
-      currentJob.tags.forEach(tag => {
-        if (this.job.tags.includes(tag) && !simJobList.includes(currentJob)) {
-          simJobList.push(currentJob);
-          return;
-        }
-      });
+      currentJob.tags
+        .map(t => t.toLowerCase())
+        .forEach(tag => {
+          if (this.job.tags.includes(tag) && !simJobList.includes(currentJob)) {
+            simJobList.push(currentJob);
+            return;
+          }
+        });
 
       if (simJobList.length === 4) break;
     }

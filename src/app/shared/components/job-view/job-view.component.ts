@@ -26,7 +26,7 @@ export class JobViewComponent implements OnInit {
    * @param jobId: string, id of the job displayed on card.
    */
   cardClicked(jobId: string) {
-    this.router.navigateByUrl(jobId);
+    this.router.navigateByUrl(`/jobs/${jobId}`);
   }
 
   /**

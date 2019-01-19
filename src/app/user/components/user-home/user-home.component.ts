@@ -99,24 +99,29 @@ export class UserHomeComponent implements OnInit, OnDestroy {
       const applications: Application[] = flatten(applicationsArray);
       console.log(applications);
 
-      this.stats.pendingApplications = applications.filter(
-        app => !app.accepted
-      ).length;
+      this.stats.pendingApplications =
+        applications.filter(app => !app.accepted).length || 0;
 
-      this.stats.acceptedApplications = applications.filter(
-        app => app.accepted
-      ).length;
+      this.stats.acceptedApplications =
+        applications.filter(app => app.accepted).length || 0;
 
-      this.stats.averageApplicationsPerJob = toOneDecimal(
-        applicationsArray
-          .map(app => app.length)
-          .reduce((prev, curr) => prev + curr) / applicationsArray.length
-      );
+      if (applicationsArray.length > 0) {
+        this.stats.averageApplicationsPerJob = toOneDecimal(
+          applicationsArray
+            .map(app => app.length)
+            .reduce((prev, curr) => prev + curr) / applicationsArray.length
+        );
+      } else {
+        this.stats.averageApplicationsPerJob = 0;
+      }
 
       this.doughnutChartData = [
         this.stats.pendingApplications,
         this.stats.acceptedApplications
       ];
+
+      if (this.doughnutChartData[0] === 0 || this.doughnutChartData[1] === 0)
+        this.doughnutChartData = null;
     }
 
     if (this.reviewsSubscription) this.reviewsSubscription.unsubscribe();

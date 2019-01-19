@@ -35,7 +35,11 @@ export class UserApplicationsComponent implements OnInit {
           user.applications;
           this.spinner.hide();
         }),
-        map(user => user.applications)
+        map(user =>
+          user.applications.sort((x, y) =>
+            x.accepted === y.accepted ? 0 : x.accepted ? -1 : 1
+          )
+        )
       );
     } else {
       this.applications$ = this.authService.user$.pipe(

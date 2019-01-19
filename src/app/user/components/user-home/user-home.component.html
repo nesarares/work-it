@@ -56,7 +56,7 @@
           icon="star"></app-stats-card>
       </div>
       <div class="ui row horizontal center aligned">
-        <div style="display: inline-block">
+        <div style="display: inline-block" *ngIf="doughnutChartData">
           <canvas baseChart
             [data]="doughnutChartData"
             [labels]="doughnutChartLabels"
