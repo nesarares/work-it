@@ -1,6 +1,6 @@
 # Work-It - Put your free time to good use!
 
-This is a university project for the course "Group Project" ("Proiect colectiv")
+University project - Group Project (Proiect colectiv)
 
 ## Usage
 
